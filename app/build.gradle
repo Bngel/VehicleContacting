@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.vehiclecontacting"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -32,7 +32,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // 第三方库
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "androidx.viewpager2:viewpager2:1.0.0" // viewpager2
+    implementation 'com.youth.banner:banner:2.1.0' // banner 轮播图
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

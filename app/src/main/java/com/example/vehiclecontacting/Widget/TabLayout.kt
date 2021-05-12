@@ -9,6 +9,6 @@ import com.example.vehiclecontacting.R
 class TabLayout(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_tab, this)
+        LayoutInflater.from(context).inflate(R.layout.view_tab, this)
     }
 }

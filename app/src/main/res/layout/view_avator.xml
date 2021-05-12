@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.vehiclecontacting.Widget.PortraitView
+        android:id="@+id/avt_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/avt_vip"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/avt_img"
+        android:layout_alignRight="@id/avt_img"
+        android:layout_alignEnd="@id/avt_img" />
+
+</RelativeLayout>

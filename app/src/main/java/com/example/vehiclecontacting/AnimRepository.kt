@@ -7,7 +7,7 @@ import android.widget.ImageView
 
 object AnimRepository {
 
-    fun startAnim(target: ImageView, afterImg: Int) {
+    fun playTabBtnClickAnim(target: ImageView, afterImg: Int) {
         val animX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 0.9f, 1f)
         animX.duration = 300
         // anim1.interpolator = BounceInterpolator()
