@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <corners android:radius="10dp"/>
-
-    <gradient
-        android:angle="180"
-        android:endColor="@color/colorAuthLight"
-        android:startColor="@color/colorAuthDark" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bk_sendauth_up" android:state_pressed="false"/>
+    <item android:drawable="@drawable/bk_sendauth_down" android:state_pressed="true"/>
+</selector>

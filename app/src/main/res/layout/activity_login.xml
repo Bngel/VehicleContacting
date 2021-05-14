@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="欢迎登录小青龙"
+            android:text="@string/login_welcome"
             android:textColor="@android:color/black"
             android:textSize="28sp"
             android:layout_marginTop="100dp"
@@ -24,17 +24,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="+86 "/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text=">"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/default_areaTel"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:text=">" />
+
+            </LinearLayout>
+
 
             <EditText
                 android:layout_width="0dp"
@@ -42,8 +51,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:hint="请输入手机号"/>
+                android:layout_marginStart="10dp"
+                android:hint="@string/login_inputTel"/>
         </LinearLayout>
 
         <ImageView
@@ -56,7 +65,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="未注册的手机号验证后自动创建小青龙账户"
+            android:text="@string/login_not_register"
             android:layout_marginBottom="20dp"/>
 
         <LinearLayout
@@ -65,17 +74,18 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/bk_checkrect"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="我已阅读并同意《小青龙用户协议》、《隐私政策》并授权小青龙使用该小青龙账号信息(如昵称、头像、手机号)进行统一管理。"/>
+                android:text="@string/login_agreement"/>
 
         </LinearLayout>
 
@@ -85,7 +95,8 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/bk_sendauth"
             android:textStyle="bold"
-            android:text="获取短信验证码"/>
+            android:text="@string/login_sendAuth"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,14 +110,14 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:textColor="@android:color/black"
-                android:text="密码登录"/>
+                android:text="@string/login_password"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="遇到问题"
+                android:text="@string/login_problem"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
     </LinearLayout>
@@ -122,7 +133,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="帮助"
+        android:text="@string/login_help"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:layout_margin="15dp"
