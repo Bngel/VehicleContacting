@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.vehiclecontacting.Widget.PortraitView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avt_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

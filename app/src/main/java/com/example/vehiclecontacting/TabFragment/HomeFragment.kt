@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.TabFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
+import com.example.vehiclecontacting.LoginActivity
 import com.example.vehiclecontacting.R
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -31,6 +33,7 @@ class HomeFragment: Fragment() {
         // 在 Activity View 加载完毕后 载入
         // Banner 事件
         bannerEvent(getBannerData())
+        testEvent()
     }
 
     /***
@@ -55,5 +58,12 @@ class HomeFragment: Fragment() {
             )
         )
         return data
+    }
+
+    private fun testEvent() {
+        test_btn.setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

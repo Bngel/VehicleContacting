@@ -4,14 +4,37 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <!--- Tab 上层浅色 -->
-    <color name="colorTabLight">#66FFD100</color>
-    <!--- Tab 下层深色 -->
-    <color name="colorTabDark">#AAFFD100</color>
+    <!--- Tab 上层 颜色 -->
+    <color name="colorTabLight">#FFFFFF</color>
+    <!--- Tab 下层 颜色 -->
+    <color name="colorTabDark">#FFFFFF</color>
+    <!--- Tab 文字 颜色 -->
+    <color name="colorTabText">#707070</color>
+    <!--- Tab 文字 颜色 -->
+    <color name="colorTabTopSeparator">#33707070</color>
     <!--- 状态栏 颜色 -->
-    <color name="colorStatusBar">#66FFD100</color>
+    <color name="colorStatusBar">#ffd207</color>
     <!--- Banner 文字栏 背景颜色 -->
     <color name="colorBannerTextBackground">#20707070</color>
     <!--- Banner 文字栏 文字颜色 -->
     <color name="colorBannerText">#000000</color>
+    <!--- UserInfo 个人信息卡片 背景颜色 -->
+    <color name="colorUserInfoBackground">#ffd207</color>
+    <!--- UserInfo 个人信息卡片 ID颜色 -->
+    <color name="colorUserInfoID">#000000</color>
+    <!--- UserInfo 动态/关注/粉丝 标签颜色 -->
+    <color name="colorMomentText">#707070</color>
+    <!--- UserInfo 动态/关注/粉丝 数字颜色 -->
+    <color name="colorMomentValueText">#000000</color>
+    <!--- UserInfo VipStatus Vip状态 背景颜色 -->
+    <color name="colorVipBackground">#FFFFFF</color>
+    <!--- UserInfo VipStatus Vip状态 字体颜色 -->
+    <color name="colorVipText">#eb261a</color>
+    <!--- AuthCheck 短信验证码 左层 颜色 -->
+    <color name="colorAuthLight">#fed000</color>
+    <!--- AuthCheck 短信验证码 右层 颜色 -->
+    <color name="colorAuthDark">#febd00</color>
+    <!--- Separator 组件分隔符 颜色 -->
+    <color name="colorSeparator">#ffffff</color>
+
 </resources>
