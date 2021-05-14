@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        main_viewpager.adapter = ViewPagerFragmentStateAdapter(this, 3)
-        main_viewpager.isUserInputEnabled = false
 
+        // viewpager控件属性设置
+        vpEvent()
         // Tab控件单击事件绑定
         tabEvent()
     }
@@ -58,5 +58,9 @@ class MainActivity : AppCompatActivity() {
         // 默认启动选择首页
         tab_home.setImageResource(R.drawable.yw_home)
         tabStatus = Tab.HOME
+    }
+    private fun vpEvent() {
+        main_viewpager.adapter = ViewPagerFragmentStateAdapter(this, 3)
+        main_viewpager.isUserInputEnabled = false
     }
 }

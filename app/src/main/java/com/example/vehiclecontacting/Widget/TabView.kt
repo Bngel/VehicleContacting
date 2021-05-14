@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.example.vehiclecontacting.R
 
-class TabLayout(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
+class TabView(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_tab, this)

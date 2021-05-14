@@ -3,7 +3,7 @@ package com.example.vehiclecontacting
 object StatusRepository {
 
     /***
-     * Status for TabLayout
+     * Status for TabView
      */
     // 首页, 社区, 个人中心
     enum class Tab {

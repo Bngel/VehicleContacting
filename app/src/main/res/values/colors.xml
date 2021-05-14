@@ -10,4 +10,8 @@
     <color name="colorTabDark">#AAFFD100</color>
     <!--- 状态栏 颜色 -->
     <color name="colorStatusBar">#66FFD100</color>
+    <!--- Banner 文字栏 背景颜色 -->
+    <color name="colorBannerTextBackground">#20707070</color>
+    <!--- Banner 文字栏 文字颜色 -->
+    <color name="colorBannerText">#000000</color>
 </resources>

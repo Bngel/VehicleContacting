@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
+import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.R
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,30 +30,30 @@ class HomeFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         // 在 Activity View 加载完毕后 载入
         // Banner 事件
-        bannerEvent(getBannerImage())
+        bannerEvent(getBannerData())
     }
 
     /***
      *  events of banner
      */
-    private fun bannerEvent(images: List<Int>) {
+    private fun bannerEvent(data: List<BannerInfo>) {
         home_banner.addBannerLifecycleObserver(this)
-            .setAdapter(MyBannerAdapter(images))
+            .setAdapter(MyBannerAdapter(data))
             .setIndicator(CircleIndicator(context))
     }
 
     /***
      *  get images for banner
      */
-    private fun getBannerImage() : List<Int>{
-        val images = ArrayList<Int>()
-        images.addAll(
+    private fun getBannerData() : List<BannerInfo>{
+        val data = ArrayList<BannerInfo>()
+        data.addAll(
             listOf(
-                R.drawable.gw_home,
-                R.drawable.gw_user,
-                R.drawable.gw_community
+                BannerInfo(R.drawable.gw_home,"TEXT1TEXT1TEXT1TEXT1TEXT1TEXT1TEXT1"),
+                BannerInfo(R.drawable.gw_user,"TEXT2"),
+                BannerInfo(R.drawable.gw_community,"TEXT3")
             )
         )
-        return images
+        return data
     }
 }
