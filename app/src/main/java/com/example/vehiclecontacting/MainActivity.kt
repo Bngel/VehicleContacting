@@ -21,12 +21,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 控件设置
+        initWidget()
+    }
+
+    private fun initWidget() {
         // viewpager控件属性设置
         vpEvent()
         // Tab控件单击事件绑定
         tabEvent()
     }
-
     private fun tabEvent() {
         tab_home.setOnClickListener {
             if (tabStatus != Tab.HOME) {

@@ -31,6 +31,10 @@
     <!--- UserInfo VipStatus Vip状态 字体颜色 -->
     <color name="colorVipText">#eb261a</color>
     <!--- AuthCheck 短信验证码 左层 颜色 -->
+    <color name="colorAuthLightUnClickable">#44fed000</color>
+    <!--- AuthCheck 短信验证码 右层 颜色 -->
+    <color name="colorAuthDarkUnClickable">#44febd00</color>
+    <!--- AuthCheck 短信验证码 左层 颜色 -->
     <color name="colorAuthLightUp">#fed000</color>
     <!--- AuthCheck 短信验证码 右层 颜色 -->
     <color name="colorAuthDarkUp">#febd00</color>

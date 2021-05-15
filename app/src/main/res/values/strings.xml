@@ -18,12 +18,15 @@
     <!--- annotation for text of LoginActivity -->
     <string name="login_welcome">欢迎登录小青龙</string>
     <string name="login_inputTel">请输入手机号</string>
+    <string name="login_inputPassword">请输入密码</string>
     <string name="login_not_register">未注册的手机号验证后自动创建小青龙账户</string>
     <string name="login_agreement">我已阅读并同意《小青龙用户协议》、《隐私政策》并授权小青龙使用该小青龙账号信息(如昵称、头像、手机号)进行统一管理。</string>
     <string name="login_sendAuth">获取短信验证码</string>
     <string name="login_password">密码登录</string>
+    <string name="login_auth">验证码登录</string>
     <string name="login_problem">遇到问题</string>
     <string name="login_help">帮助</string>
+    <string name="login_login">登录</string>
 
     <string name="app_name">VehicleContacting</string>
 
