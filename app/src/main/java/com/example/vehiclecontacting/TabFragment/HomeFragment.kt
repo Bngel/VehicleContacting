@@ -12,6 +12,7 @@ import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.LoginActivity
 import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Widget.ToastView
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -63,7 +64,8 @@ class HomeFragment: Fragment() {
     private fun testEvent() {
         test_btn.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            val myToast = ToastView(context!!).show("这是我说的提示框")
         }
     }
 }

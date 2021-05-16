@@ -14,6 +14,7 @@
     <string name="default_follow">0</string>
     <string name="default_fans">0</string>
     <string name="default_areaTel">+86</string>
+    <string name="default_city">北京</string>
 
     <!--- annotation for text of LoginActivity -->
     <string name="login_welcome">欢迎登录小青龙</string>
@@ -27,6 +28,8 @@
     <string name="login_problem">遇到问题</string>
     <string name="login_help">帮助</string>
     <string name="login_login">登录</string>
+
+    <string name="home_search">搜索</string>
 
     <string name="app_name">VehicleContacting</string>
 

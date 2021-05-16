@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Tab控件单击事件绑定
         tabEvent()
     }
+
     private fun tabEvent() {
         tab_home.setOnClickListener {
             if (tabStatus != Tab.HOME) {

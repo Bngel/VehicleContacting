@@ -42,7 +42,16 @@
     <color name="colorAuthLightDown">#e5bc00</color>
     <!--- AuthCheck 短信验证码按下 右层 颜色 -->
     <color name="colorAuthDarkDown">#e4aa00</color>
+    <!--- Toast Tip 提示框 背景颜色 -->
+    <color name="colorToastBackground">#ffd207</color>
     <!--- Separator 组件分隔符 颜色 -->
     <color name="colorSeparator">#ffffff</color>
-
+    <!--- HomeTitle 主页标题搜索栏 背景颜色 -->
+    <color name="colorHomeTitleBackground">#ffd207</color>
+    <!--- HomeTitle 主页标题城市 字体颜色 -->
+    <color name="colorHomeTitleCity">#FFFFFF</color>
+    <!--- HomeTitle 主页标题城市搜索按钮 字体颜色 -->
+    <color name="colorHomeTitleSearch">#ffd207</color>
+    <!--- HomeTitle 主页标题小部件 字体颜色 -->
+    <color name="colorHomeTitleFunction">#ffffff</color>
 </resources>
