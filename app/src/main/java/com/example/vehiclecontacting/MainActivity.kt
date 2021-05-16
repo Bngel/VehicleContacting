@@ -7,8 +7,6 @@ import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Adapter.ViewPagerFragmentStateAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_tab.*
-import com.example.vehiclecontacting.StatusRepository.Tab
-import com.example.vehiclecontacting.StatusRepository.tabStatus
 import com.example.vehiclecontacting.AnimRepository.playTabBtnClickAnim
 import com.example.vehiclecontacting.StatusRepository.PAGE_COMMUNITY
 import com.example.vehiclecontacting.StatusRepository.PAGE_HOME
@@ -34,27 +32,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun tabEvent() {
         tab_home.setOnClickListener {
-            if (tabStatus != Tab.HOME) {
+            if (StatusRepository.homeTabStatus != StatusRepository.HomeTab.HOME) {
                 playTabBtnClickAnim(it as ImageView, R.drawable.yw_home)
-                tabStatus = Tab.HOME
+                StatusRepository.homeTabStatus = StatusRepository.HomeTab.HOME
                 tab_community.setImageResource(R.drawable.gw_community)
                 tab_user.setImageResource(R.drawable.gw_user)
                 main_viewpager.currentItem = PAGE_HOME
             }
         }
         tab_community.setOnClickListener {
-            if (tabStatus != Tab.COMMUNITY) {
+            if (StatusRepository.homeTabStatus != StatusRepository.HomeTab.COMMUNITY) {
                 playTabBtnClickAnim(it as ImageView, R.drawable.yw_community)
-                tabStatus = Tab.COMMUNITY
+                StatusRepository.homeTabStatus = StatusRepository.HomeTab.COMMUNITY
                 tab_home.setImageResource(R.drawable.gw_home)
                 tab_user.setImageResource(R.drawable.gw_user)
                 main_viewpager.currentItem = PAGE_COMMUNITY
             }
         }
         tab_user.setOnClickListener {
-            if (tabStatus != Tab.USER) {
+            if (StatusRepository.homeTabStatus != StatusRepository.HomeTab.USER) {
                 playTabBtnClickAnim(it as ImageView, R.drawable.yw_user)
-                tabStatus = Tab.USER
+                StatusRepository.homeTabStatus = StatusRepository.HomeTab.USER
                 tab_home.setImageResource(R.drawable.gw_home)
                 tab_community.setImageResource(R.drawable.gw_community)
                 main_viewpager.currentItem = PAGE_USER
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
         // 默认启动选择首页
         tab_home.setImageResource(R.drawable.yw_home)
-        tabStatus = Tab.HOME
+        StatusRepository.homeTabStatus = StatusRepository.HomeTab.HOME
     }
     private fun vpEvent() {
         main_viewpager.adapter = ViewPagerFragmentStateAdapter(this, 3)

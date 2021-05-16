@@ -31,6 +31,9 @@
 
     <string name="home_search">搜索</string>
 
+    <string name="community_recommend">推荐</string>
+    <string name="community_follow">关注</string>
+
     <string name="app_name">VehicleContacting</string>
 
 </resources>

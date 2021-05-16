@@ -64,8 +64,8 @@ class HomeFragment: Fragment() {
     private fun testEvent() {
         test_btn.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
-            //startActivity(intent)
-            val myToast = ToastView(context!!).show("这是我说的提示框")
+            startActivity(intent)
+            //val myToast = ToastView(context!!).show("这是我说的提示框")
         }
     }
 }

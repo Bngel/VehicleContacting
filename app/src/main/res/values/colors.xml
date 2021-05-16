@@ -54,4 +54,6 @@
     <color name="colorHomeTitleSearch">#ffd207</color>
     <!--- HomeTitle 主页标题小部件 字体颜色 -->
     <color name="colorHomeTitleFunction">#ffffff</color>
+    <!--- CommunityTitle 社区标题栏 背景颜色 -->
+    <color name="colorCommunityTitleBackground">#ffd207</color>
 </resources>
