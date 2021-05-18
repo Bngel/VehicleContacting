@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.Widget
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -20,6 +21,10 @@ class BannerView: RelativeLayout {
 
     fun setImageResource(image: Int) {
         banner_img.setImageResource(image)
+    }
+
+    fun setImageResource(image: Drawable){
+        banner_img.setImageDrawable(image)
     }
 
     fun setText(text: String) {
