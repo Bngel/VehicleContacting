@@ -22,4 +22,7 @@ object StatusRepository {
     }
     // 当前CommunityTab选择状态
     var communityTabStatus: CommunityTab = CommunityTab.RECOMMEND
+
+    const val PAGE_RECOMMEND = 0
+    const val PAGE_FOLLOW = 1
 }

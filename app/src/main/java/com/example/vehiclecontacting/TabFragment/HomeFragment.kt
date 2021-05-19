@@ -1,23 +1,17 @@
 package com.example.vehiclecontacting.TabFragment
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.Data.HotInfo
-import com.example.vehiclecontacting.LoginActivity
 import com.example.vehiclecontacting.R
-import com.example.vehiclecontacting.Widget.HomeHot
+import com.example.vehiclecontacting.Widget.HomeHotView
 import com.example.vehiclecontacting.Widget.ToastView
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -70,7 +64,7 @@ class HomeFragment: Fragment() {
         val hots = getHots()
         if (parentContext != null) {
             for (hot in hots) {
-                val view = HomeHot(parentContext!!, hot.title, hot.type, hot.img)
+                val view = HomeHotView(parentContext!!, hot.title, hot.type, hot.img)
                 view.setOnClickListener {
                     ToastView(parentContext!!).show(hot.title)
                 }

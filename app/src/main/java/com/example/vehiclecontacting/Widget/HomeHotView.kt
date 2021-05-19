@@ -9,7 +9,7 @@ import com.example.vehiclecontacting.Data.HotInfo
 import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.view_homehot.view.*
 
-class HomeHot:LinearLayout {
+class HomeHotView:LinearLayout {
 
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)

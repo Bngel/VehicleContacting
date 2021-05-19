@@ -2,6 +2,7 @@ package com.example.vehiclecontacting.Widget
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
@@ -20,5 +21,18 @@ class AvtView(context: Context, attrs: AttributeSet): RelativeLayout(context, at
         // 设置 vip 图标
         // 默认为 灰色 图标
         avt_vip.setImageResource(R.drawable.gw_vip)
+    }
+
+    fun setAvt(image: Drawable) {
+        avt_img.setImageDrawable(image)
+    }
+
+    fun setVip(status: Boolean) {
+        avt_vip.setImageResource(
+            if (status)
+                R.drawable.yw_vip
+            else
+                R.drawable.gw_vip
+        )
     }
 }

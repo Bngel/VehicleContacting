@@ -11,7 +11,7 @@ import com.example.vehiclecontacting.TabFragment.UserFragment
 import com.example.vehiclecontacting.StatusRepository.PAGE_HOME
 import com.example.vehiclecontacting.StatusRepository.PAGE_USER
 
-class ViewPagerFragmentStateAdapter(activity: AppCompatActivity, private val itemsCount: Int):
+class MainViewPagerFragmentStateAdapter(activity: AppCompatActivity, private val itemsCount: Int):
     FragmentStateAdapter(activity) {
 
     private val fragments: SparseArray<Fragment> = SparseArray()

@@ -3,6 +3,7 @@ package com.example.vehiclecontacting
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.view.animation.BounceInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -67,6 +68,27 @@ object AnimRepository {
         val animSet = AnimatorSet()
         animSet.play(scaleX).with(scaleY).with(positionX)
         animSet.duration = 100
+        animSet.start()
+        animSet.addListener(object: Animator.AnimatorListener{
+            override fun onAnimationStart(animation: Animator?) {}
+            override fun onAnimationEnd(animation: Animator?) {
+
+            }
+            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationRepeat(animation: Animator?) {}
+        })
+    }
+
+    fun playAddArticleClickAnim(target: ImageView) {
+        val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 0.9f, 1f)
+        scaleX.duration = 100
+        // scaleX.interpolator = BounceInterpolator()
+        val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 0.9f, 1f)
+        scaleY.duration = 100
+        // scaleY.interpolator = BounceInterpolator()
+        val animSet = AnimatorSet()
+        animSet.play(scaleX).with(scaleY)
+        animSet.duration = 200
         animSet.start()
         animSet.addListener(object: Animator.AnimatorListener{
             override fun onAnimationStart(animation: Animator?) {}

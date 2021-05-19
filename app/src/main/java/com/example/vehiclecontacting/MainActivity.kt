@@ -3,16 +3,17 @@ package com.example.vehiclecontacting
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import com.example.vehiclecontacting.Adapter.MyBannerAdapter
-import com.example.vehiclecontacting.Adapter.ViewPagerFragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.example.vehiclecontacting.Adapter.MainViewPagerFragmentStateAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_tab.*
 import com.example.vehiclecontacting.AnimRepository.playTabBtnClickAnim
 import com.example.vehiclecontacting.StatusRepository.PAGE_COMMUNITY
 import com.example.vehiclecontacting.StatusRepository.PAGE_HOME
+import com.example.vehiclecontacting.StatusRepository.PAGE_RECOMMEND
 import com.example.vehiclecontacting.StatusRepository.PAGE_USER
-import com.youth.banner.indicator.CircleIndicator
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_community.*
+import kotlinx.android.synthetic.main.view_communitytitle.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +64,35 @@ class MainActivity : AppCompatActivity() {
         StatusRepository.homeTabStatus = StatusRepository.HomeTab.HOME
     }
     private fun vpEvent() {
-        main_viewpager.adapter = ViewPagerFragmentStateAdapter(this, 3)
+        main_viewpager.adapter = MainViewPagerFragmentStateAdapter(this, 3)
         main_viewpager.isUserInputEnabled = false
+        main_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    PAGE_HOME -> {
+                        playTabBtnClickAnim(tab_home, R.drawable.yw_home)
+                        StatusRepository.homeTabStatus = StatusRepository.HomeTab.HOME
+                        tab_community.setImageResource(R.drawable.gw_community)
+                        tab_user.setImageResource(R.drawable.gw_user)
+                        main_viewpager.currentItem = PAGE_HOME
+                    }
+                    PAGE_COMMUNITY -> {
+                        playTabBtnClickAnim(tab_community, R.drawable.yw_community)
+                        StatusRepository.homeTabStatus = StatusRepository.HomeTab.COMMUNITY
+                        tab_community.setImageResource(R.drawable.gw_community)
+                        tab_home.setImageResource(R.drawable.gw_home)
+                        main_viewpager.currentItem = PAGE_COMMUNITY
+                    }
+                    PAGE_USER -> {
+                        playTabBtnClickAnim(tab_user, R.drawable.yw_user)
+                        StatusRepository.homeTabStatus = StatusRepository.HomeTab.USER
+                        tab_community.setImageResource(R.drawable.gw_community)
+                        tab_home.setImageResource(R.drawable.gw_home)
+                        main_viewpager.currentItem = PAGE_USER
+                    }
+                }
+            }
+        })
     }
 }
