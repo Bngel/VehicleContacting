@@ -25,4 +25,18 @@ object StatusRepository {
 
     const val PAGE_RECOMMEND = 0
     const val PAGE_FOLLOW = 1
+
+    /***
+     * CONST for msg types
+     */
+    const val EXIST_WRONG = 0
+    const val OLD_PASSWORD_WRONG = 1
+    const val CODE_EXIST_WRONG = 2
+    const val CODE_WRONG = 3
+    const val SUCCESS = 4
+    const val REPEAT_WRONG = 5
+    const val FROZEN_WRONG = 6
+    const val FILE_WRONG = 7
+    const val TYPE_WRONG = 8
+    const val UNKNOWN_WRONG = 0xFF
 }

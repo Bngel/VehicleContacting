@@ -29,20 +29,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/user_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="用户ID测试字段"
                     android:textColor="@color/colorUserInfoID"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/user_vipstatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/bk_vipstatus"
                     android:padding="3dp"
-                    android:text="用户vip状态测试字段"
                     android:textColor="@color/colorVipText"
                     android:textSize="12sp"/>
             </LinearLayout>
@@ -60,10 +60,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/user_moments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/default_moments"
                     android:textColor="@color/colorMomentValueText"/>
 
                 <TextView
@@ -87,10 +87,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/user_follow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/default_follow"
                     android:textColor="@color/colorMomentValueText"/>
 
                 <TextView
@@ -114,10 +114,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/user_fans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/default_fans"
                     android:textColor="@color/colorMomentValueText"/>
 
                 <TextView
