@@ -33,16 +33,19 @@ class UserFragment: Fragment() {
     }
 
     private fun initWidget() {
-        user_username.text = "点击登录"
-        user_vipstatus.text = "用户vip状态测试字段"
-        user_moments.text = resources.getText(R.string.default_moments)
-        user_follow.text = resources.getText(R.string.default_follow)
-        user_fans.text = resources.getText(R.string.default_fans)
-        loginEvent()
-        testBtn.setOnClickListener {
-            InfoRepository.initUser("1393953426531430402")
-
-            Log.d("DataJson",InfoRepository.user.toString())
+        val status = InfoRepository.loginStatus.status
+        val user = InfoRepository.user
+        if (status) {
+            if (user != null) {
+                user_username.text = user.username
+                user_vipstatus.text = "用户vip状态测试字段"
+                user_moments.text = resources.getText(R.string.default_moments)
+                user_follow.text = user.followCounts.toString()
+                user_fans.text = user.fansCounts.toString()
+            }
+        }
+        else {
+            loginEvent()
         }
     }
 

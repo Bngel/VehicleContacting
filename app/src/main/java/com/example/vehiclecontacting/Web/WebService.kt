@@ -18,7 +18,7 @@ interface WebService {
      */
     @GET("user")
     fun getUser(
-        @Query("id") id: String
+        @Query("phone") phone: String
     )
         :Call<GetUser>
 

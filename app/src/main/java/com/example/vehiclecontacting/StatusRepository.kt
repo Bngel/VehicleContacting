@@ -39,4 +39,9 @@ object StatusRepository {
     const val FILE_WRONG = 7
     const val TYPE_WRONG = 8
     const val UNKNOWN_WRONG = 0xFF
+
+    /***
+     * CONST for activities
+     */
+    const val ACTIVITY_CODE = 0x01
 }

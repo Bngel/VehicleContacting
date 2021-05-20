@@ -1,33 +1,32 @@
 package com.example.vehiclecontacting.Web.UserController
 
-import com.example.vehiclecontacting.InfoRepository
 import com.example.vehiclecontacting.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
 import okhttp3.MultipartBody
-import retrofit2.http.Multipart
 import java.lang.Exception
-import javax.net.ssl.SSLEngineResult
 import kotlin.concurrent.thread
 
 object UserRepository {
 
     private val userService = WebService.create()
 
-    private fun getNullUser(): User {
+    private fun getNullUser(msg: String): User {
         return User("","",-1, -1, "", "", -1, "",
-            "", "", "", "", "", "")
+            "", "", "", "", "", msg)
     }
 
     fun getUser(id: String): User {
         val data = userService.getUser(id)
         var user: User? = null
+        var msg = ""
         try {
             thread {
                 val body = data.execute().body()!!
                 user = body.data.user
+                msg = body.msg
             }.join(4000)
         } catch (e: Exception) {}
-        return if (user != null) user!! else getNullUser()
+        return if (user != null) user!! else getNullUser(msg)
     }
 
     fun patchUser(id: Int, sex: String ="", username: String=""): Boolean {
@@ -75,6 +74,11 @@ object UserRepository {
      * existWrong：手机号不存在（验证码发送错误）
      * success：成功
      */
+
+    const val TYPE_REGISTER = 1
+    const val TYPE_CHANGE = 2
+    const val TYPE_FIND = 3
+    const val TYPE_LOGIN = 4
     fun postCode(phone: String, type: Int): Int {
         val data = userService.postCode(phone, type)
         var msg = ""

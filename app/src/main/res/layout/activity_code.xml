@@ -34,15 +34,17 @@
                 android:text="@string/code_sendCode"/>
 
             <TextView
+                android:id="@+id/code_tel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="+86 17605024713"/>
+                android:text=""/>
 
         </LinearLayout>
 
         <com.dalimao.corelibrary.VerificationCodeInput
+            android:id="@+id/code_inputCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -61,7 +63,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/login_close"
+        android:id="@+id/code_close"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/bp_left"
@@ -70,7 +72,7 @@
         android:layout_alignParentStart="true"/>
 
     <TextView
-        android:id="@+id/login_help"
+        android:id="@+id/code_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_help"

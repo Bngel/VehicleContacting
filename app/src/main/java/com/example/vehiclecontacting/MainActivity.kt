@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 用户状态设置
+        initUser()
         // 控件设置
         initWidget()
     }
@@ -30,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         // Tab控件单击事件绑定
         tabEvent()
     }
-
+    private fun initUser() {
+        InfoRepository.initStatus(this) //"1393953426531430402"
+    }
     private fun tabEvent() {
         tab_home.setOnClickListener {
             if (StatusRepository.homeTabStatus != StatusRepository.HomeTab.HOME) {

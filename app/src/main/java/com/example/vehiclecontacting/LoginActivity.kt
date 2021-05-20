@@ -7,6 +7,8 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -33,13 +35,38 @@ class LoginActivity : AppCompatActivity() {
         showPasswordEvent()
         telInputCheckEvent()
         clearTelEvent()
-        getCodeEvent()
+        loginEvent()
     }
 
-    private fun getCodeEvent() {
+    private fun loginEvent() {
+        val codeType = "codeType"
+        val telArea = "telArea"
+        val phone = "phone"
         login_btn.setOnClickListener {
-            /*val codeIntent = Intent(this, CodeActivity::class.java)
-            startActivity(codeIntent)*/
+            if (loginWay == LoginWay.AUTH) {
+                if (!telValid)
+                    ToastView(this).show("请输入正确的手机号")
+                else if (!checkStatus)
+                    ToastView(this).show("请阅读并同意服务条款")
+                else {
+                    val tel = login_inputTel.text.toString()
+                    val area = login_areaTel.text.toString()
+                    val user = UserRepository.getUser(tel)
+                    val loginFlag = user.id
+                    val codeIntent = Intent(this, CodeActivity::class.java)
+                    codeIntent.putExtra(telArea, area)
+                    codeIntent.putExtra(phone, tel)
+                    if (loginFlag == "") { // 获取User失败
+                        UserRepository.postCode(tel, UserRepository.TYPE_REGISTER)
+                        codeIntent.putExtra(codeType, UserRepository.TYPE_REGISTER)
+                    }
+                    else {
+                        UserRepository.postCode(tel, UserRepository.TYPE_LOGIN)
+                        codeIntent.putExtra(codeType, UserRepository.TYPE_LOGIN)
+                    }
+                    startActivityForResult(codeIntent, StatusRepository.ACTIVITY_CODE)
+                }
+            }
         }
     }
 
