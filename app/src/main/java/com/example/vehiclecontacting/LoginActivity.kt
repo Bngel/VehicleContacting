@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -32,6 +33,14 @@ class LoginActivity : AppCompatActivity() {
         showPasswordEvent()
         telInputCheckEvent()
         clearTelEvent()
+        getCodeEvent()
+    }
+
+    private fun getCodeEvent() {
+        login_btn.setOnClickListener {
+            /*val codeIntent = Intent(this, CodeActivity::class.java)
+            startActivity(codeIntent)*/
+        }
     }
 
     private fun checkEvent() {

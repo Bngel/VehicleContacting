@@ -56,4 +56,6 @@
     <color name="colorHomeTitleFunction">#ffffff</color>
     <!--- CommunityTitle 社区标题栏 背景颜色 -->
     <color name="colorCommunityTitleBackground">#ffd207</color>
+    <!--- CodeResend 输入验证码 重发验证码字体颜色 -->
+    <color name="colorResendCode">#fd8c00</color>
 </resources>

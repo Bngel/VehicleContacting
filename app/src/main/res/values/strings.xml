@@ -29,10 +29,18 @@
     <string name="login_help">帮助</string>
     <string name="login_login">登录</string>
 
+    <!--- annotation for text of HomeFragment -->
     <string name="home_search">搜索</string>
 
+    <!--- annotation for text of CommunityFragment -->
     <string name="community_recommend">推荐</string>
     <string name="community_follow">关注</string>
+
+    <!--- annotation for text of CodeActivity -->
+    <string name="code_inputCode">输入验证码</string>
+    <string name="code_sendCode">验证码已发送至</string>
+    <string name="code_resendCode">收不到验证码点这里</string>
+    <string name="code_waitCode">秒后重新获取验证码</string>
 
     <string name="app_name">VehicleContacting</string>
 
