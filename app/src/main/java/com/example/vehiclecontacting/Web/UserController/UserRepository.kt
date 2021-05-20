@@ -99,7 +99,23 @@ object UserRepository {
      * codeWrong：验证码错误
      * success：成功
      */
-    fun postFindPassword(code: String, newPassword: String, phone: String){}
+    fun postFindPassword(code: String, newPassword: String, phone: String): Int{
+        val data = userService.postFindPassword(code, newPassword, phone)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
+            "codeWrong" -> StatusRepository.CODE_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 
     /***
      * msg
@@ -109,7 +125,24 @@ object UserRepository {
      * frozenWrong：用户已被封号（返回json带frozenDate：封号截止时间）
      * success：成功（返回json带token：token令牌）
      */
-    fun postLoginByCode(code: String, phone: String){}
+    fun postLoginByCode(code: String, phone: String): Int{
+        val data = userService.postLoginByCode(code, phone)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
+            "codeWrong" -> StatusRepository.CODE_WRONG
+            "frozenWrong" -> StatusRepository.FROZEN_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 
     /***
      * msg:
@@ -118,7 +151,23 @@ object UserRepository {
      * repeatWrong：该手机已被绑定
      * success：成功
      */
-    fun postRegister(code: String, password: String, phone: String){}
+    fun postRegister(code: String, password: String, phone: String): Int{
+        val data = userService.postLoginByCode(code, phone)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "codeWrong" -> StatusRepository.CODE_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 
     /***
      * msg:
