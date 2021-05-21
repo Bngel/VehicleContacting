@@ -3,6 +3,7 @@ package com.example.vehiclecontacting
 object StatusRepository {
 
     const val VehicleLog = "vehicleLog"
+    const val loginStatus = "loginStatus"
 
     /***
      * Status for TabView
@@ -45,5 +46,5 @@ object StatusRepository {
     /***
      * CONST for activities
      */
-    const val ACTIVITY_CODE = 0x01
+
 }

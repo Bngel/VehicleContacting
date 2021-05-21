@@ -1,3 +1,3 @@
 package com.example.vehiclecontacting.Data
 
-data class LoginStatusInfo(val status: Boolean, val id: String, val phone: String, val token: String)
+data class LoginStatusInfo(var status: Boolean, var id: String, var phone: String, var token: String)

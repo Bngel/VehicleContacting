@@ -41,14 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:src="@drawable/yw_vip"/>
+                android:src="@drawable/by_carinfo"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="10sp"
-                android:text="用户功能"
+                android:text="@string/userFunc_myCar"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -64,14 +64,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:src="@drawable/yw_vip"/>
+                android:src="@drawable/by_mycreate"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="10sp"
-                android:text="用户功能"
+                android:text="@string/userFunc_myCreate"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -87,14 +87,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:src="@drawable/yw_vip"/>
+                android:src="@drawable/by_mystar"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="10sp"
-                android:text="用户功能"
+                android:text="@string/userFunc_myStar"
                 android:gravity="center"/>
 
         </LinearLayout>
@@ -110,14 +110,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:src="@drawable/yw_vip"/>
+                android:src="@drawable/by_myhistory"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="10sp"
-                android:text="用户功能"
+                android:text="@string/userFunc_myHistory"
                 android:gravity="center"/>
 
         </LinearLayout>

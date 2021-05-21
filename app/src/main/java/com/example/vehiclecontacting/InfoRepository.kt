@@ -16,8 +16,8 @@ object InfoRepository {
     var user: User? = null
     var loginStatus = LoginStatusInfo(false, "", "", "")
 
-    fun initUser(id: String) {
-        user = UserRepository.getUser(id)
+    private fun initUser(phone: String) {
+        user = UserRepository.getUser(phone)
     }
 
     fun initStatus(context: Context){
@@ -31,5 +31,16 @@ object InfoRepository {
             loginStatus = LoginStatusInfo(status, id, phone, token)
             initUser(id)
         }
+    }
+
+    fun initLogin(context: Context, phone: String) {
+        initUser(phone)
+        context.getSharedPreferences(LOCAL_STATUS, Context.MODE_PRIVATE).edit().apply {
+            putBoolean(KEY_STATUS, true)
+            putString(KEY_ID, user!!.id)
+            putString(KEY_PHONE, user!!.phone)
+            putString(KEY_TOKEN, loginStatus.token)
+        }
+        loginStatus = LoginStatusInfo(true, user!!.id, user!!.phone, loginStatus.token)
     }
 }

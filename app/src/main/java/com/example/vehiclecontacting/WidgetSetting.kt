@@ -1,12 +1,20 @@
 package com.example.vehiclecontacting
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.widget.TextView
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
+
 
 object WidgetSetting {
     fun setFont(context: Context, view: TextView) {
@@ -40,7 +48,7 @@ object WidgetSetting {
             if (result.length < 15)
                 return result
             else
-                return result.substring(0,15)
+                return result.substring(0, 15)
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }

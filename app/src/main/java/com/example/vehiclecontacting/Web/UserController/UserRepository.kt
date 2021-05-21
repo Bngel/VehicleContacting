@@ -1,6 +1,8 @@
 package com.example.vehiclecontacting.Web.UserController
 
 import android.util.Log
+import com.example.vehiclecontacting.Data.LoginStatusInfo
+import com.example.vehiclecontacting.InfoRepository
 import com.example.vehiclecontacting.LogRepository
 import com.example.vehiclecontacting.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
@@ -14,8 +16,9 @@ object UserRepository {
     private val userService = WebService.create()
 
     private fun getNullUser(msg: String): User {
-        return User("","",-1, -1, "", "", -1, "",
-            "", "", "", "", "", msg)
+        return User("",msg,"", "", "",
+            "", "", "", -1, -1, -1, -1,
+            -1,"", "", "", "", -1)
     }
 
     fun getUser(id: String): User {
@@ -82,6 +85,7 @@ object UserRepository {
     const val TYPE_CHANGE = 2
     const val TYPE_FIND = 3
     const val TYPE_LOGIN = 4
+
     fun postCode(phone: String, type: Int): Int {
         val data = userService.postCode(phone, type)
         var msg = ""
@@ -145,6 +149,9 @@ object UserRepository {
                 val body = data.execute().body()!!
                 LogRepository.loginLog(body)
                 msg = body.msg
+                if (msg == "success") {
+                    InfoRepository.loginStatus.token = body.data.toString()
+                }
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {
@@ -152,7 +159,9 @@ object UserRepository {
             "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
             "codeWrong" -> StatusRepository.CODE_WRONG
             "frozenWrong" -> StatusRepository.FROZEN_WRONG
-            "success" -> StatusRepository.SUCCESS
+            "success" -> {
+                StatusRepository.SUCCESS
+            }
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }
@@ -185,32 +194,6 @@ object UserRepository {
             "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
             "userWrong" -> StatusRepository.CODE_WRONG
             "frozenWrong" -> StatusRepository.FROZEN_WRONG
-            "success" -> StatusRepository.SUCCESS
-            else -> StatusRepository.UNKNOWN_WRONG
-        }
-    }
-
-    /***
-     * msg:
-     * existWrong：验证码不存在或已过期
-     * codeWrong：验证码错误
-     * repeatWrong：该手机已被绑定
-     * success：成功
-     */
-    fun postRegister(code: String, password: String, phone: String): Int{
-        val data = userService.postLoginByCode(code, phone)
-        var msg = ""
-        try {
-            thread {
-                val body = data.execute().body()!!
-                Log.d(StatusRepository.VehicleLog, "注册获取的body为:\ncode:${body.code}\ndata:${body.data}\nmsg:${body.msg}\n")
-                msg = body.msg
-            }.join(4000)
-        } catch (e: Exception) {}
-        return when (msg) {
-            "existWrong" -> StatusRepository.EXIST_WRONG
-            "repeatWrong" -> StatusRepository.REPEAT_WRONG
-            "codeWrong" -> StatusRepository.CODE_WRONG
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }

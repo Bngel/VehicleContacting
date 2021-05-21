@@ -1,0 +1,38 @@
+package com.example.vehiclecontacting
+
+import android.app.Activity
+
+object ActivityCollector {
+
+    const val ACTIVITY_CODE = 0x01
+    const val ACTIVITY_LOGIN = 0x02
+
+    private val activities = ArrayList<Activity>()
+
+    fun addActivity(activity: Activity) {
+        activities.add(activity)
+    }
+
+    fun removeActivity(activity: Activity) {
+        activities.remove(activity)
+    }
+
+    fun onlyActivity(only: Activity) {
+        for (activity in activities) {
+            if (!activity.isFinishing && activity != only) {
+                activity.finish()
+            }
+        }
+        activities.clear()
+    }
+
+    fun finishAll() {
+        for (activity in activities) {
+            if (!activity.isFinishing) {
+                activity.finish()
+            }
+        }
+        activities.clear()
+    }
+
+}

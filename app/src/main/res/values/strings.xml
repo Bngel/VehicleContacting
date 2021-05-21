@@ -46,6 +46,12 @@
     <string name="code_resendCode">收不到验证码点这里</string>
     <string name="code_waitCode">秒后重新获取验证码</string>
 
+    <!--- annotation for text of UserInfo -->
+    <string name="userFunc_myCar">我的车辆</string>
+    <string name="userFunc_myCreate">我的创作</string>
+    <string name="userFunc_myStar">我的收藏</string>
+    <string name="userFunc_myHistory">历史浏览</string>
+
     <string name="app_name">VehicleContacting</string>
 
 </resources>

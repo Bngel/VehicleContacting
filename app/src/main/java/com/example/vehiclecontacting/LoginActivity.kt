@@ -11,7 +11,7 @@ import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     enum class LoginWay {
         PASSWORD, AUTH
@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginEvent() {
-        val codeType = "codeType"
         val telArea = "telArea"
         val phone = "phone"
         login_btn.setOnClickListener {
@@ -51,26 +50,24 @@ class LoginActivity : AppCompatActivity() {
                 else {
                     val tel = login_inputTel.text.toString()
                     val area = login_areaTel.text.toString()
-                    val user = UserRepository.getUser(tel)
-                    val loginFlag = user.id
                     val codeIntent = Intent(this, CodeActivity::class.java)
                     codeIntent.putExtra(telArea, area)
                     codeIntent.putExtra(phone, tel)
-                    if (loginFlag == "") { // 获取User失败
-                        UserRepository.postCode(tel, UserRepository.TYPE_REGISTER)
-                        codeIntent.putExtra(codeType, UserRepository.TYPE_REGISTER)
-                    }
-                    else {
-                        UserRepository.postCode(tel, UserRepository.TYPE_LOGIN)
-                        codeIntent.putExtra(codeType, UserRepository.TYPE_LOGIN)
-                    }
-                    startActivityForResult(codeIntent, StatusRepository.ACTIVITY_CODE)
+                    UserRepository.postCode(tel, UserRepository.TYPE_LOGIN)
+                    startActivityForResult(codeIntent, ActivityCollector.ACTIVITY_CODE)
                 }
             }
             else if (loginWay == LoginWay.PASSWORD) {
                 val tel = login_inputTel.text.toString()
                 val password = login_inputPswd.text.toString()
-                UserRepository.postLogin(tel, password)
+                val status = UserRepository.postLogin(tel, password)
+                if (status == StatusRepository.SUCCESS) {
+                    val intent = Intent()
+                    intent.putExtra(StatusRepository.loginStatus, true)
+                    setResult(RESULT_OK, intent)
+                    InfoRepository.initLogin(this, tel)
+                    finish()
+                }
             }
         }
     }
@@ -94,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun switchLoginWayEvent() {
         login_way.setOnClickListener {
             loginWay = if (loginWay == LoginWay.AUTH) {
@@ -158,4 +156,22 @@ class LoginActivity : AppCompatActivity() {
             login_inputTel.setText("")
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                ActivityCollector.ACTIVITY_CODE -> {
+                    if (data?.getBooleanExtra(StatusRepository.loginStatus, false) == true) {
+                        val intent = Intent()
+                        intent.putExtra(StatusRepository.loginStatus, true)
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                }
+            }
+        }
+    }
+
+
 }

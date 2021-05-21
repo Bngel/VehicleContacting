@@ -14,8 +14,9 @@ import com.example.vehiclecontacting.StatusRepository.PAGE_RECOMMEND
 import com.example.vehiclecontacting.StatusRepository.PAGE_USER
 import kotlinx.android.synthetic.main.fragment_community.*
 import kotlinx.android.synthetic.main.view_communitytitle.*
+import kotlinx.android.synthetic.main.view_userinfo.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         tabEvent()
     }
     private fun initUser() {
-        InfoRepository.initStatus(this) //"1393953426531430402"
+        InfoRepository.initStatus(this)
     }
     private fun tabEvent() {
         tab_home.setOnClickListener {
