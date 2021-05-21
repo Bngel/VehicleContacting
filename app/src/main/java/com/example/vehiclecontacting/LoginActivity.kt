@@ -80,8 +80,10 @@ class LoginActivity : AppCompatActivity() {
             checkStatus = if (!checkStatus) {
                 login_agreecheck.setImageResource(R.drawable.bp_agree)
                 if (telValid) {
-                    login_btn.background = resources.getDrawable(R.drawable.bk_sendauth)
-                    login_btn.isClickable = true
+                    if (loginWay == LoginWay.AUTH || (loginWay == LoginWay.PASSWORD && login_inputPswd.text.toString() != "")) {
+                        login_btn.background = resources.getDrawable(R.drawable.bk_sendauth)
+                        login_btn.isClickable = true
+                    }
                 }
                 true
             } else {
@@ -99,6 +101,10 @@ class LoginActivity : AppCompatActivity() {
                 login_tip.visibility = View.GONE
                 login_way.text = resources.getText(R.string.login_auth)
                 login_btn.text = resources.getText(R.string.login_login)
+                if (login_inputPswd.text.toString() == "") {
+                    login_btn.background = resources.getDrawable(R.drawable.bk_sendauth_unclickable)
+                    login_btn.isClickable = false
+                }
                 LoginWay.PASSWORD
             } else {
                 login_password.visibility = View.GONE
