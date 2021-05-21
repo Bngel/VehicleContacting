@@ -1,20 +1,23 @@
 package com.example.vehiclecontacting.Web.UserController
 
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import java.lang.reflect.Type
 
-class PostLoginByCode(
+data class PostLogin(
     var code: Int,
     var data: Any,
     var msg: String) {
 
-    class DataStateDeserializer : JsonDeserializer<PostLoginByCode> {
+    class DataStateDeserializer : JsonDeserializer<PostLogin> {
         override fun deserialize(
             json: JsonElement?,
             typeOfT: Type?,
             context: JsonDeserializationContext?
-        ): PostLoginByCode {
-            val response = Gson().fromJson(json, PostLoginByCode::class.java)
+        ): PostLogin {
+            val response = Gson().fromJson(json, PostLogin::class.java)
             val jsonObject = json!!.asJsonObject
 
             if (jsonObject.has("data")) {
@@ -34,3 +37,4 @@ class PostLoginByCode(
         }
     }
 }
+

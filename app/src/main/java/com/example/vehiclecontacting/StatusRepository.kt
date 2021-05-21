@@ -2,6 +2,8 @@ package com.example.vehiclecontacting
 
 object StatusRepository {
 
+    const val VehicleLog = "vehicleLog"
+
     /***
      * Status for TabView
      */

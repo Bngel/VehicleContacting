@@ -2,6 +2,7 @@ package com.example.vehiclecontacting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_code.*
@@ -28,12 +29,13 @@ class CodeActivity : AppCompatActivity() {
             when (type) {
                 UserRepository.TYPE_REGISTER -> {
                     if (tel != null) {
+                        Log.d(StatusRepository.VehicleLog, "用户${tel}正在尝试注册")
                         when (UserRepository.postRegister(it, password, tel)) {
                             StatusRepository.EXIST_WRONG -> {
-                                ToastView(this).show("用户不存在")
+                                ToastView(this).show("验证码不存在或已过期")
                             }
                             StatusRepository.REPEAT_WRONG -> {
-                                ToastView(this).show("验证码不存在或已过期")
+                                ToastView(this).show("该手机已被绑定")
                             }
                             StatusRepository.CODE_WRONG -> {
                                 ToastView(this).show("验证码错误")
@@ -42,7 +44,7 @@ class CodeActivity : AppCompatActivity() {
                                 ToastView(this).show("发生未知错误")
                             }
                             StatusRepository.SUCCESS -> {
-                                TODO("SUCCESS")
+                                ToastView(this).show("成功")
                             }
                         }
                     }
@@ -52,7 +54,8 @@ class CodeActivity : AppCompatActivity() {
                 }
                 UserRepository.TYPE_LOGIN -> {
                     if (tel != null) {
-                        when (UserRepository.postRegister(it, password, tel)) {
+                        Log.d(StatusRepository.VehicleLog, "用户${tel}正在尝试登录")
+                        when (UserRepository.postLoginByCode(it, phone)) {
                             StatusRepository.EXIST_WRONG -> {
                                 ToastView(this).show("账号不存在")
                             }
@@ -69,7 +72,7 @@ class CodeActivity : AppCompatActivity() {
                                 ToastView(this).show("发生未知错误")
                             }
                             StatusRepository.SUCCESS -> {
-                                TODO("SUCCESS")
+                                ToastView(this).show("成功")
                             }
                         }
                     }

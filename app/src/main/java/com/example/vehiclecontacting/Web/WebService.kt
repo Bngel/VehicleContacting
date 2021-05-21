@@ -2,6 +2,7 @@ package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.SSLSocketClient
 import com.example.vehiclecontacting.Web.UserController.*
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -61,6 +62,13 @@ interface WebService {
     )
         : Call<PostLoginByCode>
 
+    @POST("login")
+    fun postLogin(
+        @Query("phone") phone: String,
+        @Query("password") password: String
+    )
+            : Call<PostLogin>
+
     @POST("register")
     fun postRegister(
         @Query("code") code: String,
@@ -84,6 +92,23 @@ interface WebService {
                 .setLenient()
                 .create()
 
+            val mHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .sslSocketFactory(SSLSocketClient.SSLSocketFactory)//配置
+                .hostnameVerifier(SSLSocketClient.hostnameVerifier)//配置
+                .build();
+
+            val retrofit: Retrofit =  Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(mHttpClient)
+                .build()
+            return retrofit.create(WebService::class.java)
+        }
+
+        fun create(gson: Gson): WebService {
             val mHttpClient = OkHttpClient().newBuilder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)

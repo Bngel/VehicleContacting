@@ -38,7 +38,7 @@ class UserFragment: Fragment() {
         if (status) {
             if (user != null) {
                 user_username.text = user.username
-                user_vipstatus.text = "用户vip状态测试字段"
+                user_vipstatus.text = "vip 0"
                 user_moments.text = resources.getText(R.string.default_moments)
                 user_follow.text = user.followCounts.toString()
                 user_fans.text = user.fansCounts.toString()

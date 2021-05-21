@@ -1,7 +1,10 @@
 package com.example.vehiclecontacting.Web.UserController
 
+import android.util.Log
+import com.example.vehiclecontacting.LogRepository
 import com.example.vehiclecontacting.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
+import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import java.lang.Exception
 import kotlin.concurrent.thread
@@ -130,11 +133,17 @@ object UserRepository {
      * success：成功（返回json带token：token令牌）
      */
     fun postLoginByCode(code: String, phone: String): Int{
-        val data = userService.postLoginByCode(code, phone)
+        val gson = GsonBuilder()
+            .registerTypeAdapter(PostLoginByCode::class.java, PostLoginByCode.DataStateDeserializer())
+            .setLenient()
+            .create()
+        val loginService = WebService.create(gson)
+        val data = loginService.postLoginByCode(code, phone)
         var msg = ""
         try {
             thread {
                 val body = data.execute().body()!!
+                LogRepository.loginLog(body)
                 msg = body.msg
             }.join(4000)
         } catch (e: Exception) {}
@@ -142,6 +151,39 @@ object UserRepository {
             "existWrong" -> StatusRepository.EXIST_WRONG
             "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
             "codeWrong" -> StatusRepository.CODE_WRONG
+            "frozenWrong" -> StatusRepository.FROZEN_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg
+     * codeExistWrong：验证码不存在或已失效
+     * existWrong：账号不存在（用户没注册）
+     * codeWrong：验证码错误（验证码可以不区分大小写）
+     * frozenWrong：用户已被封号（返回json带frozenDate：封号截止时间）
+     * success：成功（返回json带token：token令牌）
+     */
+    fun postLogin(phone: String, password: String): Int{
+        val gson = GsonBuilder()
+            .registerTypeAdapter(PostLogin::class.java, PostLogin.DataStateDeserializer())
+            .setLenient()
+            .create()
+        val loginService = WebService.create(gson)
+        val data = loginService.postLogin(phone, password)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                LogRepository.loginLog(body)
+                msg = body.msg
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "codeExistWrong" -> StatusRepository.CODE_EXIST_WRONG
+            "userWrong" -> StatusRepository.CODE_WRONG
             "frozenWrong" -> StatusRepository.FROZEN_WRONG
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
@@ -161,6 +203,7 @@ object UserRepository {
         try {
             thread {
                 val body = data.execute().body()!!
+                Log.d(StatusRepository.VehicleLog, "注册获取的body为:\ncode:${body.code}\ndata:${body.data}\nmsg:${body.msg}\n")
                 msg = body.msg
             }.join(4000)
         } catch (e: Exception) {}

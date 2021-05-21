@@ -34,7 +34,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorUserInfoID"
                     android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:text="@string/user_login"/>
 
                 <TextView
                     android:id="@+id/user_vipstatus"
@@ -44,7 +45,8 @@
                     android:background="@drawable/bk_vipstatus"
                     android:padding="3dp"
                     android:textColor="@color/colorVipText"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:text="@string/default_vip"/>
             </LinearLayout>
         </LinearLayout>
 

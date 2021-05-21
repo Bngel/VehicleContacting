@@ -67,6 +67,11 @@ class LoginActivity : AppCompatActivity() {
                     startActivityForResult(codeIntent, StatusRepository.ACTIVITY_CODE)
                 }
             }
+            else if (loginWay == LoginWay.PASSWORD) {
+                val tel = login_inputTel.text.toString()
+                val password = login_inputPswd.text.toString()
+                UserRepository.postLogin(tel, password)
+            }
         }
     }
 

@@ -15,6 +15,7 @@
     <string name="default_fans">0</string>
     <string name="default_areaTel">+86</string>
     <string name="default_city">北京</string>
+    <string name="default_vip">未开通vip服务</string>
 
     <!--- annotation for text of LoginActivity -->
     <string name="login_welcome">欢迎登录小青龙</string>
@@ -35,6 +36,9 @@
     <!--- annotation for text of CommunityFragment -->
     <string name="community_recommend">推荐</string>
     <string name="community_follow">关注</string>
+
+    <!--- annotation for text of UserFragment -->
+    <string name="user_login">点击登录</string>
 
     <!--- annotation for text of CodeActivity -->
     <string name="code_inputCode">输入验证码</string>
