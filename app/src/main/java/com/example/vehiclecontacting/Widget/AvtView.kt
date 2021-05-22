@@ -1,8 +1,6 @@
 package com.example.vehiclecontacting.Widget
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -10,13 +8,6 @@ import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.view_avator.view.*
-import retrofit2.http.Url
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
-import kotlin.concurrent.thread
 
 class AvtView(context: Context, attrs: AttributeSet): RelativeLayout(context, attrs) {
 
@@ -39,6 +30,7 @@ class AvtView(context: Context, attrs: AttributeSet): RelativeLayout(context, at
         Glide.with(context)
             .load(url)
             .placeholder(R.drawable.bp_defaultavt)
+            .error(R.drawable.bp_defaultavt)
             .into(avt_img)
     }
 

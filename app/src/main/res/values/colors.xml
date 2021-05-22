@@ -58,4 +58,10 @@
     <color name="colorCommunityTitleBackground">#ffd207</color>
     <!--- CodeResend 输入验证码 重发验证码字体颜色 -->
     <color name="colorResendCode">#fd8c00</color>
+    <!--- CreateTitle 创作标题栏 背景颜色 -->
+    <color name="colorCreateTitleBackground">#ffd207</color>
+    <!--- CreateTitle 创作标题栏 发布按钮 字体颜色 -->
+    <color name="colorCreate">#ffd207</color>
+    <!--- CreateTitle 创作界面 分割线 颜色 -->
+    <color name="colorCreateSeparator">#ffd207</color>
 </resources>

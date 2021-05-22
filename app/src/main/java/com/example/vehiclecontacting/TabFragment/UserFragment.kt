@@ -39,11 +39,7 @@ class UserFragment: Fragment() {
         val user = InfoRepository.user
         if (status) {
             if (user != null) {
-                user_username.text = user.username
-                user_vipstatus.text = "vip 0"
-                user_moments.text = resources.getText(R.string.default_moments)
-                user_follow.text = user.followCounts.toString()
-                user_fans.text = user.fansCounts.toString()
+                loadInfo()
             }
         }
         else {
@@ -58,6 +54,18 @@ class UserFragment: Fragment() {
         }
     }
 
+    private fun loadInfo() {
+        user_username.text = InfoRepository.user!!.username?:""
+        user_vipstatus.text =
+            if (InfoRepository.user!!.vip > 0) "vip${InfoRepository.user!!.vip}" else "未开通VIP服务"
+        user_moments.text = InfoRepository.user!!.momentCounts.toString()
+        user_follow.text = InfoRepository.user!!.followCounts.toString()
+        user_fans.text = InfoRepository.user!!.fansCounts.toString()
+        if (InfoRepository.user!!.photo != null)
+            user_avt.setAvt(InfoRepository.user!!.photo)
+        user_username.isClickable = false
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -65,14 +73,7 @@ class UserFragment: Fragment() {
                 ActivityCollector.ACTIVITY_LOGIN -> {
                     val status = data?.getBooleanExtra(StatusRepository.loginStatus, false)
                     if (status == true) {
-                        user_username.text = InfoRepository.user!!.username?:""
-                        user_vipstatus.text =
-                            if (InfoRepository.user!!.vip > 0) "vip${InfoRepository.user!!.vip}" else "未开通VIP服务"
-                        user_moments.text = InfoRepository.user!!.momentCounts.toString()
-                        user_follow.text = InfoRepository.user!!.followCounts.toString()
-                        user_fans.text = InfoRepository.user!!.fansCounts.toString()
-                        user_avt.setAvt(InfoRepository.user!!.photo)
-                        user_username.isClickable = false
+                        loadInfo()
                     }
                 }
             }

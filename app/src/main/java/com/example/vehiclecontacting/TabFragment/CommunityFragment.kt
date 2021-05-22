@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.TabFragment
 
 import android.content.Context
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -18,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.Adapter.CommunityViewPagerFragmentStateAdapter
 import com.example.vehiclecontacting.Adapter.MainViewPagerFragmentStateAdapter
 import com.example.vehiclecontacting.AnimRepository
+import com.example.vehiclecontacting.CreateActivity
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.StatusRepository
 import kotlinx.android.synthetic.main.activity_main.*
@@ -98,6 +100,8 @@ class CommunityFragment: Fragment() {
     private fun addEvent() {
         community_add.setOnClickListener {
             AnimRepository.playAddArticleClickAnim(it as ImageView)
+            val createIntent = Intent(parentContext, CreateActivity::class.java)
+            startActivity(createIntent)
         }
     }
 }
