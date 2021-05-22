@@ -43,8 +43,4 @@ object StatusRepository {
     const val TYPE_WRONG = 8
     const val UNKNOWN_WRONG = 0xFF
 
-    /***
-     * CONST for activities
-     */
-
 }

@@ -206,5 +206,27 @@ object UserRepository {
      * typeWrong：上传格式错误
      * success：成功，成功后返回json：url（头像url）
      */
-    fun postUserPhoto(id: String, photo: MultipartBody.Part){}
+    fun postUserPhoto(id: String, photo: MultipartBody.Part): Int{
+        val gson = GsonBuilder()
+            .registerTypeAdapter(PostUserPhoto::class.java, PostUserPhoto.DataStateDeserializer())
+            .setLenient()
+            .create()
+        val photoService = WebService.create(gson)
+        val data = photoService.postUserPhoto(id, photo)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                LogRepository.updateAvtLog(body)
+                msg = body.msg
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "fileWrong" -> StatusRepository.FILE_WRONG
+            "typeWrong" -> StatusRepository.TYPE_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 }

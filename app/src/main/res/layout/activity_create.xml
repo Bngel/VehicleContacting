@@ -30,8 +30,10 @@
         android:background="@color/colorCreateSeparator"/>
 
     <com.sendtion.xrichtext.RichTextEditor
+        android:id="@+id/create_edit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:rt_editor_text_size="18sp"/>
+
 </LinearLayout>

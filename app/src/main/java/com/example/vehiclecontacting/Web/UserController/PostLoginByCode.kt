@@ -3,7 +3,7 @@ package com.example.vehiclecontacting.Web.UserController
 import com.google.gson.*
 import java.lang.reflect.Type
 
-class PostLoginByCode(
+data class PostLoginByCode(
     var code: Int,
     var data: Any,
     var msg: String) {

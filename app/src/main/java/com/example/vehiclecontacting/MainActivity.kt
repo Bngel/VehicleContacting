@@ -20,7 +20,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        InfoRepository.DOWNLOAD_PATH = applicationContext.filesDir.absolutePath + "/Vc_Download"
+        InfoRepository.PORTRAIT_PATH = applicationContext.filesDir.absolutePath + "/Vc_Avt"
         // 用户状态设置
         initUser()
         // 控件设置

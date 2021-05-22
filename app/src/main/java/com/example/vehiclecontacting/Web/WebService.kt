@@ -4,8 +4,7 @@ import com.example.vehiclecontacting.SSLSocketClient
 import com.example.vehiclecontacting.Web.UserController.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
+import okhttp3.*
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -81,7 +80,7 @@ interface WebService {
     @POST("userPhoto")
     fun postUserPhoto(
         @Part("id") id: String,
-        @Part("photo") photo: MultipartBody.Part
+        @Part photo: MultipartBody.Part
     )
         : Call<PostUserPhoto>
 
@@ -98,7 +97,7 @@ interface WebService {
                 .writeTimeout(15, TimeUnit.SECONDS)
                 .sslSocketFactory(SSLSocketClient.SSLSocketFactory)//配置
                 .hostnameVerifier(SSLSocketClient.hostnameVerifier)//配置
-                .build();
+                .build()
 
             val retrofit: Retrofit =  Retrofit.Builder()
                 .baseUrl(baseUrl)

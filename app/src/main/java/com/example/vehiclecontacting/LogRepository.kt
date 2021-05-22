@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.vehiclecontacting.Web.UserController.PostLogin
 import com.example.vehiclecontacting.Web.UserController.PostLoginByCode
 import com.example.vehiclecontacting.Web.UserController.PostRegister
+import com.example.vehiclecontacting.Web.UserController.PostUserPhoto
 import java.lang.StringBuilder
 
 object LogRepository {
@@ -72,4 +73,31 @@ object LogRepository {
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
+    fun updateAvtLog(body: PostUserPhoto) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t修改头像接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t修改头像接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "fileWrong" -> {
+                stringBuilder.append("-\tmsg: 文件为空\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 上传成功\t-\n")
+                stringBuilder.append("-\turl: ${body.data}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

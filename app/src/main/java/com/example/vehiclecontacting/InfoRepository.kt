@@ -13,6 +13,9 @@ object InfoRepository {
     private const val KEY_PHONE = "userPhone"
     private const val KEY_TOKEN = "userToken"
 
+    var PORTRAIT_PATH :String? = null
+    var DOWNLOAD_PATH :String? = null
+
     var user: User? = null
     var loginStatus = LoginStatusInfo(false, "", "", "")
 
