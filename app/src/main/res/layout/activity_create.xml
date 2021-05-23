@@ -1,39 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.example.vehiclecontacting.Widget.CreateTitleView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
+        <com.example.vehiclecontacting.Widget.CreateTitleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/create_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:maxLength="25"
+            android:hint="@string/create_title" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorCreateSeparator"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorCreateSeparator"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/create_edit"
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:textSize="20sp"
-        android:layout_margin="20dp"
-        android:maxLength="25"
-        android:hint="文章标题" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorCreateSeparator"/>
+        <ImageView
+            android:id="@+id/create_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/yb_addphoto"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/colorCreateSeparator"/>
+        <TextView
+            android:id="@+id/create_attention"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:textSize="10sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:background="@drawable/bk_attention"
+            android:textColor="@android:color/white"
+            android:visibility="invisible"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
-    <com.sendtion.xrichtext.RichTextEditor
-        android:id="@+id/create_edit"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:rt_editor_text_size="18sp"/>
 
-</LinearLayout>
+</RelativeLayout>

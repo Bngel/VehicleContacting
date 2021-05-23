@@ -54,6 +54,9 @@
 
     <!--- annotation for text of Create -->
     <string name="create_btn">发布</string>
+    <string name="create_limitPhoto">选择图片数量达到上限(3)</string>
+    <string name="create_clearPhoto">图片数量已清空</string>
+    <string name="create_title">文章标题</string>
 
     <string name="app_name">VehicleContacting</string>
 

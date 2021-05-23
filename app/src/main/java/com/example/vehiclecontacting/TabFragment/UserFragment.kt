@@ -45,6 +45,12 @@ class UserFragment: Fragment() {
         initWidget()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (InfoRepository.loginStatus.status)
+            loadInfo()
+    }
+
     private fun initWidget() {
         val status = InfoRepository.loginStatus.status
         val user = InfoRepository.user
@@ -77,7 +83,7 @@ class UserFragment: Fragment() {
         user_username.isClickable = false
         user_avt.isClickable = true
         user_avt.setOnClickListener {
-            gallery()
+            callGallery()
         }
     }
 
@@ -101,7 +107,7 @@ class UserFragment: Fragment() {
         }
     }
 
-    private fun gallery() {
+    private fun callGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         // 以startActivityForResult的方式启动一个activity用来获取返回的结果
         startActivityForResult(intent, ActivityCollector.CODE_GALLERY)

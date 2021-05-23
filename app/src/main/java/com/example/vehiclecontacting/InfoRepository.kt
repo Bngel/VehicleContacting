@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.vehiclecontacting.Data.LoginStatusInfo
 import com.example.vehiclecontacting.Web.UserController.User
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import kotlinx.android.synthetic.main.view_userinfo.*
 
 object InfoRepository {
 
@@ -46,4 +47,6 @@ object InfoRepository {
         }
         loginStatus = LoginStatusInfo(true, user!!.id, user!!.phone, loginStatus.token)
     }
+
+
 }

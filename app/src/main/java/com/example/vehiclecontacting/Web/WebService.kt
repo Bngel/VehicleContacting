@@ -1,6 +1,8 @@
 package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.SSLSocketClient
+import com.example.vehiclecontacting.Web.DiscussController.PostDiscuss
+import com.example.vehiclecontacting.Web.DiscussController.PostDiscussPhoto
 import com.example.vehiclecontacting.Web.UserController.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -83,6 +85,28 @@ interface WebService {
         @Part photo: MultipartBody.Part
     )
         : Call<PostUserPhoto>
+
+    /***
+     *  Discuss Controller
+     */
+    @Multipart
+    @POST("discussPhoto")
+    fun postDiscussPhoto(
+        @Part photo: MultipartBody.Part
+    )
+            : Call<PostDiscussPhoto>
+
+
+    @POST("discuss")
+    fun postDiscuss(
+        @Query("description") description: String,
+        @Query("id") id: String,
+        @Query("photo1") photo1: String,
+        @Query("photo2") photo2: String,
+        @Query("photo3") photo3: String,
+        @Query("title") title: String
+    )
+            : Call<PostDiscuss>
 
 
     companion object Factory {

@@ -37,6 +37,7 @@ class MainActivity : BaseActivity() {
     private fun initUser() {
         InfoRepository.initStatus(this)
     }
+
     private fun tabEvent() {
         tab_home.setOnClickListener {
             if (StatusRepository.homeTabStatus != StatusRepository.HomeTab.HOME) {
@@ -70,7 +71,8 @@ class MainActivity : BaseActivity() {
         StatusRepository.homeTabStatus = StatusRepository.HomeTab.HOME
     }
     private fun vpEvent() {
-        main_viewpager.adapter = MainViewPagerFragmentStateAdapter(this, 3)
+        val adapter = MainViewPagerFragmentStateAdapter(this, 3)
+        main_viewpager.adapter = adapter
         main_viewpager.isUserInputEnabled = false
         main_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.TabFragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.Image
@@ -16,12 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.vehiclecontacting.*
 import com.example.vehiclecontacting.Adapter.CommunityViewPagerFragmentStateAdapter
 import com.example.vehiclecontacting.Adapter.MainViewPagerFragmentStateAdapter
-import com.example.vehiclecontacting.AnimRepository
-import com.example.vehiclecontacting.CreateActivity
-import com.example.vehiclecontacting.R
-import com.example.vehiclecontacting.StatusRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community.*
 import kotlinx.android.synthetic.main.view_communitytitle.*
@@ -99,9 +97,15 @@ class CommunityFragment: Fragment() {
 
     private fun addEvent() {
         community_add.setOnClickListener {
-            AnimRepository.playAddArticleClickAnim(it as ImageView)
-            val createIntent = Intent(parentContext, CreateActivity::class.java)
-            startActivity(createIntent)
+            if (InfoRepository.loginStatus.status){
+                AnimRepository.playAddArticleClickAnim(it as ImageView)
+                val createIntent = Intent(parentContext, CreateActivity::class.java)
+                startActivity(createIntent)
+            }
+            else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
         }
     }
 }
