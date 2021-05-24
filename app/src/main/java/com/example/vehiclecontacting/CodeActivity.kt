@@ -13,7 +13,13 @@ class CodeActivity : BaseActivity() {
         initWidget()
     }
 
-    private fun initWidget() {
+    private fun closeEvent() {
+        code_close.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun sendEvent() {
         val telArea = "telArea"
         val phone = "phone"
         val area = intent.getStringExtra(telArea)
@@ -48,5 +54,10 @@ class CodeActivity : BaseActivity() {
                 finish()
             }
         }
+    }
+
+    private fun initWidget() {
+        sendEvent()
+        closeEvent()
     }
 }

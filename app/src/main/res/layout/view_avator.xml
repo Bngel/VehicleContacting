@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.percentlayout.widget.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avt_img"
@@ -11,10 +12,11 @@
 
     <ImageView
         android:id="@+id/avt_vip"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/avt_img"
-        android:layout_alignRight="@id/avt_img"
-        android:layout_alignEnd="@id/avt_img" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="right|bottom"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="30%" />
 
-</RelativeLayout>
+</androidx.percentlayout.widget.PercentFrameLayout>
+

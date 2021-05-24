@@ -18,12 +18,15 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class CreateActivity : AppCompatActivity() {
 
     private var imageFile: File? = null // 声明File对象
     private var imageUri: Uri? = null // 裁剪后的图片uri
-    private val imageList = ArrayList<MultipartBody.Part>()
+    private val imageList = ArrayList<Uri>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,32 +36,59 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun initWidget() {
-        editEvent()
         sendEvent()
         photoEvent()
+        closeEvent()
     }
 
-    private fun editEvent() {
-
+    private fun closeEvent() {
+        create_close.setOnClickListener {
+            finish()
+        }
     }
 
     private fun sendEvent() {
         create_send.setOnClickListener {
-            var flag = true
-            for (photo in imageList) {
-                val status = DiscussRepository.postDiscussPhoto(photo)
-                if (status != StatusRepository.SUCCESS) {
-                    ToastView(this).show("发表帖子失败, 请重试")
-                    flag = false
-                    break
+            if (create_edit.text.toString() == "" || create_title.text.toString() == "")
+                ToastView(this).show("标题或内容不能为空")
+            else {
+                var flag = true
+                for (photo in imageList) {
+                    flag = saveImage(photo)
+                    if (!flag)
+                        break
                 }
-            }
-            if (flag) {
-                DiscussRepository.postDiscuss(create_edit.text.toString(), InfoRepository.user!!.id, create_title.text.toString(),
-                    DiscussRepository.imageUrl)
-                DiscussRepository.imageUrl.clear()
+                if (flag) {
+                    DiscussRepository.postDiscuss(create_edit.text.toString(), InfoRepository.user!!.id, create_title.text.toString(),
+                        DiscussRepository.imageUrl)
+                    DiscussRepository.imageUrl.clear()
+                    ToastView(this).show("发表成功")
+                }
+                finish()
             }
         }
+    }
+
+    /**
+     * 显示图片
+     * @param imageUri 图片的uri
+     */
+    private fun saveImage(imageUri: Uri): Boolean {
+        val file = File(imageUri.path)
+        var flag = true
+        if (!file.exists()) {
+            flag = false
+            ToastView(this).show("发表帖子失败, 请重试")
+            return flag
+        }
+        val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val part = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+        val status = DiscussRepository.postDiscussPhoto(part)
+        if (status != StatusRepository.SUCCESS) {
+            ToastView(this).show("发表帖子失败, 请重试")
+            flag = false
+        }
+        return flag
     }
 
     private fun photoEvent() {
@@ -89,33 +119,13 @@ class CreateActivity : AppCompatActivity() {
      */
     private fun createImageFile() {
         try {
-            if (imageFile != null && imageFile!!.exists()) {
-                imageFile!!.delete()
-            }
             // 新建文件
-            val PORTRAIT = "portrait.png"
-            val filepath = "${InfoRepository.PORTRAIT_PATH}/${InfoRepository.user?.username}${PORTRAIT}"
             imageFile = File(
                 getExternalFilesDir(null),
-                System.currentTimeMillis().toString() + PORTRAIT
+                System.currentTimeMillis().toString() + (1..10).random() + ".png"
             )
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    /**
-     * 显示图片
-     * @param imageUri 图片的uri
-     */
-    private fun saveImage(imageUri: Uri) {
-        val file = File(imageUri.path)
-        val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        val part = MultipartBody.Part.createFormData("photo", file.name, requestFile)
-        imageList.add(part)
-        if (imageList.count() > 0) {
-            create_attention.text = imageList.count().toString()
-            create_attention.visibility = View.VISIBLE
         }
     }
 
@@ -125,7 +135,11 @@ class CreateActivity : AppCompatActivity() {
             when (requestCode) {
                 ActivityCollector.CROP_PHOTO -> {
                     try {
-                        saveImage(imageUri!!)
+                        imageList.add(imageUri!!)
+                        if (imageList.count() > 0) {
+                            create_attention.text = imageList.count().toString()
+                            create_attention.visibility = View.VISIBLE
+                        }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

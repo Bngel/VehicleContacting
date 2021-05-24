@@ -36,6 +36,13 @@ class LoginActivity : BaseActivity() {
         telInputCheckEvent()
         clearTelEvent()
         loginEvent()
+        closeEvent()
+    }
+
+    private fun closeEvent() {
+        login_close.setOnClickListener {
+            finish()
+        }
     }
 
     private fun loginEvent() {

@@ -15,6 +15,8 @@ object DiscussRepository {
     private val discussService = WebService.create()
     val imageUrl = ArrayList<String>()
     val discussList = ArrayList<Discuss>()
+    val commentList = ArrayList<Comment>()
+    lateinit var ownerComment: OwnerComment
     var pageCount = 0
 
     /***
@@ -77,12 +79,11 @@ object DiscussRepository {
         var photo2 = ""
         var photo3 = ""
         for (photo in photos.indices) {
-            if (photo == 0)
-                photo1 = photos[photo]
-            else if (photo == 1)
-                photo2 = photos[photo]
-            else if (photo == 1)
-                photo3 = photos[photo]
+            when (photo) {
+                0 -> photo1 = photos[photo]
+                1 -> photo2 = photos[photo]
+                2 -> photo3 = photos[photo]
+            }
         }
         val data = discussService.postDiscuss(description, id, photo1, photo2, photo3, title)
         var msg = ""
@@ -100,8 +101,8 @@ object DiscussRepository {
         }
     }
 
-    fun getDiscuss(cnt: Int, isOrderByTime: Int, page: Int, keyword: String = ""): Int {
-        val data = discussService.getDiscuss(cnt,isOrderByTime, keyword, page)
+    fun getDiscuss(cnt: Int, isOrderByTime: Int, page: Int, isFollow: Int, keyword: String = "", id: String = ""): Int {
+        val data = discussService.getDiscuss(id, cnt,isOrderByTime, keyword, page, isFollow)
         var msg = ""
         try {
             thread {
@@ -113,6 +114,26 @@ object DiscussRepository {
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    fun getComment(cnt: Int, isOrderByTime: Int, page: Int, number: String): Int {
+        val data = discussService.getComment(cnt,isOrderByTime, number, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                commentList.addAll(body.data.commentList)
+                ownerComment = body.data.OwnerComment
+                pageCount = body.data.pages
+                LogRepository.getCommentLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }

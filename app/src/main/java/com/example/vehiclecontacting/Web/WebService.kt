@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.SSLSocketClient
+import com.example.vehiclecontacting.Web.DiscussController.GetComment
 import com.example.vehiclecontacting.Web.DiscussController.GetDiscuss
 import com.example.vehiclecontacting.Web.DiscussController.PostDiscuss
 import com.example.vehiclecontacting.Web.DiscussController.PostDiscussPhoto
@@ -111,12 +112,23 @@ interface WebService {
 
     @GET("discuss")
     fun getDiscuss(
+        @Query("id") id: String,
         @Query("cnt") description: Int,
         @Query("isOrderByTime") isOrderByTime: Int,
         @Query("keyword") keyword: String,
         @Query("page") page: Int,
+        @Query("isFollow") isFollow: Int
     )
             : Call<GetDiscuss>
+
+    @GET("comment")
+    fun getComment(
+        @Query("cnt") description: Int,
+        @Query("isOrderByTime") isOrderByTime: Int,
+        @Query("number") number: String,
+        @Query("page") page: Int,
+    )
+            : Call<GetComment>
 
 
     companion object Factory {

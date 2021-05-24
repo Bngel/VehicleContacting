@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.CommunityFragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.Data.CardInfo
+import com.example.vehiclecontacting.DiscussActivity
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.CommunityCardView
@@ -38,7 +40,6 @@ class RecommendFragment: Fragment() {
         initWidget()
     }
 
-
     private fun initWidget() {
         refreshEvent()
         initRecommend()
@@ -47,7 +48,7 @@ class RecommendFragment: Fragment() {
     private fun initRecommend() {
         DiscussRepository.discussList.clear()
         recommend_cards.removeAllViews()
-        DiscussRepository.getDiscuss(10, 1, 1)
+        DiscussRepository.getDiscuss(10, 1, 1, 0)
         cardEvent()
     }
 
@@ -58,7 +59,7 @@ class RecommendFragment: Fragment() {
                 Handler().postDelayed(Runnable {
                     DiscussRepository.discussList.clear()
                     recommend_cards.removeAllViews()
-                    DiscussRepository.getDiscuss(10, 1, 1)
+                    DiscussRepository.getDiscuss(10, 1, 1, 0)
                     cardEvent()
                     recommend_refresh.finishRefreshing()
                 }, 2000)
@@ -69,7 +70,7 @@ class RecommendFragment: Fragment() {
                 Handler().postDelayed(Runnable {
                     page ++
                     if (page <= DiscussRepository.pageCount){
-                        DiscussRepository.getDiscuss(10, 1, page)
+                        DiscussRepository.getDiscuss(10, 1, page, 0)
                         cardEvent()
                     }
                     else
@@ -86,7 +87,11 @@ class RecommendFragment: Fragment() {
                 val view = CommunityCardView(parentContext!!, discuss.title, discuss.userPhoto, discuss.username,discuss.description,discuss.photo,
                     discuss.likeCounts,discuss.commentCounts)
                 view.setOnClickListener {
-                    ToastView(parentContext!!).show(discuss.title)
+                    DiscussRepository.getComment(10, 1, 1, discuss.number)
+                    val discussIntent = Intent(parentContext, DiscussActivity::class.java)
+                    discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
+                    discussIntent.putExtra("comments", DiscussRepository.commentList)
+                    startActivity(discussIntent)
                 }
                 recommend_cards.addView(view)
             }

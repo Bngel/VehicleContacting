@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.TabFragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,13 @@ import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.Data.HotInfo
+import com.example.vehiclecontacting.DiscussActivity
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Widget.HomeHotView
 import com.example.vehiclecontacting.Widget.ToastView
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.view_hometitle.*
 
 class HomeFragment: Fragment() {
 
@@ -36,8 +39,19 @@ class HomeFragment: Fragment() {
         // 在 Activity View 加载完毕后 载入
         // Banner 事件
         parentContext = context?.applicationContext
+        initWidget()
+    }
+
+    private fun initWidget() {
         bannerEvent(getBannerData())
         hotEvent()
+        cityEvent()
+    }
+
+    private fun cityEvent() {
+        home_city.setOnClickListener {
+
+        }
     }
 
     /***

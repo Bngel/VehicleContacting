@@ -1,5 +1,8 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class Discuss(
     val commentCounts: Int,
     val description: String,

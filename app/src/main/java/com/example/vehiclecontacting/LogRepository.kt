@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting
 
 import android.util.Log
+import com.example.vehiclecontacting.Web.DiscussController.GetComment
 import com.example.vehiclecontacting.Web.DiscussController.GetDiscuss
 import com.example.vehiclecontacting.Web.DiscussController.PostDiscuss
 import com.example.vehiclecontacting.Web.DiscussController.PostDiscussPhoto
@@ -171,6 +172,31 @@ object LogRepository {
                 stringBuilder.append("-\tmsg: 获取成功\t-\n")
                 for (discuss in body.data.discussList)
                     stringBuilder.append("-\ttitle: ${discuss.title}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getCommentLog (body: GetComment) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取评论一级界面接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取评论一级界面接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取成功\t-\n")
+                stringBuilder.append("-\ttitle: ${body.data.OwnerComment.title}\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

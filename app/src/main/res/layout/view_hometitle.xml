@@ -12,16 +12,17 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/home_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="@string/default_city"
             android:textColor="@color/colorHomeTitleCity"
-            android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/default_city"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="0dp"

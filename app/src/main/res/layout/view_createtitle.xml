@@ -6,6 +6,7 @@
     android:background="@color/colorCreateTitleBackground">
 
     <ImageView
+        android:id="@+id/create_close"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/bp_left"
