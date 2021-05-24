@@ -14,6 +14,8 @@ object DiscussRepository {
 
     private val discussService = WebService.create()
     val imageUrl = ArrayList<String>()
+    val discussList = ArrayList<Discuss>()
+    var pageCount = 0
 
     /***
      * msg:
@@ -93,6 +95,24 @@ object DiscussRepository {
         } catch (e: Exception) {}
         return when (msg) {
             "repeatWrong" -> StatusRepository.TYPE_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    fun getDiscuss(cnt: Int, isOrderByTime: Int, page: Int, keyword: String = ""): Int {
+        val data = discussService.getDiscuss(cnt,isOrderByTime, keyword, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                discussList.addAll(body.data.discussList)
+                pageCount = body.data.pages
+                LogRepository.getDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }

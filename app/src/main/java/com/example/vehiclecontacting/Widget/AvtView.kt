@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.R
@@ -41,5 +42,9 @@ class AvtView(context: Context, attrs: AttributeSet): RelativeLayout(context, at
             else
                 R.drawable.gw_vip
         )
+    }
+
+    fun hideVip() {
+        avt_vip.visibility = View.GONE
     }
 }

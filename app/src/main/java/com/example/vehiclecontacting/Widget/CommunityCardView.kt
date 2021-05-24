@@ -5,7 +5,9 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.R
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.view_communitycard.view.*
 
 class CommunityCardView: LinearLayout {
@@ -16,6 +18,7 @@ class CommunityCardView: LinearLayout {
                 img: Drawable, like: Int, comment: Int): super(context){
         card_title.text = title
         card_avt.setAvt(avt)
+        card_avt.hideVip()
         card_username.text = username
         card_text.text = text
         card_img.setImageDrawable(img)
@@ -25,9 +28,22 @@ class CommunityCardView: LinearLayout {
         img: Drawable, like: Int, comment: Int): super(context, attrs){
         card_title.text = title
         card_avt.setAvt(avt)
+        card_avt.hideVip()
         card_username.text = username
         card_text.text = text
         card_img.setImageDrawable(img)
+        card_status.text = "$like 赞同 · $comment 评论"
+    }
+    constructor(context:Context, title: String, avt: String, username: String, text: String,
+                img: String, like: Int, comment: Int): super(context){
+        card_title.text = title
+        card_avt.setAvt(avt)
+        card_avt.hideVip()
+        card_username.text = username
+        card_text.text = text
+        Glide.with(getContext())
+            .load(img)
+            .into(card_img)
         card_status.text = "$like 赞同 · $comment 评论"
     }
     init {

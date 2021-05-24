@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +21,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.*
 import com.example.vehiclecontacting.Adapter.CommunityViewPagerFragmentStateAdapter
 import com.example.vehiclecontacting.Adapter.MainViewPagerFragmentStateAdapter
+import com.example.vehiclecontacting.Data.CardInfo
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository.discussList
+import com.example.vehiclecontacting.Widget.CommunityCardView
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community.*
+import kotlinx.android.synthetic.main.fragment_recommend.*
 import kotlinx.android.synthetic.main.view_communitytitle.*
 
 class CommunityFragment: Fragment() {
@@ -108,4 +115,5 @@ class CommunityFragment: Fragment() {
             }
         }
     }
+
 }
