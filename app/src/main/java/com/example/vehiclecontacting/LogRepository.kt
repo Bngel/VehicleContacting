@@ -164,6 +164,7 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取成功\t-\n")
+                stringBuilder.append("-\tpages: ${body.data.pages}\t-\n")
                 for (discuss in body.data.discussList)
                     stringBuilder.append("-\ttitle: ${discuss.title}\t-\n")
             }
@@ -214,6 +215,7 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取成功\t-\n")
+                stringBuilder.append("-\tfromId: ${body.data.OwnerComment.fromId}\t-\n")
                 stringBuilder.append("-\tnumber: ${body.data.OwnerComment.number}\t-\n")
             }
             "existWrong" -> {
@@ -305,6 +307,185 @@ object LogRepository {
                         stringBuilder.append("-\tstatus: 已相互关注\t-\n")
                     }
                 }
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postLikeAndFavorLog(body: PostLikeAndFavor) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t查询帖子点赞与收藏状态接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t查询帖子点赞与收藏状态接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 查询帖子点赞与收藏状态成功\t-\n")
+                stringBuilder.append("-\tlike: 点赞状态 : ${body.data.isLike}\t-\n")
+                stringBuilder.append("-\tfavor: 收藏状态 : ${body.data.isFavor}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postLikeLog(body: PostLike) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t评论点赞接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t评论点赞接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 评论已被点赞\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 评论不存在\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 评论点赞成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteLikeLog(body: DeleteLike) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t评论取消点赞接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t评论取消点赞接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 评论已被取消点赞(重复操作)\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 评论不存在\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 评论成功取消点赞\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postLikeDiscussLog(body: PostLikeDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t帖子点赞接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t帖子点赞接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 帖子点赞成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteLikeDiscussLog(body: DeleteLikeDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t帖子取消点赞接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t帖子取消点赞接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 帖子成功取消点赞\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postFavorDiscussLog(body: PostFavorDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t帖子收藏接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t帖子收藏接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子已经收藏\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 帖子收藏成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteFavorDiscussLog(body: DeleteFavorDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t帖子取消收藏接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t帖子取消收藏接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子未被收藏\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 帖子成功取消收藏\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

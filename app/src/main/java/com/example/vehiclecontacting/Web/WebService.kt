@@ -156,6 +156,54 @@ interface WebService {
     )
             : Call<PostJudgeFavor>
 
+    @POST("likeAndFavor")
+    fun postLikeAndFavor(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<PostLikeAndFavor>
+
+    @POST("like")
+    fun postLike(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<PostLike>
+
+    @DELETE("like")
+    fun deleteLike(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<DeleteLike>
+
+    @POST("likeDiscuss")
+    fun postLikeDiscuss(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<PostLikeDiscuss>
+
+    @DELETE("likeDiscuss")
+    fun deleteLikeDiscuss(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<DeleteLikeDiscuss>
+
+    @POST("favorDiscuss")
+    fun postFavorDiscuss(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<PostFavorDiscuss>
+
+    @DELETE("favorDiscuss")
+    fun deleteFavorDiscuss(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<DeleteFavorDiscuss>
 
 
     companion object Factory {

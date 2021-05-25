@@ -13,11 +13,23 @@ import kotlin.concurrent.thread
 object DiscussRepository {
 
     private val discussService = WebService.create()
+
     val imageUrl = ArrayList<String>()
+
     val discussList = ArrayList<Discuss>()
     val commentList = ArrayList<Comment>()
+
     lateinit var ownerComment: OwnerComment
+
     var pageCount = 0
+
+    const val LIKE_STATUS = 0
+    const val LIKED_STATUS = 1
+    var like = 0
+
+    const val FAVOR_STATUS = 0
+    const val FAVORED_STATUS = 1
+    var favor = 0
 
     /***
      * msg:
@@ -177,5 +189,179 @@ object DiscussRepository {
         }
     }
 
+    /***
+     * msg:
+     * success：成功 （返回json isLike（是否点赞） isFavor（是否收藏））
+     */
+    fun postLikeAndFavor(id: String, number: String): Int {
+        val data = discussService.postLikeAndFavor(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    favor = body.data.isFavor
+                    like = body.data.isLike
+                }
+                LogRepository.postLikeAndFavorLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 
+    /***
+     * msg:
+     * repeatWrong：评论已被点赞（可能是重复请求）
+     * existWrong：评论不存在
+     * success：成功
+     */
+    fun postLike(id: String, number: String): Int {
+        val data = discussService.postLike(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKED_STATUS
+                LogRepository.postLikeLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：评论未被点赞（可能是重复请求）
+     * existWrong：评论不存在
+     * success：成功
+     */
+    fun deleteLike(id: String, number: String): Int {
+        val data = discussService.deleteLike(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKE_STATUS
+                LogRepository.deleteLikeLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在
+     * success：成功
+     */
+    fun postLikeDiscuss(id: String, number: String): Int {
+        val data = discussService.postLikeDiscuss(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKED_STATUS
+                LogRepository.postLikeDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在
+     * success：成功
+     */
+    fun deleteLikeDiscuss(id: String, number: String): Int {
+        val data = discussService.deleteLikeDiscuss(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKE_STATUS
+                LogRepository.deleteLikeDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：帖子已被收藏（可能是重复收藏）
+     * existWrong：帖子不存在
+     * success：成功
+     */
+    fun postFavorDiscuss(id: String, number: String): Int {
+        val data = discussService.postFavorDiscuss(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKED_STATUS
+                LogRepository.postFavorDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：帖子未被收藏（可能是重复请求）
+     * existWrong：帖子不存在
+     * success：成功
+     */
+    fun deleteFavorDiscuss(id: String, number: String): Int {
+        val data = discussService.deleteFavorDiscuss(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    like = LIKE_STATUS
+                LogRepository.deleteFavorDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 }

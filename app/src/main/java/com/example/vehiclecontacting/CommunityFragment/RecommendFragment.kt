@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.vehiclecontacting.ActivityCollector
 import com.example.vehiclecontacting.Data.CardInfo
 import com.example.vehiclecontacting.DiscussActivity
 import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.CommunityCardView
 import com.example.vehiclecontacting.Widget.ToastView
@@ -50,6 +52,7 @@ class RecommendFragment: Fragment() {
     private fun initRecommend() {
         DiscussRepository.discussList.clear()
         recommend_cards.removeAllViews()
+        page = 1
         DiscussRepository.getDiscuss(10, 1, 1, 0)
         cardEvent()
     }
@@ -62,6 +65,7 @@ class RecommendFragment: Fragment() {
                     DiscussRepository.discussList.clear()
                     recommend_cards.removeAllViews()
                     DiscussRepository.getDiscuss(10, 1, 1, 0)
+                    page = 1
                     cardEvent()
                     recommend_refresh.finishRefreshing()
                 }, 2000)
@@ -72,6 +76,7 @@ class RecommendFragment: Fragment() {
                 Handler().postDelayed(Runnable {
                     page ++
                     if (page <= DiscussRepository.pageCount){
+                        Log.d(StatusRepository.VehicleLog, page.toString())
                         DiscussRepository.getDiscuss(10, 1, page, 0)
                         cardEvent()
                     }
@@ -110,6 +115,7 @@ class RecommendFragment: Fragment() {
                         DiscussRepository.discussList.clear()
                         recommend_cards.removeAllViews()
                         DiscussRepository.getDiscuss(10, 1, 1, 0)
+                        page = 1
                         cardEvent()
                         data.putExtra("update", false)
                     }

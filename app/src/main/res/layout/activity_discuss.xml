@@ -146,8 +146,8 @@
             android:layout_margin="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <ImageView
                 android:id="@+id/discuss_likeImg"
@@ -176,6 +176,7 @@
             android:layout_margin="10dp">
 
             <LinearLayout
+                android:id="@+id/discuss_browse"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,12 +185,13 @@
                 android:layout_marginRight="10dp">
 
                 <ImageView
+                    android:id="@+id/discuss_browseImg"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/bp_browse"/>
 
                 <TextView
-                    android:id="@+id/discuss_browse"
+                    android:id="@+id/discuss_browseText"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -198,6 +200,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/discuss_favor"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -206,12 +209,13 @@
                 android:layout_marginRight="10dp">
 
                 <ImageView
+                    android:id="@+id/discuss_favorImg"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/bp_favor"/>
 
                 <TextView
-                    android:id="@+id/discuss_favor"
+                    android:id="@+id/discuss_favorText"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -220,6 +224,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/discuss_comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -228,12 +233,13 @@
                 android:layout_marginRight="10dp">
 
                 <ImageView
+                    android:id="@+id/discuss_commentImg"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/yb_comment"/>
 
                 <TextView
-                    android:id="@+id/discuss_comment"
+                    android:id="@+id/discuss_commentText"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"

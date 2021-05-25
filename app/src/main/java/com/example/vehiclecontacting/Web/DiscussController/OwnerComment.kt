@@ -4,22 +4,22 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class OwnerComment(
-    val commentCounts: Int,
-    val createTime: String,
-    val deleted: Int,
-    val description: String,
-    val favorCounts: Int,
-    val fromId: String,
-    val likeCounts: Int,
-    val number: String,
-    val photo1: String,
-    val photo2: String,
-    val photo3: String,
-    val scanCounts: Int,
-    val sex: String,
-    val title: String,
-    val userPhoto: String,
-    val username: String
+    var commentCounts: Int,
+    var createTime: String,
+    var deleted: Int,
+    var description: String,
+    var favorCounts: Int,
+    var fromId: String,
+    var likeCounts: Int,
+    var number: String,
+    var photo1: String,
+    var photo2: String,
+    var photo3: String,
+    var scanCounts: Int,
+    var sex: String,
+    var title: String,
+    var userPhoto: String,
+    var username: String
 )  : Parcelable {
 
     override fun describeContents(): Int {

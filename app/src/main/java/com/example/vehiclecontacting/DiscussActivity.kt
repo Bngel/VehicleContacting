@@ -21,14 +21,14 @@ class DiscussActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discuss)
-        initWidget()
         initData()
+        initWidget()
     }
 
     private fun initWidget() {
         closeEvent()
         followEvent()
-        likeEvent()
+        likeAndFavorEvent()
         deleteEvent()
     }
 
@@ -47,6 +47,7 @@ class DiscussActivity : AppCompatActivity() {
                             val intent = Intent()
                             intent.putExtra("update", true)
                             setResult(RESULT_OK, intent)
+                            ToastView(this).show("删除成功")
                             finish()
                         }
                         else {
@@ -60,9 +61,120 @@ class DiscussActivity : AppCompatActivity() {
         }
     }
 
-    private fun likeEvent() {
-        discuss_like.setOnClickListener {
+    private fun likeAndFavorEvent() {
+        var lf = -1
+        if (InfoRepository.loginStatus.status) {
+            lf = DiscussRepository.postLikeAndFavor(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+            if (lf == StatusRepository.SUCCESS) {
+                if (DiscussRepository.like == DiscussRepository.LIKE_STATUS) {
+                    discuss_likeImg.visibility = View.VISIBLE
+                    discuss_like.background = resources.getDrawable(R.drawable.bk_likebtn)
+                    discuss_likeText.text = "赞同 ${ownerComment.likeCounts}"
+                    DiscussRepository.like = DiscussRepository.LIKE_STATUS
+                }
+                else if (DiscussRepository.like == DiscussRepository.LIKED_STATUS) {
+                    discuss_likeImg.visibility = View.GONE
+                    discuss_like.background = resources.getDrawable(R.drawable.bk_likedbtn)
+                    discuss_likeText.text = "赞同 ${ownerComment.likeCounts}"
+                    DiscussRepository.like = DiscussRepository.LIKED_STATUS
+                }
+                if (DiscussRepository.favor == DiscussRepository.FAVOR_STATUS) {
+                    discuss_favorText.text = ownerComment.favorCounts.toString()
+                    discuss_favorImg.setImageResource(R.drawable.yp_favor)
+                    DiscussRepository.favor = DiscussRepository.FAVOR_STATUS
+                }
+                else if (DiscussRepository.favor == DiscussRepository.FAVORED_STATUS) {
+                    discuss_favorText.text = ownerComment.favorCounts.toString()
+                    discuss_favorImg.setImageResource(R.drawable.yy_favor)
+                    DiscussRepository.favor = DiscussRepository.FAVORED_STATUS
+                }
+            }
+        }
+        likeEvent(lf)
+        favorEvent(lf)
+    }
 
+    private fun likeEvent(lf: Int) {
+        discuss_like.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                if (lf == StatusRepository.SUCCESS) {
+                    if (DiscussRepository.like == DiscussRepository.LIKE_STATUS) {
+                        val likeStatus = DiscussRepository.postLikeDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        if (likeStatus == StatusRepository.SUCCESS) {
+                            discuss_likeImg.visibility = View.GONE
+                            discuss_like.background = resources.getDrawable(R.drawable.bk_likedbtn)
+                            ownerComment.likeCounts += 1
+                            discuss_likeText.text = "赞同 ${ownerComment.likeCounts}"
+                            DiscussRepository.like = DiscussRepository.LIKED_STATUS
+                        }
+                        else {
+                            ToastView(this).show("点赞帖子失败, 请稍后重试")
+                        }
+                    }
+                    else if (DiscussRepository.like == DiscussRepository.LIKED_STATUS) {
+                        val likeStatus = DiscussRepository.deleteLikeDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        if (likeStatus == StatusRepository.SUCCESS) {
+                            discuss_likeImg.visibility = View.VISIBLE
+                            discuss_like.background = resources.getDrawable(R.drawable.bk_likebtn)
+                            ownerComment.likeCounts -= 1
+                            discuss_likeText.text = "赞同 ${ownerComment.likeCounts}"
+                            DiscussRepository.like = DiscussRepository.LIKE_STATUS
+                        }
+                        else {
+                            ToastView(this).show("取消点赞帖子失败, 请稍后重试")
+                        }
+                    }
+                }
+                else {
+                    ToastView(this).show("读取用户点赞与收藏状态失败")
+                }
+            }
+            else {
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
+    }
+
+    private fun favorEvent(lf: Int) {
+        discuss_favor.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                if (lf == StatusRepository.SUCCESS) {
+                    if (DiscussRepository.favor == DiscussRepository.FAVOR_STATUS) {
+                        val favorStatus = DiscussRepository.postFavorDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        if (favorStatus == StatusRepository.SUCCESS) {
+                            ownerComment.favorCounts += 1
+                            discuss_favorText.text = ownerComment.favorCounts.toString()
+                            discuss_favorImg.setImageResource(R.drawable.yy_favor)
+                            DiscussRepository.favor = DiscussRepository.FAVORED_STATUS
+                            ToastView(this).show("收藏成功")
+                        }
+                        else {
+                            ToastView(this).show("收藏帖子失败, 请稍后重试")
+                        }
+                    }
+                    else if (DiscussRepository.favor == DiscussRepository.FAVORED_STATUS) {
+                        val favorStatus = DiscussRepository.deleteFavorDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        if (favorStatus == StatusRepository.SUCCESS) {
+                            ownerComment.favorCounts -= 1
+                            discuss_favorText.text = ownerComment.favorCounts.toString()
+                            discuss_favorImg.setImageResource(R.drawable.yp_favor)
+                            DiscussRepository.favor = DiscussRepository.FAVOR_STATUS
+                            ToastView(this).show("取消收藏成功")
+                        }
+                        else {
+                            ToastView(this).show("取消收藏帖子失败, 请稍后重试")
+                        }
+                    }
+                }
+                else {
+                    ToastView(this).show("读取用户点赞与收藏状态失败")
+                }
+            }
+            else {
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
         }
     }
 
@@ -128,9 +240,9 @@ class DiscussActivity : AppCompatActivity() {
         discuss_username.text = ownerComment.username
         discuss_userDescription.text = ""
         discuss_text.text = ownerComment.description
-        discuss_browse.text = if (ownerComment.scanCounts > 99) "99+" else ownerComment.scanCounts.toString()
-        discuss_favor.text = if (ownerComment.favorCounts > 99) "99+" else ownerComment.favorCounts.toString()
-        discuss_comment.text = if (ownerComment.commentCounts > 99) "99+" else ownerComment.commentCounts.toString()
+        discuss_browseText.text = if (ownerComment.scanCounts > 99) "99+" else ownerComment.scanCounts.toString()
+        discuss_favorText.text = if (ownerComment.favorCounts > 99) "99+" else ownerComment.favorCounts.toString()
+        discuss_commentText.text = if (ownerComment.commentCounts > 99) "99+" else ownerComment.commentCounts.toString()
         discuss_likeText.text = "赞同 ${ownerComment.likeCounts}"
         if (ownerComment.photo1 != "")
             discuss_content.addView(initImg(ownerComment.photo1))
@@ -153,5 +265,16 @@ class DiscussActivity : AppCompatActivity() {
         intent.putExtra("update", false)
         setResult(RESULT_CANCELED, intent)
         finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                ActivityCollector.ACTIVITY_LOGIN -> {
+                    likeAndFavorEvent()
+                }
+            }
+        }
     }
 }

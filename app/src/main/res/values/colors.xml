@@ -68,5 +68,9 @@
     <color name="colorFollow">#ffd207</color>
     <!--- FollowBtn 关注按钮 已关注 字体颜色 -->
     <color name="colorFollowed">#707070</color>
+    <!--- LikeBtn 点赞按钮 点赞 背景颜色 -->
+    <color name="colorLike">#55FBE251</color>
+    <!--- LikeBtn 点赞按钮 已点赞 背景颜色 -->
+    <color name="colorLiked">#ffd207</color>
 
 </resources>
