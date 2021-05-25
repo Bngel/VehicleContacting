@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.TabFragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.*
 import com.example.vehiclecontacting.Adapter.CommunityViewPagerFragmentStateAdapter
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
+import com.example.vehiclecontacting.Widget.CommunityCardView
 import kotlinx.android.synthetic.main.fragment_community.*
+import kotlinx.android.synthetic.main.fragment_recommend.*
 import kotlinx.android.synthetic.main.view_communitytitle.*
 
 class CommunityFragment: Fragment() {
@@ -93,11 +97,42 @@ class CommunityFragment: Fragment() {
             if (InfoRepository.loginStatus.status){
                 AnimRepository.playAddArticleClickAnim(it as ImageView)
                 val createIntent = Intent(parentContext, CreateActivity::class.java)
-                startActivity(createIntent)
+                startActivityForResult(createIntent, ActivityCollector.ACTIVITY_CREATE)
             }
             else {
                 val loginIntent = Intent(parentContext, LoginActivity::class.java)
                 startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ActivityCollector.ACTIVITY_DISCUSS -> {
+                    val delete = data?.getBooleanExtra("update", false)
+                    if (delete == true) {
+                        DiscussRepository.discussList.clear()
+                        recommend_cards.removeAllViews()
+                        DiscussRepository.getDiscuss(10, 1, 1, 0)
+                        if (parentContext != null) {
+                            for (discuss in DiscussRepository.discussList) {
+                                val view = CommunityCardView(parentContext!!, discuss.title, discuss.userPhoto, discuss.username,discuss.description,discuss.photo,
+                                    discuss.likeCounts,discuss.commentCounts)
+                                view.setOnClickListener {
+                                    DiscussRepository.getComment(10, 1, 1, discuss.number)
+                                    val discussIntent = Intent(parentContext, DiscussActivity::class.java)
+                                    discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
+                                    discussIntent.putExtra("comments", DiscussRepository.commentList)
+                                    startActivityForResult(discussIntent, ActivityCollector.ACTIVITY_DISCUSS)
+                                }
+                                recommend_cards.addView(view)
+                            }
+                        }
+                        data.putExtra("update", false)
+                    }
+                }
             }
         }
     }

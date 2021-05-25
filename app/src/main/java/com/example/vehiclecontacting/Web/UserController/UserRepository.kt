@@ -5,6 +5,7 @@ import com.example.vehiclecontacting.Data.LoginStatusInfo
 import com.example.vehiclecontacting.InfoRepository
 import com.example.vehiclecontacting.LogRepository
 import com.example.vehiclecontacting.StatusRepository
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.WebService
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
@@ -14,6 +15,11 @@ import kotlin.concurrent.thread
 object UserRepository {
 
     private val userService = WebService.create()
+
+    const val FOLLOW_NOT = 1
+    const val FOLLOW_ED = 2
+    const val FOLLOW_BOTH = 3
+    var followStatus = FOLLOW_NOT
 
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
@@ -225,6 +231,76 @@ object UserRepository {
             "existWrong" -> StatusRepository.EXIST_WRONG
             "fileWrong" -> StatusRepository.FILE_WRONG
             "typeWrong" -> StatusRepository.TYPE_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：用户不存在
+     * repeatWrong：已经关注了（可能是重复请求）
+     * success：成功
+     */
+    fun postFans(fromId: String, toId: String): Int {
+        val data = userService.postFans(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postFansLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：用户不存在
+     * repeatWrong：已经取关了（可能是重复请求）
+     * success：成功
+     */
+    fun deleteFans(fromId: String, toId: String): Int {
+        val data = userService.deleteFans(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteFansLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功
+     * data.status :  返回status 1：未关注 2：已关注 3：已相互关注
+     */
+    fun postJudgeFavor(fromId: String, toId: String): Int {
+        val data = userService.postJudgeFavor(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                followStatus = body.data.status
+                msg = body.msg
+                LogRepository.postJudgeFavorLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }

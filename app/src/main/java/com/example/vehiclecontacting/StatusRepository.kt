@@ -41,6 +41,7 @@ object StatusRepository {
     const val FROZEN_WRONG = 6
     const val FILE_WRONG = 7
     const val TYPE_WRONG = 8
+    const val USER_WRONG = 9
     const val UNKNOWN_WRONG = 0xFF
 
 }

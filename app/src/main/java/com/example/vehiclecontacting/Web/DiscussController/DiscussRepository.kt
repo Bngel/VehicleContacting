@@ -73,6 +73,11 @@ object DiscussRepository {
         }
     }
 
+    /***
+     * msg:
+     * repeatWrong：该用户短期创建新帖子太多（2小时5次以上）
+     * success：成功（返回json带url）
+     */
     fun postDiscuss(description: String, id: String, title: String,
                     photos: List<String>): Int {
         var photo1 = ""
@@ -101,6 +106,10 @@ object DiscussRepository {
         }
     }
 
+    /***
+     * msg:
+     * success：成功（返回json discussList（主页帖子信息列表） pages（页面总数） counts（帖子总数））
+     */
     fun getDiscuss(cnt: Int, isOrderByTime: Int, page: Int, isFollow: Int, keyword: String = "", id: String = ""): Int {
         val data = discussService.getDiscuss(id, cnt,isOrderByTime, keyword, page, isFollow)
         var msg = ""
@@ -119,6 +128,35 @@ object DiscussRepository {
         }
     }
 
+    /***
+     * msg:
+     * existWrong：帖子不存在（可能是重复删除）
+     * userWrong：用户不是帖子的主人
+     * success：成功
+     */
+    fun deleteDiscuss(id: String, number: String): Int {
+        val data = discussService.deleteDiscuss(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "userWrong" -> StatusRepository.USER_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在（可能被删了，提示一下）
+     * success：成功（返回json ownerComment（楼主的评论和帖子的相关信息） pages（页面总数） counts（帖子总数） commentList（评论列表））
+     */
     fun getComment(cnt: Int, isOrderByTime: Int, page: Int, number: String): Int {
         val data = discussService.getComment(cnt,isOrderByTime, number, page)
         var msg = ""
@@ -138,4 +176,6 @@ object DiscussRepository {
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }
+
+
 }

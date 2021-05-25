@@ -1,10 +1,7 @@
 package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.SSLSocketClient
-import com.example.vehiclecontacting.Web.DiscussController.GetComment
-import com.example.vehiclecontacting.Web.DiscussController.GetDiscuss
-import com.example.vehiclecontacting.Web.DiscussController.PostDiscuss
-import com.example.vehiclecontacting.Web.DiscussController.PostDiscussPhoto
+import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -121,6 +118,13 @@ interface WebService {
     )
             : Call<GetDiscuss>
 
+    @DELETE("discuss")
+    fun deleteDiscuss(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<DeleteDiscuss>
+
     @GET("comment")
     fun getComment(
         @Query("cnt") description: Int,
@@ -129,6 +133,29 @@ interface WebService {
         @Query("page") page: Int,
     )
             : Call<GetComment>
+
+
+    @POST("fans")
+    fun postFans(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<PostFans>
+
+    @DELETE("fans")
+    fun deleteFans(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<DeleteFans>
+
+    @POST("judgeFavor")
+    fun postJudgeFavor(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<PostJudgeFavor>
+
 
 
     companion object Factory {

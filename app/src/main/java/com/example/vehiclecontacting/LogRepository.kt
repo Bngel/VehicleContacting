@@ -1,14 +1,8 @@
 package com.example.vehiclecontacting
 
 import android.util.Log
-import com.example.vehiclecontacting.Web.DiscussController.GetComment
-import com.example.vehiclecontacting.Web.DiscussController.GetDiscuss
-import com.example.vehiclecontacting.Web.DiscussController.PostDiscuss
-import com.example.vehiclecontacting.Web.DiscussController.PostDiscussPhoto
-import com.example.vehiclecontacting.Web.UserController.PostLogin
-import com.example.vehiclecontacting.Web.UserController.PostLoginByCode
-import com.example.vehiclecontacting.Web.UserController.PostRegister
-import com.example.vehiclecontacting.Web.UserController.PostUserPhoto
+import com.example.vehiclecontacting.Web.DiscussController.*
+import com.example.vehiclecontacting.Web.UserController.*
 import java.lang.StringBuilder
 
 object LogRepository {
@@ -180,6 +174,33 @@ object LogRepository {
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
+    fun deleteDiscussLog (body: DeleteDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t删除帖子接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t删除帖子接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            "userWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不是帖子的主人\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 删除帖子成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
     fun getCommentLog (body: GetComment) {
         val stringBuilder = StringBuilder()
         if (body.code == 200) {
@@ -193,10 +214,97 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取成功\t-\n")
-                stringBuilder.append("-\ttitle: ${body.data.OwnerComment.title}\t-\n")
+                stringBuilder.append("-\tnumber: ${body.data.OwnerComment.number}\t-\n")
             }
             "existWrong" -> {
                 stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postFansLog (body: PostFans) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t用户关注接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t用户关注接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 关注成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 重复关注\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteFansLog (body: DeleteFans) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t用户取消关注接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t用户取消关注接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 取消关注成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 重复取消关注\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postJudgeFavorLog(body: PostJudgeFavor) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t查询关注状态接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t查询关注状态接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 查询关注状态成功\t-\n")
+
+                when (UserRepository.followStatus) {
+                    UserRepository.FOLLOW_NOT -> {
+                        stringBuilder.append("-\tstatus: 未关注\t-\n")
+                    }
+                    UserRepository.FOLLOW_ED -> {
+                        stringBuilder.append("-\tstatus: 已关注\t-\n")
+                    }
+                    UserRepository.FOLLOW_BOTH -> {
+                        stringBuilder.append("-\tstatus: 已相互关注\t-\n")
+                    }
+                }
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

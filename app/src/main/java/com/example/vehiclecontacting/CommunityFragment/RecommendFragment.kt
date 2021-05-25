@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.CommunityFragment
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.vehiclecontacting.ActivityCollector
 import com.example.vehiclecontacting.Data.CardInfo
 import com.example.vehiclecontacting.DiscussActivity
 import com.example.vehiclecontacting.R
@@ -91,9 +93,27 @@ class RecommendFragment: Fragment() {
                     val discussIntent = Intent(parentContext, DiscussActivity::class.java)
                     discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
                     discussIntent.putExtra("comments", DiscussRepository.commentList)
-                    startActivity(discussIntent)
+                    startActivityForResult(discussIntent, ActivityCollector.ACTIVITY_DISCUSS)
                 }
                 recommend_cards.addView(view)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                ActivityCollector.ACTIVITY_DISCUSS -> {
+                    val delete = data?.getBooleanExtra("update", false)
+                    if (delete == true) {
+                        DiscussRepository.discussList.clear()
+                        recommend_cards.removeAllViews()
+                        DiscussRepository.getDiscuss(10, 1, 1, 0)
+                        cardEvent()
+                        data.putExtra("update", false)
+                    }
+                }
             }
         }
     }

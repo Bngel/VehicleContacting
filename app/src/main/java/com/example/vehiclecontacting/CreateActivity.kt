@@ -62,6 +62,9 @@ class CreateActivity : AppCompatActivity() {
                     DiscussRepository.postDiscuss(create_edit.text.toString(), InfoRepository.user!!.id, create_title.text.toString(),
                         DiscussRepository.imageUrl)
                     DiscussRepository.imageUrl.clear()
+                    val intent = Intent()
+                    intent.putExtra("update", true)
+                    setResult(RESULT_OK, intent)
                     ToastView(this).show("发表成功")
                 }
                 finish()
