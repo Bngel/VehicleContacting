@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting
 
 import android.content.Context
+import android.util.Log
 import com.example.vehiclecontacting.Data.LoginStatusInfo
 import com.example.vehiclecontacting.Web.UserController.User
 import com.example.vehiclecontacting.Web.UserController.UserRepository
@@ -22,6 +23,7 @@ object InfoRepository {
 
     private fun initUser(phone: String) {
         user = UserRepository.getUser(phone)
+        Log.d(StatusRepository.VehicleLog, user?.followCounts.toString())
     }
 
     fun initStatus(context: Context){
@@ -33,7 +35,15 @@ object InfoRepository {
             val phone = localStatus.getString(KEY_PHONE, "")!!
             val token = localStatus.getString(KEY_TOKEN, "")!!
             loginStatus = LoginStatusInfo(status, id, phone, token)
-            initUser(id)
+            initUser(phone)
+        }
+    }
+
+    fun refreshStatus() {
+        val status = loginStatus.status
+        if (status) {
+            // 用户处于登录状态 可以直接 getUser
+            initUser(user!!.phone)
         }
     }
 

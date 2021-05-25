@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.icu.text.IDNA
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -47,8 +48,10 @@ class UserFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (InfoRepository.loginStatus.status)
+        if (InfoRepository.loginStatus.status) {
+            InfoRepository.refreshStatus()
             loadInfo()
+        }
     }
 
     private fun initWidget() {

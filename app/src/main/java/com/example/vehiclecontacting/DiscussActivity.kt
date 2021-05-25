@@ -52,6 +52,7 @@ class DiscussActivity : AppCompatActivity() {
                         }
                         else {
                             ToastView(this).show("删除失败")
+                            finish()
                         }
                     })
                     .setNegativeButton("取消",
