@@ -23,7 +23,6 @@ object InfoRepository {
 
     private fun initUser(phone: String) {
         user = UserRepository.getUser(phone)
-        Log.d(StatusRepository.VehicleLog, user?.followCounts.toString())
     }
 
     fun initStatus(context: Context){

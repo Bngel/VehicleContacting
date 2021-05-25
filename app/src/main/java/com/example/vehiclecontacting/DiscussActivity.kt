@@ -4,19 +4,34 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.setPadding
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.vehiclecontacting.Web.DiscussController.Comment
+import com.example.vehiclecontacting.Web.DiscussController.Comments
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.DiscussController.OwnerComment
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Widget.FirstCommentCardView
+import com.example.vehiclecontacting.Widget.SecondCommentCardView
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_discuss.*
+import kotlinx.android.synthetic.main.popup_comment.*
 
 class DiscussActivity : AppCompatActivity() {
 
     private lateinit var ownerComment: OwnerComment
+    private lateinit var comments: ArrayList<Comment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +45,7 @@ class DiscussActivity : AppCompatActivity() {
         followEvent()
         likeAndFavorEvent()
         deleteEvent()
+        commentEvent()
     }
 
     private fun deleteEvent() {
@@ -234,8 +250,44 @@ class DiscussActivity : AppCompatActivity() {
         }
     }
 
+    private fun commentEvent() {
+        discuss_comment.setOnClickListener {
+            val contentView = LayoutInflater.from(this).inflate(R.layout.popup_comment, null)
+            val popWindow = PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true)
+            popWindow.contentView = contentView
+            val commentCards = contentView.findViewById<LinearLayout>(R.id.comment_cards)
+            val commentRefresh = contentView.findViewById<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>(R.id.comment_refresh)
+            commentRefresh.setAutoLoadMore(true)
+            commentRefresh.setEnableRefresh(false)
+            commentRefresh.setEnableOverScroll(false)
+            for (comment in comments) {
+                val view = FirstCommentCardView(this, comment.userPhoto, comment.username,
+                    comment.comments, comment.createTime.substring(0,10), comment.likeCounts, comment.commentCounts)
+                commentCards.addView(view)
+
+                // 插入二级评论
+                val views = SecondCommentCardView(view.context, comment.userPhoto, comment.username,
+                    comment.comments, comment.createTime.substring(0,10), comment.likeCounts)
+                val secondView = view.findViewById<LinearLayout>(R.id.comment_second_cards)
+                secondView.addView(views)
+            }
+            val commentClose = contentView.findViewById<ImageView>(R.id.comment_close)
+            commentClose.setOnClickListener {
+                popWindow.dismiss()
+            }
+            val commentCount = contentView.findViewById<TextView>(R.id.comment_commentCount)
+            commentCount.text = "评论 ${comments.count()}"
+
+            val rootView = LayoutInflater.from(this).inflate(R.layout.activity_discuss, null)
+            popWindow.animationStyle = R.style.contextCommentAnim
+            popWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0)
+        }
+    }
+
     private fun initData() {
         ownerComment = intent.getParcelableExtra("ownerComment")
+        comments = intent.getParcelableArrayListExtra("comments")
         discuss_avt.setAvt(ownerComment.userPhoto)
         discuss_title.text = ownerComment.title
         discuss_username.text = ownerComment.username
@@ -255,6 +307,7 @@ class DiscussActivity : AppCompatActivity() {
 
     private fun initImg(photo: String): ImageView {
         val img = ImageView(this)
+        img.setPadding(10,10,10,10)
         Glide.with(this)
             .load(photo)
             .into(img)

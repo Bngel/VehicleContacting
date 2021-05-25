@@ -62,6 +62,9 @@
     <string name="fans_follow">+ 关注</string>
     <string name="fans_followed">已关注</string>
 
+    <!--- annotation for text of popup comments -->
+    <string name="comment_allComments">全部评论</string>
+
     <string name="app_name">VehicleContacting</string>
 
 </resources>

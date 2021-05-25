@@ -7,4 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="contextCommentAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/context_comment_enter</item>
+        <item name="android:windowExitAnimation">@anim/context_comment_exit</item>
+    </style>
+
 </resources>
