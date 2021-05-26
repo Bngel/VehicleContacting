@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,13 @@ class UserDetailActivity : AppCompatActivity() {
             editEvent()
         else
             followEvent()
+        closeEvent()
+    }
+
+    private fun closeEvent(){
+        detail_close.setOnClickListener {
+            finish()
+        }
     }
 
     private fun followEvent() {
@@ -30,6 +38,10 @@ class UserDetailActivity : AppCompatActivity() {
 
     private fun editEvent() {
         detail_edit.visibility = View.VISIBLE
+        detail_edit.setOnClickListener {
+            val editIntent = Intent(this, UpdateInfoActivity::class.java)
+            startActivityForResult(editIntent, ActivityCollector.ACTIVITY_EDIT)
+        }
     }
 
     private fun initData() {

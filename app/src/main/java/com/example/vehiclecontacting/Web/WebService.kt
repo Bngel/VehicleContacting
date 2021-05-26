@@ -205,6 +205,15 @@ interface WebService {
     )
             : Call<DeleteFavorDiscuss>
 
+    @GET("follow")
+    fun getFollow(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int
+    )
+            : Call<GetFollow>
+
 
     companion object Factory {
         fun create() : WebService {

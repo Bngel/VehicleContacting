@@ -13,11 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.vehiclecontacting.*
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.view_userinfo.*
@@ -63,6 +65,22 @@ class UserFragment: Fragment() {
 
     private fun initWidget() {
         userNameEvent()
+        followEvent()
+    }
+
+    private fun followEvent() {
+        user_follow.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val followStatus = UserRepository.getFollow(InfoRepository.user!!.id, 10, 1, "")
+                if (followStatus != StatusRepository.SUCCESS)
+                    ToastView(parentContext!!).show("获取用户关注信息失败")
+                val followIntent = Intent(parentContext!!, FollowActivity::class.java)
+                startActivityForResult(followIntent, ActivityCollector.ACTIVITY_FOLLOW)
+            } else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
     }
 
     private fun userNameEvent() {

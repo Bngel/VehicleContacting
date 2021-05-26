@@ -493,4 +493,26 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun getFollowLog(body: GetFollow) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户关注信息接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户关注信息接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户关注信息成功\t-\n")
+                stringBuilder.append("-\tcount: ${body.data.counts}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

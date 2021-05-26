@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorCommunityTitleBackground">
+
+        <ImageView
+            android:id="@+id/updateInfo_close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/bp_left"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="账号资料"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="头像"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <com.example.vehiclecontacting.Widget.AvtView
+                android:id="@+id/updateInfo_avt"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_toLeftOf="@id/updateInfo_change1"
+                android:src="@drawable/test_img"/>
+
+            <ImageView
+                android:id="@+id/updateInfo_change1"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_margin="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33707070"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昵称"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/updateInfo_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/updateInfo_change2"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="测试字段"/>
+
+            <ImageView
+                android:id="@+id/updateInfo_change2"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33707070"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/updateInfo_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/updateInfo_change3"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="测试字段"/>
+
+            <ImageView
+                android:id="@+id/updateInfo_change3"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33707070"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出生年月"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/updateInfo_birth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/updateInfo_change4"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="测试字段"/>
+
+            <ImageView
+                android:id="@+id/updateInfo_change4"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33707070"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个性签名"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/updateInfo_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/updateInfo_change5"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="测试字段"/>
+
+            <ImageView
+                android:id="@+id/updateInfo_change5"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

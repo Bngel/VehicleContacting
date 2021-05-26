@@ -11,6 +11,8 @@ object ActivityCollector {
     const val ACTIVITY_DISCUSS = 0x05
     const val ACTIVITY_CREATE = 0x06
     const val ACTIVITY_DETAIL = 0x07
+    const val ACTIVITY_EDIT = 0x08
+    const val ACTIVITY_FOLLOW = 0x09
 
     private val activities = ArrayList<Activity>()
 

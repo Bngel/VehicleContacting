@@ -20,6 +20,9 @@ object UserRepository {
     const val FOLLOW_ED = 2
     const val FOLLOW_BOTH = 3
     var followStatus = FOLLOW_NOT
+    val followList = ArrayList<Follow>()
+    var followPage = 0
+    var followCount = 0
 
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
@@ -298,6 +301,31 @@ object UserRepository {
                 followStatus = body.data.status
                 msg = body.msg
                 LogRepository.postJudgeFavorLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json followList（关注信息列表） pages（页面总数） counts（数据总量））
+     */
+    fun getFollow(id: String, cnt: Int, page: Int, keyword: String): Int {
+        val data = userService.getFollow(cnt, id, keyword, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    followList.addAll(body.data.followList)
+                    followPage = body.data.pages
+                    followCount = body.data.counts
+                }
+                LogRepository.getFollowLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {
