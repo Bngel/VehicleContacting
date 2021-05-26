@@ -1,4 +1,4 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,10 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import com.example.vehiclecontacting.Repository.ActivityCollector
+import com.example.vehiclecontacting.Repository.InfoRepository
+import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_login.*

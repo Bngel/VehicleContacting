@@ -1,6 +1,6 @@
 package com.example.vehiclecontacting.Web
 
-import com.example.vehiclecontacting.SSLSocketClient
+import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
 import com.google.gson.Gson
@@ -22,6 +22,12 @@ interface WebService {
         @Query("phone") phone: String
     )
         :Call<GetUser>
+
+    @GET("user")
+    fun getUserById(
+        @Query("id") id: String
+    )
+            :Call<GetUser>
 
     @PATCH("user")
     fun patchUser(
@@ -213,6 +219,15 @@ interface WebService {
         @Query("page") page: Int
     )
             : Call<GetFollow>
+
+    @GET("fans")
+    fun getFans(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int
+    )
+            : Call<GetFans>
 
 
     companion object Factory {

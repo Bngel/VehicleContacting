@@ -1,10 +1,8 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +12,12 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.setPadding
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.vehiclecontacting.Repository.ActivityCollector
+import com.example.vehiclecontacting.Repository.InfoRepository
+import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.Comment
-import com.example.vehiclecontacting.Web.DiscussController.Comments
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.DiscussController.OwnerComment
 import com.example.vehiclecontacting.Web.UserController.UserRepository
@@ -26,9 +25,8 @@ import com.example.vehiclecontacting.Widget.FirstCommentCardView
 import com.example.vehiclecontacting.Widget.SecondCommentCardView
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_discuss.*
-import kotlinx.android.synthetic.main.popup_comment.*
 
-class DiscussActivity : AppCompatActivity() {
+class DiscussActivity : BaseActivity() {
 
     private lateinit var ownerComment: OwnerComment
     private lateinit var comments: ArrayList<Comment>
@@ -46,6 +44,19 @@ class DiscussActivity : AppCompatActivity() {
         likeAndFavorEvent()
         deleteEvent()
         commentEvent()
+        avtEvent()
+    }
+
+    private fun avtEvent() {
+        discuss_avt.setOnClickListener {
+            val detailIntent = Intent(this, UserDetailActivity::class.java)
+            if (InfoRepository.loginStatus.status)
+                detailIntent.putExtra("isSelf", ownerComment.fromId == InfoRepository.user!!.id)
+            else
+                detailIntent.putExtra("isSelf", false)
+            detailIntent.putExtra("id", ownerComment.fromId)
+            startActivityForResult(detailIntent, ActivityCollector.ACTIVITY_DETAIL)
+        }
     }
 
     private fun deleteEvent() {
@@ -200,7 +211,7 @@ class DiscussActivity : AppCompatActivity() {
             val followStatus = UserRepository.postJudgeFavor(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
             if (followStatus == StatusRepository.SUCCESS) {
                     discuss_follow.setStatus(UserRepository.followStatus)
-                    discuss_follow.follow()
+                    discuss_follow.discussFollow()
             }
         }
     }
@@ -221,7 +232,9 @@ class DiscussActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true)
             popWindow.contentView = contentView
             val commentCards = contentView.findViewById<LinearLayout>(R.id.comment_cards)
-            val commentRefresh = contentView.findViewById<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>(R.id.comment_refresh)
+            val commentRefresh = contentView.findViewById<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>(
+                R.id.comment_refresh
+            )
             commentRefresh.setAutoLoadMore(true)
             commentRefresh.setEnableRefresh(false)
             commentRefresh.setEnableOverScroll(false)

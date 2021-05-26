@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.vehiclecontacting.CommunityFragment.FollowFragment
 import com.example.vehiclecontacting.CommunityFragment.RecommendFragment
-import com.example.vehiclecontacting.StatusRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 
 
 class CommunityViewPagerFragmentStateAdapter(activity: AppCompatActivity, private val itemsCount: Int):

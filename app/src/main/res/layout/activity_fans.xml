@@ -10,7 +10,7 @@
         android:background="@color/colorCommunityTitleBackground">
 
         <ImageView
-            android:id="@+id/updateInfo_close"
+            android:id="@+id/fans_close"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_margin="15dp"
@@ -27,5 +27,15 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/fans_fans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
 
 </LinearLayout>

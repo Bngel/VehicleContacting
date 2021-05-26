@@ -1,7 +1,6 @@
 package com.example.vehiclecontacting.TabFragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.Data.HotInfo
-import com.example.vehiclecontacting.DiscussActivity
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Widget.HomeHotView
 import com.example.vehiclecontacting.Widget.ToastView

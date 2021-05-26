@@ -1,9 +1,9 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.vehiclecontacting.Repository.ActivityCollector
 
 open class BaseActivity: AppCompatActivity() {
 

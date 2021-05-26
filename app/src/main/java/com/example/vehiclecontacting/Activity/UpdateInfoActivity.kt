@@ -1,10 +1,10 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.activity_update_info.*
 
-class UpdateInfoActivity : AppCompatActivity() {
+class UpdateInfoActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_info)

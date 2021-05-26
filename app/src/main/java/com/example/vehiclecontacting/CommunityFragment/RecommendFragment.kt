@@ -9,20 +9,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.vehiclecontacting.ActivityCollector
-import com.example.vehiclecontacting.Data.CardInfo
-import com.example.vehiclecontacting.DiscussActivity
+import com.example.vehiclecontacting.Repository.ActivityCollector
+import com.example.vehiclecontacting.Activity.DiscussActivity
 import com.example.vehiclecontacting.R
-import com.example.vehiclecontacting.StatusRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.CommunityCardView
 import com.example.vehiclecontacting.Widget.ToastView
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-import kotlinx.android.synthetic.main.fragment_follow.*
-import kotlinx.android.synthetic.main.fragment_follow.follow_cards
 import kotlinx.android.synthetic.main.fragment_recommend.*
 
 class RecommendFragment: Fragment() {

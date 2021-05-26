@@ -1,9 +1,7 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
-import com.example.vehiclecontacting.CreateActivity
-import com.example.vehiclecontacting.LogRepository
-import com.example.vehiclecontacting.StatusRepository
-import com.example.vehiclecontacting.Web.UserController.PostUserPhoto
+import com.example.vehiclecontacting.Repository.LogRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody

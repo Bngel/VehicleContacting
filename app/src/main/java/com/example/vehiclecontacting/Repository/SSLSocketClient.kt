@@ -1,4 +1,4 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Repository
 
 import java.security.SecureRandom
 import java.security.cert.X509Certificate

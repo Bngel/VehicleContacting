@@ -1,11 +1,9 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Repository
 
 import android.content.Context
-import android.util.Log
 import com.example.vehiclecontacting.Data.LoginStatusInfo
 import com.example.vehiclecontacting.Web.UserController.User
 import com.example.vehiclecontacting.Web.UserController.UserRepository
-import kotlinx.android.synthetic.main.view_userinfo.*
 
 object InfoRepository {
 

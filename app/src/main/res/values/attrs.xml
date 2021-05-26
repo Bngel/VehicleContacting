@@ -3,4 +3,8 @@
     <declare-styleable name="AvtView">
         <attr name="android:src" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="FollowView">
+        <attr name="followStatus" format="integer"/>
+    </declare-styleable>
 </resources>

@@ -16,6 +16,7 @@ class UserCardView: LinearLayout {
         userCard_avt.setAvt(avt)
         userCard_username.text = username
         userCard_description.text = description
+
     }
     init {
         LayoutInflater.from(context).inflate(R.layout.view_usercard, this)

@@ -1,20 +1,18 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.Adapter.MainViewPagerFragmentStateAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_tab.*
-import com.example.vehiclecontacting.AnimRepository.playTabBtnClickAnim
-import com.example.vehiclecontacting.StatusRepository.PAGE_COMMUNITY
-import com.example.vehiclecontacting.StatusRepository.PAGE_HOME
-import com.example.vehiclecontacting.StatusRepository.PAGE_RECOMMEND
-import com.example.vehiclecontacting.StatusRepository.PAGE_USER
-import kotlinx.android.synthetic.main.fragment_community.*
-import kotlinx.android.synthetic.main.view_communitytitle.*
-import kotlinx.android.synthetic.main.view_userinfo.*
+import com.example.vehiclecontacting.Repository.AnimRepository.playTabBtnClickAnim
+import com.example.vehiclecontacting.Repository.InfoRepository
+import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_COMMUNITY
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_HOME
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_USER
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

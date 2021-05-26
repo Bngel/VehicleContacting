@@ -12,20 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FansActivity"></activity>
-        <activity android:name=".FollowActivity" />
-        <activity android:name=".UpdateInfoActivity" />
-        <activity android:name=".UserDetailActivity" />
-        <activity android:name=".DiscussActivity" />
-        <activity android:name=".CreateActivity" />
+        <activity android:name=".Activity.FansActivity"></activity>
+        <activity android:name=".Activity.FollowActivity" />
+        <activity android:name=".Activity.UpdateInfoActivity" />
+        <activity android:name=".Activity.UserDetailActivity" />
+        <activity android:name=".Activity.DiscussActivity" />
+        <activity android:name=".Activity.CreateActivity" />
         <activity
-            android:name=".CodeActivity"
+            android:name=".Activity.CodeActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

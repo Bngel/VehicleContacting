@@ -1,4 +1,4 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Repository
 
 import android.util.Log
 import com.example.vehiclecontacting.Web.DiscussController.*
@@ -507,6 +507,28 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取用户关注信息成功\t-\n")
+                stringBuilder.append("-\tcount: ${body.data.counts}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getFansLog(body: GetFans) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户粉丝信息接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户粉丝信息接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户粉丝信息成功\t-\n")
                 stringBuilder.append("-\tcount: ${body.data.counts}\t-\n")
             }
             else -> {

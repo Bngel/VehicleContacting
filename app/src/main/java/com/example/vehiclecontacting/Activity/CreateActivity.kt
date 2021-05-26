@@ -1,16 +1,18 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import com.example.vehiclecontacting.*
+import com.example.vehiclecontacting.Repository.ActivityCollector
+import com.example.vehiclecontacting.Repository.AnimRepository
+import com.example.vehiclecontacting.Repository.InfoRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
-import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.android.synthetic.main.view_createtitle.*
@@ -18,11 +20,9 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.random.Random
 
-class CreateActivity : AppCompatActivity() {
+class CreateActivity : BaseActivity() {
 
     private var imageFile: File? = null // 声明File对象
     private var imageUri: Uri? = null // 裁剪后的图片uri

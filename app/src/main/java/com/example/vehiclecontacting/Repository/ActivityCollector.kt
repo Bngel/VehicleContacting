@@ -1,4 +1,4 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Repository
 
 import android.app.Activity
 
@@ -13,6 +13,7 @@ object ActivityCollector {
     const val ACTIVITY_DETAIL = 0x07
     const val ACTIVITY_EDIT = 0x08
     const val ACTIVITY_FOLLOW = 0x09
+    const val ACTIVITY_FANS = 0x09
 
     private val activities = ArrayList<Activity>()
 

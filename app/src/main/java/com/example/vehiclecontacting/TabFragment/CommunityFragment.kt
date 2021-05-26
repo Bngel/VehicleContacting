@@ -14,7 +14,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.*
+import com.example.vehiclecontacting.Activity.CreateActivity
+import com.example.vehiclecontacting.Activity.DiscussActivity
+import com.example.vehiclecontacting.Activity.LoginActivity
 import com.example.vehiclecontacting.Adapter.CommunityViewPagerFragmentStateAdapter
+import com.example.vehiclecontacting.Repository.ActivityCollector
+import com.example.vehiclecontacting.Repository.AnimRepository
+import com.example.vehiclecontacting.Repository.InfoRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.CommunityCardView
 import kotlinx.android.synthetic.main.fragment_community.*

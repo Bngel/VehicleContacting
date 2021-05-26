@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
-import com.example.vehiclecontacting.AnimRepository
+import com.example.vehiclecontacting.Repository.AnimRepository
 import com.example.vehiclecontacting.R
-import com.example.vehiclecontacting.StatusRepository
+import com.example.vehiclecontacting.Repository.StatusRepository
 import kotlinx.android.synthetic.main.view_communitytitle.view.*
 
 class CommunityTitleView(context: Context, attrs: AttributeSet): RelativeLayout(context, attrs) {

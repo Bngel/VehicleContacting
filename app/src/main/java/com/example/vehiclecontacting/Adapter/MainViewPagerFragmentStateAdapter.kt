@@ -4,12 +4,12 @@ import android.util.SparseArray
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.vehiclecontacting.StatusRepository.PAGE_COMMUNITY
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_COMMUNITY
 import com.example.vehiclecontacting.TabFragment.CommunityFragment
 import com.example.vehiclecontacting.TabFragment.HomeFragment
 import com.example.vehiclecontacting.TabFragment.UserFragment
-import com.example.vehiclecontacting.StatusRepository.PAGE_HOME
-import com.example.vehiclecontacting.StatusRepository.PAGE_USER
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_HOME
+import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_USER
 
 class MainViewPagerFragmentStateAdapter(activity: AppCompatActivity, private val itemsCount: Int):
     FragmentStateAdapter(activity) {

@@ -1,4 +1,4 @@
-package com.example.vehiclecontacting
+package com.example.vehiclecontacting.Repository
 
 object StatusRepository {
 
