@@ -199,44 +199,8 @@ class DiscussActivity : AppCompatActivity() {
         if (InfoRepository.loginStatus.status && InfoRepository.user!!.id != DiscussRepository.ownerComment.fromId) {
             val followStatus = UserRepository.postJudgeFavor(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
             if (followStatus == StatusRepository.SUCCESS) {
-                if (UserRepository.followStatus == UserRepository.FOLLOW_NOT) {
-                    discuss_follow.text = resources.getString(R.string.fans_follow)
-                    discuss_follow.background = resources.getDrawable(R.drawable.bk_followbtn)
-                    discuss_follow.setTextColor(resources.getColor(R.color.colorFollow))
-                }
-                else {
-                    discuss_follow.text = resources.getString(R.string.fans_followed)
-                    discuss_follow.background = resources.getDrawable(R.drawable.bk_followedbtn)
-                    discuss_follow.setTextColor(resources.getColor(R.color.colorFollowed))
-                }
-                discuss_follow.setOnClickListener {
-                    if (UserRepository.followStatus == UserRepository.FOLLOW_NOT) {
-                        val follow = UserRepository.postFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
-                        if (follow == StatusRepository.SUCCESS) {
-                            discuss_follow.text = resources.getString(R.string.fans_followed)
-                            discuss_follow.background = resources.getDrawable(R.drawable.bk_followedbtn)
-                            discuss_follow.setTextColor(resources.getColor(R.color.colorFollowed))
-                            UserRepository.followStatus = UserRepository.FOLLOW_ED
-                            ToastView(this).show("关注成功")
-                        }
-                        else {
-                            ToastView(this).show("关注失败, 请稍后重试")
-                        }
-                    }
-                    else {
-                        val follow = UserRepository.deleteFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
-                        if (follow == StatusRepository.SUCCESS) {
-                            discuss_follow.text = resources.getString(R.string.fans_follow)
-                            discuss_follow.background = resources.getDrawable(R.drawable.bk_followbtn)
-                            discuss_follow.setTextColor(resources.getColor(R.color.colorFollow))
-                            UserRepository.followStatus = UserRepository.FOLLOW_NOT
-                            ToastView(this).show("取消关注成功")
-                        }
-                        else {
-                            ToastView(this).show("取消关注失败, 请稍后重试")
-                        }
-                    }
-                }
+                    discuss_follow.setStatus(UserRepository.followStatus)
+                    discuss_follow.follow()
             }
         }
     }

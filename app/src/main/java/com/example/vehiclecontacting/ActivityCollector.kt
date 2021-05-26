@@ -10,6 +10,7 @@ object ActivityCollector {
     const val CROP_PHOTO = 0x04 // 裁剪图片标识请求码
     const val ACTIVITY_DISCUSS = 0x05
     const val ACTIVITY_CREATE = 0x06
+    const val ACTIVITY_DETAIL = 0x07
 
     private val activities = ArrayList<Activity>()
 

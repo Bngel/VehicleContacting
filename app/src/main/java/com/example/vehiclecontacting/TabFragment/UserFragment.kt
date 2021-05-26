@@ -43,6 +43,7 @@ class UserFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         parentContext = context?.applicationContext
+        initData()
         initWidget()
     }
 
@@ -54,23 +55,27 @@ class UserFragment: Fragment() {
         }
     }
 
-    private fun initWidget() {
-        val status = InfoRepository.loginStatus.status
-        val user = InfoRepository.user
-        if (status) {
-            if (user != null) {
-                loadInfo()
-            }
-        }
-        else {
-            loginEvent()
+    private fun initData() {
+        if (InfoRepository.loginStatus.status && InfoRepository.user != null) {
+            loadInfo()
         }
     }
 
-    private fun loginEvent() {
+    private fun initWidget() {
+        userNameEvent()
+    }
+
+    private fun userNameEvent() {
         user_username.setOnClickListener {
-            val loginIntent = Intent(parentContext, LoginActivity::class.java)
-            startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            if (InfoRepository.loginStatus.status) {
+                val detailIntent = Intent(parentContext, UserDetailActivity::class.java)
+                detailIntent.putExtra("isSelf", true)
+                startActivityForResult(detailIntent, ActivityCollector.ACTIVITY_DETAIL)
+            }
+            else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
         }
     }
 
@@ -83,7 +88,7 @@ class UserFragment: Fragment() {
         user_fans.text = InfoRepository.user!!.fansCounts.toString()
         if (InfoRepository.user!!.photo != null)
             user_avt.setAvt(InfoRepository.user!!.photo)
-        user_username.isClickable = false
+        // user_username.isClickable = false
         user_avt.isClickable = true
         user_avt.setOnClickListener {
             callGallery()
