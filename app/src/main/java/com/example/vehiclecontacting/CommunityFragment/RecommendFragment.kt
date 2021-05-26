@@ -72,7 +72,6 @@ class RecommendFragment: Fragment() {
                 Handler().postDelayed(Runnable {
                     page ++
                     if (page <= DiscussRepository.pageCount){
-                        Log.d(StatusRepository.VehicleLog, page.toString())
                         DiscussRepository.getDiscuss(10, 1, page, 0)
                         cardEvent()
                     }

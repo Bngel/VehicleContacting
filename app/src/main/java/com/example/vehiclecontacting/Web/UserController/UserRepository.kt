@@ -39,6 +39,7 @@ object UserRepository {
                 val body = data.execute().body()!!
                 user = body.data.user
                 msg = body.msg
+                LogRepository.getUserLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return if (user != null) user!! else getNullUser(msg)
@@ -58,16 +59,76 @@ object UserRepository {
         return if (user != null) user!! else getNullUser(msg)
     }
 
-    fun patchUser(id: Int, sex: String ="", username: String=""): Boolean {
-        val data = userService.patchUser(id, sex, username)
+    /**
+     * msg:
+     * existWrong：用户不存在
+     * repeatWrong：用户没有修改信息（可能是重复请求或者用户写相同的信息保存）
+     * success：成功
+     */
+    fun patchUserDescription(id: String, description: String): Int {
+        val data = userService.patchUserDescription(id, description)
         var msg = ""
         try {
             thread {
                 val body = data.execute().body()!!
                 msg = body.msg
+                LogRepository.patchUserLog(body, "description")
             }.join(4000)
         } catch (e: Exception) {}
-        return msg == "success"
+        return when(msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.SUCCESS
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /**
+     * msg:
+     * existWrong：用户不存在
+     * repeatWrong：用户没有修改信息（可能是重复请求或者用户写相同的信息保存）
+     * success：成功
+     */
+    fun patchUserSex(id: String, sex: String): Int {
+        val data = userService.patchUserSex(id, sex)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.patchUserLog(body, "sex")
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when(msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.SUCCESS
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /**
+     * msg:
+     * existWrong：用户不存在
+     * repeatWrong：用户没有修改信息（可能是重复请求或者用户写相同的信息保存）
+     * success：成功
+     */
+    fun patchUserUsername(id: String, username: String): Int {
+        val data = userService.patchUserUsername(id, username)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.patchUserLog(body, "username")
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when(msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.SUCCESS
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
     }
 
     /**

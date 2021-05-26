@@ -7,6 +7,31 @@ import java.lang.StringBuilder
 
 object LogRepository {
 
+    fun getUserLog(body: GetUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户信息接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户信息接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户信息成功\t-\n")
+                stringBuilder.append("-\tuser: ${body.data.user}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 登录发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
     fun loginLog(body: PostLoginByCode) {
         val stringBuilder = StringBuilder()
         if (body.code == 200) {
@@ -530,6 +555,33 @@ object LogRepository {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取用户粉丝信息成功\t-\n")
                 stringBuilder.append("-\tcount: ${body.data.counts}\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun patchUserLog(body: PatchUser, type: String) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t用户${type}信息修改接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t用户${type}信息修改接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 用户${type}信息修改成功\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 用户${type}信息修改成功(输入相同信息)\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

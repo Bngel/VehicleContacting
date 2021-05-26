@@ -107,14 +107,15 @@ class UserFragment: Fragment() {
     }
 
     private fun loadInfo() {
-        user_username.text = InfoRepository.user!!.username?:""
-        user_vipstatus.text =
-            if (InfoRepository.user!!.vip > 0) "vip${InfoRepository.user!!.vip}" else "未开通VIP服务"
-        user_moments.text = InfoRepository.user!!.momentCounts.toString()
-        user_follow.text = InfoRepository.user!!.followCounts.toString()
-        user_fans.text = InfoRepository.user!!.fansCounts.toString()
-        if (InfoRepository.user!!.photo != null)
-            user_avt.setAvt(InfoRepository.user!!.photo)
+        InfoRepository.user!!.apply {
+            user_username.text = username?:""
+            user_vipstatus.text = if (vip > 0) "vip${vip}" else "未开通VIP服务"
+            user_moments.text = momentCounts.toString()
+            user_follow.text = followCounts.toString()
+            user_fans.text = fansCounts.toString()
+            if (photo != null)
+                user_avt.setAvt(photo)
+        }
         // user_username.isClickable = false
         user_avt.isClickable = true
         user_avt.setOnClickListener {

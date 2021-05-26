@@ -2,15 +2,23 @@ package com.example.vehiclecontacting.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.*
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
 import kotlinx.android.synthetic.main.activity_fans.*
+import kotlinx.android.synthetic.main.fragment_recommend.*
 
 class FansActivity : BaseActivity() {
+    var page = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fans)
@@ -20,6 +28,7 @@ class FansActivity : BaseActivity() {
     private fun initWidget() {
         fansShowEvent()
         closeEvent()
+        refreshEvent()
     }
 
     private fun closeEvent() {
@@ -28,8 +37,26 @@ class FansActivity : BaseActivity() {
         }
     }
 
+    private fun refreshEvent() {
+        fans_refresh.setEnableRefresh(false)
+        fans_refresh.setOnRefreshListener(object : RefreshListenerAdapter() {
+            override fun onLoadMore(refreshLayout: TwinklingRefreshLayout?) {
+                super.onLoadMore(refreshLayout)
+                Handler().postDelayed(Runnable {
+                    page ++
+                    if (page <= UserRepository.fansPage){
+                        DiscussRepository.getDiscuss(100, 1, page, 0)
+                    }
+                    else
+                        ToastView(baseContext).show("已无更多粉丝")
+                    fans_refresh.finishLoadmore()
+                }, 2000)
+            }
+        })
+    }
+
     private fun fansShowEvent() {
-        val fansStatus = UserRepository.getFans(InfoRepository.user!!.id, 10, 1, "")
+        val fansStatus = UserRepository.getFans(InfoRepository.user!!.id, 100, 1, "")
         if (fansStatus != StatusRepository.SUCCESS)
             ToastView(this).show("获取用户粉丝信息失败")
         fans_fans.removeAllViews()

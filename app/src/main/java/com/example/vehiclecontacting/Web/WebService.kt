@@ -30,12 +30,25 @@ interface WebService {
             :Call<GetUser>
 
     @PATCH("user")
-    fun patchUser(
-        @Query("id") id: Int,
-        @Query("sex") sex: String = "",
-        @Query("username") username: String = ""
+    fun patchUserDescription(
+        @Query("id") id: String,
+        @Query("introduction") description: String
     )
         : Call<PatchUser>
+
+    @PATCH("user")
+    fun patchUserSex(
+        @Query("id") id: String,
+        @Query("sex") sex: String
+    )
+            : Call<PatchUser>
+
+    @PATCH("user")
+    fun patchUserUsername(
+        @Query("id") id: String,
+        @Query("username") username: String
+    )
+            : Call<PatchUser>
 
     @POST("changePassword")
     fun postChangePassword(

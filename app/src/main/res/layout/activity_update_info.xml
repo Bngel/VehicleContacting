@@ -56,11 +56,10 @@
                 android:id="@+id/updateInfo_avt"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_toLeftOf="@id/updateInfo_change1"
-                android:src="@drawable/test_img"/>
+                android:layout_toLeftOf="@id/updateInfo_changeAvt"/>
 
             <ImageView
-                android:id="@+id/updateInfo_change1"
+                android:id="@+id/updateInfo_changeAvt"
                 android:layout_width="15dp"
                 android:layout_height="25dp"
                 android:layout_margin="15dp"
@@ -94,13 +93,12 @@
                 android:id="@+id/updateInfo_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/updateInfo_change2"
+                android:layout_toLeftOf="@id/updateInfo_changeUsername"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="测试字段"/>
+                android:gravity="center"/>
 
             <ImageView
-                android:id="@+id/updateInfo_change2"
+                android:id="@+id/updateInfo_changeUsername"
                 android:layout_width="15dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
@@ -135,13 +133,12 @@
                 android:id="@+id/updateInfo_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/updateInfo_change3"
+                android:layout_toLeftOf="@id/updateInfo_changeSex"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="测试字段"/>
+                android:gravity="center"/>
 
             <ImageView
-                android:id="@+id/updateInfo_change3"
+                android:id="@+id/updateInfo_changeSex"
                 android:layout_width="15dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
@@ -161,7 +158,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,13 +174,12 @@
                 android:id="@+id/updateInfo_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/updateInfo_change4"
+                android:layout_toLeftOf="@id/updateInfo_changeBirth"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="测试字段"/>
+                android:gravity="center"/>
 
             <ImageView
-                android:id="@+id/updateInfo_change4"
+                android:id="@+id/updateInfo_changeBirth"
                 android:layout_width="15dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
@@ -216,13 +213,12 @@
                 android:id="@+id/updateInfo_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/updateInfo_change5"
+                android:layout_toLeftOf="@id/updateInfo_changeDescription"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="测试字段"/>
+                android:gravity="center"/>
 
             <ImageView
-                android:id="@+id/updateInfo_change5"
+                android:id="@+id/updateInfo_changeDescription"
                 android:layout_width="15dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
