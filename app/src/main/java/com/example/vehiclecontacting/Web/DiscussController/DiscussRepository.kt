@@ -27,6 +27,7 @@ object DiscussRepository {
     var thirdCount = 0
 
     lateinit var ownerComment: OwnerComment
+    lateinit var thirdOwnerComment: CommentOwner
 
     var pageCount = 0
 
@@ -445,6 +446,7 @@ object DiscussRepository {
                     thirdCount = body.data.counts
                     thirdCommentList.clear()
                     thirdCommentList.addAll(body.data.thirdCommentList)
+                    thirdOwnerComment = body.data.ownerComment
                 }
                 LogRepository.getThirdDiscussLog(body)
             }.join(4000)

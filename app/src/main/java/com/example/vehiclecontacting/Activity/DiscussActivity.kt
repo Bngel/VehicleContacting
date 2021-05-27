@@ -3,7 +3,6 @@ package com.example.vehiclecontacting.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.StatusRepository
-import com.example.vehiclecontacting.Web.DiscussController.Comment
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.DiscussController.FirstComment
 import com.example.vehiclecontacting.Web.DiscussController.OwnerComment
@@ -247,7 +245,7 @@ class DiscussActivity : BaseActivity() {
             if (secondStatus == StatusRepository.SUCCESS) {
                 for (secondComment in DiscussRepository.secondCommentList) {
                     val view = FirstCommentCardView(this, secondComment.photo, secondComment.username,
-                        secondComment.description, secondComment.createTime.substring(0,10), secondComment.likeCounts, secondComment.commentCounts)
+                        secondComment.description, secondComment.createTime.substring(0,10), secondComment.likeCounts, secondComment.commentCounts, secondComment.number)
                     commentCards.addView(view)
 
                     // 插入二级评论
