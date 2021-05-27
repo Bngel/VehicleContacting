@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.view_comment_first.view.*
@@ -20,6 +21,21 @@ class FirstCommentCardView: LinearLayout {
         comment_first_likeCount.text = likeCount.toString()
     }
     constructor(context: Context, avt: String, username: String, text: String, date: String, likeCount: Int, commentCount: Int) : super(context) {
+        comment_first_avt.setAvt(avt)
+        comment_first_username.text = username
+        comment_first_text.text = text
+        comment_first_date.text = date
+        comment_first_likeCount.text = likeCount.toString()
+        if (commentCount > 2) {
+            comment_second_count.visibility = View.VISIBLE
+            comment_second_count.text = "查看全部 $commentCount 条回复 >"
+        }
+        else {
+            comment_second_count.visibility = View.GONE
+        }
+        comment_second_count.background = resources.getDrawable(R.drawable.bk_comment_second_count)
+    }
+    constructor(context: Context, avt: String, username: String, text: String, date: String, likeCount: Int, commentCount: Int, deleted: Int) : super(context) {
         comment_first_avt.setAvt(avt)
         comment_first_username.text = username
         comment_first_text.text = text

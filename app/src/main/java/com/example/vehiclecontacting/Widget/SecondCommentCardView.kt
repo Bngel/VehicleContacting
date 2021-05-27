@@ -17,12 +17,12 @@ class SecondCommentCardView: LinearLayout{
 
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
-    constructor(context: Context, avt: String, username: String, text: String, date: String, likeCount: Int) : super(context) {
+    constructor(context: Context, avt: String, username: String, text: String, date: String, likeCount: String) : super(context) {
         comment_second_avt.setAvt(avt)
         comment_second_username.text = username
         comment_second_text.text = text
         comment_second_date.text = date
-        comment_second_likeCount.text = likeCount.toString()
+        comment_second_likeCount.text = likeCount
     }
 
     init {

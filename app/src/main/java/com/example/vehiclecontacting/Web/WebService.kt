@@ -242,6 +242,30 @@ interface WebService {
     )
             : Call<GetFans>
 
+    @GET("firstDiscuss")
+    fun getFirstDiscuss(
+        @Query("cnt") cnt: Int,
+        @Query("number") number: String
+    )
+            : Call<GetFirstDiscuss>
+
+    @GET("secondDiscuss")
+    fun getSecondDiscuss(
+        @Query("cnt") cnt: Int,
+        @Query("isOrderByHot") isOrderByHot: Int,
+        @Query("number") number: String,
+        @Query("page") page: Int
+    )
+            : Call<GetSecondDiscuss>
+
+    @GET("thirdDiscuss")
+    fun getThirdDiscuss(
+        @Query("cnt") cnt: Int,
+        @Query("number") number: String,
+        @Query("page") page: Int
+    )
+            : Call<GetThirdDiscuss>
+
 
     companion object Factory {
         fun create() : WebService {

@@ -1,7 +1,10 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
-data class GetFirstDiscuss(
+data class GetThirdDiscuss(
     val code: Int,
-    val data: FirstDiscuss,
+    val data: ThirdDiscuss,
     val msg: String
 )
+
+
+

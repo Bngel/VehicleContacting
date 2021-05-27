@@ -589,4 +589,80 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun getFirstDiscussLog(body: GetFirstDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t一级帖子界面接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t一级帖子界面接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 一级帖子界面信息获取成功\t-\n")
+                stringBuilder.append("-\tnumber: ${body.data.ownerComment.number}\t-\n")
+                stringBuilder.append("-\ttitle: ${body.data.ownerComment.title}\t-\n")
+                stringBuilder.append("-\tlikeCount: ${body.data.ownerComment.likeCounts}\t-\n")
+                stringBuilder.append("-\tcommentCount: ${body.data.ownerComment.commentCounts}\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getSecondDiscussLog(body: GetSecondDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t二级帖子评论接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t二级帖子评论接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 二级帖子评论获取成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getThirdDiscussLog(body: GetThirdDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t三级帖子评论接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t三级帖子评论接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 三级帖子评论获取成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

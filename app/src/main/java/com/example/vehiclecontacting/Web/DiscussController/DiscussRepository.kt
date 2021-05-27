@@ -1,10 +1,12 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
+import android.util.Log
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
+import retrofit2.http.Query
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -16,6 +18,13 @@ object DiscussRepository {
 
     val discussList = ArrayList<Discuss>()
     val commentList = ArrayList<Comment>()
+    val firstCommentList = ArrayList<FirstComment>()
+    val secondCommentList = ArrayList<SecondComment>()
+    var secondPage = 0
+    var secondCount = 0
+    val thirdCommentList = ArrayList<ThirdComment>()
+    var thirdPage = 0
+    var thirdCount = 0
 
     lateinit var ownerComment: OwnerComment
 
@@ -174,6 +183,7 @@ object DiscussRepository {
             thread {
                 val body = data.execute().body()!!
                 msg = body.msg
+                commentList.clear()
                 commentList.addAll(body.data.commentList)
                 ownerComment = body.data.OwnerComment
                 pageCount = body.data.pages
@@ -359,6 +369,89 @@ object DiscussRepository {
             "success" -> StatusRepository.SUCCESS
             "existWrong" -> StatusRepository.EXIST_WRONG
             "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在
+     * success：成功 （返回json ownerComment：帖子主人写的内容 firstCommentList：下面的评论列表（2-3个就好））
+     */
+    fun getFirstDiscuss(cnt: Int, number: String): Int {
+        val data = discussService.getFirstDiscuss(cnt, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    ownerComment = body.data.ownerComment
+                    firstCommentList.clear()
+                    firstCommentList.addAll(body.data.firstCommentList)
+                }
+                LogRepository.getFirstDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在
+     * success：成功 （返回json secondCommentList：二级评论列表 pages：页面数 counts：数据总数）
+     */
+    fun getSecondDiscuss(cnt: Int, isOrderByHot: Int, number: String, page: Int): Int {
+        val data = discussService.getSecondDiscuss(cnt, isOrderByHot, number, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    secondPage = body.data.pages
+                    secondCount = body.data.counts
+                    secondCommentList.clear()
+                    secondCommentList.addAll(body.data.secondCommentList)
+                }
+                LogRepository.getSecondDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：评论不存在
+     * success：成功 （返回json thirdCommentList：三级评论列表 OwnerComment：父级评论（显示在最上面） pages：页面数 counts：页面数据量）
+     */
+    fun getThirdDiscuss(cnt: Int, number: String, page: Int): Int {
+        val data = discussService.getThirdDiscuss(cnt, number, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    thirdPage = body.data.pages
+                    thirdCount = body.data.counts
+                    thirdCommentList.clear()
+                    thirdCommentList.addAll(body.data.thirdCommentList)
+                }
+                LogRepository.getThirdDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }

@@ -128,7 +128,7 @@ class CommunityFragment: Fragment() {
                                 val view = CommunityCardView(parentContext!!, discuss.title, discuss.userPhoto, discuss.username,discuss.description,discuss.photo,
                                     discuss.likeCounts,discuss.commentCounts)
                                 view.setOnClickListener {
-                                    DiscussRepository.getComment(10, 1, 1, discuss.number)
+                                    DiscussRepository.getFirstDiscuss(30, discuss.number)
                                     val discussIntent = Intent(parentContext, DiscussActivity::class.java)
                                     discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
                                     discussIntent.putExtra("comments", DiscussRepository.commentList)

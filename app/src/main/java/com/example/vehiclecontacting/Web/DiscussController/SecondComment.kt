@@ -1,0 +1,31 @@
+package com.example.vehiclecontacting.Web.DiscussController
+
+data class SecondComment(
+    val commentCounts: Int,
+    val createTime: String,
+    val description: String,
+    val id: String,
+    val likeCounts: Int,
+    val number: String,
+    val photo: String,
+    val replyCreateTime1: String,
+    val replyCreateTime2: String,
+    val replyDescription1: String,
+    val replyDescription2: String,
+    val replyId1: String,
+    val replyId2: String,
+    val replyLikeCounts1: String,
+    val replyLikeCounts2: String,
+    val replyNumber1: String,
+    val replyNumber2: String,
+    val replyPhoto1: String,
+    val replyPhoto2: String,
+    val replyUsername1: String,
+    val replyUsername2: String,
+    val replyVip1: String,
+    val replyVip2: String,
+    val secondReplyUsername1: String,
+    val secondReplyUsername2: String,
+    val username: String,
+    val vip: Int
+)

@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ChangeInfoActivity"></activity>
+        <activity android:name=".Activity.SettingActivity"></activity>
+        <activity android:name=".Activity.ChangeInfoActivity" />
         <activity android:name=".Activity.FansActivity" />
         <activity android:name=".Activity.FollowActivity" />
         <activity android:name=".Activity.UpdateInfoActivity" />

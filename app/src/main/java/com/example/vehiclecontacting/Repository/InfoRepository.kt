@@ -36,6 +36,17 @@ object InfoRepository {
         }
     }
 
+    fun quitStatus(context: Context) {
+        context.getSharedPreferences(LOCAL_STATUS, Context.MODE_PRIVATE).edit().apply {
+            putBoolean(KEY_STATUS, false)
+            putString(KEY_ID, "")
+            putString(KEY_PHONE, "")
+            putString(KEY_TOKEN, "")
+        }
+        user = null
+        loginStatus = LoginStatusInfo(false, "", "", "")
+    }
+
     fun refreshStatus() {
         val status = loginStatus.status
         if (status) {

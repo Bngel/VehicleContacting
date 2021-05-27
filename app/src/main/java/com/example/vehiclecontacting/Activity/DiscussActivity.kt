@@ -3,6 +3,7 @@ package com.example.vehiclecontacting.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,14 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.example.vehiclecontacting.Data.ReplyInfo
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.Comment
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
+import com.example.vehiclecontacting.Web.DiscussController.FirstComment
 import com.example.vehiclecontacting.Web.DiscussController.OwnerComment
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.FirstCommentCardView
@@ -29,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_discuss.*
 class DiscussActivity : BaseActivity() {
 
     private lateinit var ownerComment: OwnerComment
-    private lateinit var comments: ArrayList<Comment>
+    private lateinit var comments: ArrayList<FirstComment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -238,23 +241,39 @@ class DiscussActivity : BaseActivity() {
             commentRefresh.setAutoLoadMore(true)
             commentRefresh.setEnableRefresh(false)
             commentRefresh.setEnableOverScroll(false)
-            for (comment in comments) {
-                val view = FirstCommentCardView(this, comment.userPhoto, comment.username,
-                    comment.comments, comment.createTime.substring(0,10), comment.likeCounts, comment.commentCounts)
-                commentCards.addView(view)
+            commentRefresh.setEnableLoadmore(false)
 
-                // 插入二级评论
-                val views = SecondCommentCardView(view.context, comment.userPhoto, comment.username,
-                    comment.comments, comment.createTime.substring(0,10), comment.likeCounts)
-                val secondView = view.findViewById<LinearLayout>(R.id.comment_second_cards)
-                secondView.addView(views)
+            val secondStatus = DiscussRepository.getSecondDiscuss(ownerComment.commentCounts, 1, ownerComment.number, 1)
+            if (secondStatus == StatusRepository.SUCCESS) {
+                for (secondComment in DiscussRepository.secondCommentList) {
+                    val view = FirstCommentCardView(this, secondComment.photo, secondComment.username,
+                        secondComment.description, secondComment.createTime.substring(0,10), secondComment.likeCounts, secondComment.commentCounts)
+                    commentCards.addView(view)
+
+                    // 插入二级评论
+                    val reply1 = ReplyInfo(secondComment.replyNumber1?:"", secondComment.replyId1?:"", secondComment.replyUsername1?:"", secondComment.replyPhoto1?:"",
+                        secondComment.replyVip1?:"", secondComment.replyDescription1?:"", secondComment.replyLikeCounts1?:"", secondComment.secondReplyUsername1?:"", secondComment.replyCreateTime1?:"")
+                    val reply2 = ReplyInfo(secondComment.replyNumber2?:"", secondComment.replyId2?:"", secondComment.replyUsername2?:"", secondComment.replyPhoto2?:"",
+                        secondComment.replyVip2?:"", secondComment.replyDescription2?:"", secondComment.replyLikeCounts2?:"", secondComment.secondReplyUsername2?:"", secondComment.replyCreateTime2?:"")
+                    val secondView = view.findViewById<LinearLayout>(R.id.comment_second_cards)
+                    if (reply1.replyId != "") {
+                        val view1 = SecondCommentCardView(view.context, reply1.replyPhoto, reply1.replyUsername,
+                            reply1.replyDescription, reply1.replyCreateTime.substring(0, 10), reply1.replyLikeCounts)
+                        secondView.addView(view1)
+                    }
+                    if (reply2.replyId != "") {
+                        val view2 = SecondCommentCardView(view.context, reply2.replyPhoto, reply2.replyUsername,
+                            reply2.replyDescription, reply2.replyCreateTime.substring(0,10), reply2.replyLikeCounts)
+                        secondView.addView(view2)
+                    }
+                }
             }
             val commentClose = contentView.findViewById<ImageView>(R.id.comment_close)
             commentClose.setOnClickListener {
                 popWindow.dismiss()
             }
             val commentCount = contentView.findViewById<TextView>(R.id.comment_commentCount)
-            commentCount.text = "评论 ${comments.count()}"
+            commentCount.text = "评论 ${ownerComment.commentCounts}"
 
             val rootView = LayoutInflater.from(this).inflate(R.layout.activity_discuss, null)
             popWindow.animationStyle = R.style.contextCommentAnim
@@ -264,7 +283,7 @@ class DiscussActivity : BaseActivity() {
 
     private fun initData() {
         ownerComment = intent.getParcelableExtra("ownerComment")
-        comments = intent.getParcelableArrayListExtra("comments")
+        comments = intent.getParcelableArrayListExtra("firstComments")
         discuss_avt.setAvt(ownerComment.userPhoto)
         discuss_title.text = ownerComment.title
         discuss_username.text = ownerComment.username

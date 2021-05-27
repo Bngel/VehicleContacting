@@ -15,6 +15,7 @@ object ActivityCollector {
     const val ACTIVITY_FOLLOW = 0x09
     const val ACTIVITY_FANS = 0x09
     const val ACTIVITY_CHANGE_INFO = 0x10
+    const val ACTIVITY_SETTING = 0x11
 
     private val activities = ArrayList<Activity>()
 

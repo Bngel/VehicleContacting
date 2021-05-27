@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Activity.DiscussActivity
 import com.example.vehiclecontacting.R
-import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.CommunityCardView
 import com.example.vehiclecontacting.Widget.ToastView
@@ -89,10 +87,10 @@ class RecommendFragment: Fragment() {
                 val view = CommunityCardView(parentContext!!, discuss.title, discuss.userPhoto, discuss.username,discuss.description,discuss.photo,
                     discuss.likeCounts,discuss.commentCounts)
                 view.setOnClickListener {
-                    DiscussRepository.getComment(10, 1, 1, discuss.number)
+                    DiscussRepository.getFirstDiscuss(30, discuss.number)
                     val discussIntent = Intent(parentContext, DiscussActivity::class.java)
                     discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
-                    discussIntent.putExtra("comments", DiscussRepository.commentList)
+                    discussIntent.putExtra("firstComments", DiscussRepository.firstCommentList)
                     startActivityForResult(discussIntent, ActivityCollector.ACTIVITY_DISCUSS)
                 }
                 recommend_cards.addView(view)

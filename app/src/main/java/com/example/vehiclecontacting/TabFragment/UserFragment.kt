@@ -12,10 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.*
-import com.example.vehiclecontacting.Activity.FansActivity
-import com.example.vehiclecontacting.Activity.FollowActivity
-import com.example.vehiclecontacting.Activity.LoginActivity
-import com.example.vehiclecontacting.Activity.UserDetailActivity
+import com.example.vehiclecontacting.Activity.*
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
@@ -55,6 +52,22 @@ class UserFragment: Fragment() {
         }
     }
 
+    private fun initNotLogin() {
+        InfoRepository.quitStatus(parentContext!!)
+        if (!InfoRepository.loginStatus.status) {
+            user_username.text = resources.getString(R.string.user_login)
+            user_vipstatus.text = "未开通VIP服务"
+            user_moments.text = ""
+            user_follow.text = ""
+            user_fans.text = ""
+            user_avt.setAvt(resources.getDrawable(R.drawable.bp_defaultavt))
+            // user_username.isClickable = false
+            user_avt.isClickable = false
+            user_setting.visibility = View.GONE
+        }
+        settingEvent()
+    }
+
     private fun initData() {
         if (InfoRepository.loginStatus.status && InfoRepository.user != null) {
             loadInfo()
@@ -65,6 +78,20 @@ class UserFragment: Fragment() {
         userNameEvent()
         followEvent()
         fansEvent()
+        settingEvent()
+    }
+
+    private fun settingEvent() {
+        if (InfoRepository.loginStatus.status) {
+            user_setting.visibility = View.VISIBLE
+        }
+        else {
+            user_setting.visibility = View.GONE
+        }
+        user_setting.setOnClickListener {
+            val stIntent = Intent(parentContext!!, SettingActivity::class.java)
+            startActivityForResult(stIntent, ActivityCollector.ACTIVITY_SETTING)
+        }
     }
 
     private fun fansEvent() {
@@ -115,6 +142,7 @@ class UserFragment: Fragment() {
             user_fans.text = fansCounts.toString()
             if (photo != null)
                 user_avt.setAvt(photo)
+            user_setting.visibility = View.VISIBLE
         }
         // user_username.isClickable = false
         user_avt.isClickable = true
@@ -168,6 +196,10 @@ class UserFragment: Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             when (requestCode) {
+                ActivityCollector.ACTIVITY_SETTING -> {
+                    if (data?.getBooleanExtra("quit", false) == true)
+                        initNotLogin()
+                }
                 ActivityCollector.ACTIVITY_LOGIN -> {
                     val status = data?.getBooleanExtra(StatusRepository.loginStatus, false)
                     if (status == true) {

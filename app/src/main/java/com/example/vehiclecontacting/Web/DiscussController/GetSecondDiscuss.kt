@@ -1,7 +1,7 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
-data class GetFirstDiscuss(
+data class GetSecondDiscuss(
     val code: Int,
-    val data: FirstDiscuss,
+    val data: SecondDiscuss,
     val msg: String
 )
