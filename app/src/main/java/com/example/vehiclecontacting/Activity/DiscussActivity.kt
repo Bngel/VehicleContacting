@@ -318,7 +318,8 @@ class DiscussActivity : BaseActivity() {
                             reply1.replyUsername,
                             reply1.replyDescription,
                             reply1.replyCreateTime.substring(0, 10),
-                            reply1.replyLikeCounts
+                            reply1.replyLikeCounts,
+                            reply1.replyNumber
                         )
                         val reply1 = view1.findViewById<ImageView>(R.id.comment_second_commentImg)
                         reply1.setOnClickListener {
@@ -334,7 +335,8 @@ class DiscussActivity : BaseActivity() {
                             reply2.replyUsername,
                             reply2.replyDescription,
                             reply2.replyCreateTime.substring(0, 10),
-                            reply2.replyLikeCounts
+                            reply2.replyLikeCounts,
+                            reply2.replyNumber
                         )
                         val reply2 = view2.findViewById<ImageView>(R.id.comment_second_commentImg)
                         reply2.setOnClickListener {

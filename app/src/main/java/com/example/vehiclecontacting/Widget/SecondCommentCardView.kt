@@ -26,13 +26,37 @@ class SecondCommentCardView: LinearLayout{
         username: String,
         text: String,
         date: String,
-        likeCount: String
+        likeCount: String,
+        number: String
     ) : super(context) {
         comment_second_avt.setAvt(avt)
         comment_second_username.text = username
         comment_second_text.text = text
         comment_second_date.text = date
         comment_second_likeCount.text = likeCount
+        secondNumber = number
+        comment_second_likeImg.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
+                if (likeStatus != StatusRepository.SUCCESS){
+                    val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
+                    if (unlikeStatus == StatusRepository.SUCCESS) {
+                        comment_second_likeImg.setImageResource(R.drawable.gp_like)
+                        comment_second_likeCount.text =
+                            (comment_second_likeCount.text.toString().toInt() - 1).toString()
+                        ToastView(context).show("取消点赞成功")
+                    }
+                }
+                else {
+                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                    comment_second_likeCount.text = (comment_second_likeCount.text.toString().toInt() + 1).toString()
+                    ToastView(context).show("点赞成功")
+                }
+            }
+            else {
+                ToastView(context).show("请先登录")
+            }
+        }
     }
 
     init {
@@ -54,6 +78,28 @@ class SecondCommentCardView: LinearLayout{
         comment_second_likeCount.text = data.likeCounts.toString()
         comment_second_date.text = data.createTime.substring(0, 10)
         secondNumber = data.number
+        comment_second_likeImg.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
+                if (likeStatus != StatusRepository.SUCCESS){
+                    val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
+                    if (unlikeStatus == StatusRepository.SUCCESS) {
+                        comment_second_likeImg.setImageResource(R.drawable.gp_like)
+                        comment_second_likeCount.text =
+                            (comment_second_likeCount.text.toString().toInt() - 1).toString()
+                        ToastView(context).show("取消点赞成功")
+                    }
+                }
+                else {
+                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                    comment_second_likeCount.text = (comment_second_likeCount.text.toString().toInt() + 1).toString()
+                    ToastView(context).show("点赞成功")
+                }
+            }
+            else {
+                ToastView(context).show("请先登录")
+            }
+        }
     }
 
     fun openSecondComments() {
@@ -91,7 +137,8 @@ class SecondCommentCardView: LinearLayout{
                 thirdComment.username,
                 thirdComment.description,
                 thirdComment.createTime.substring(0, 10),
-                thirdComment.likeCounts.toString()
+                thirdComment.likeCounts.toString(),
+                thirdComment.number
             )
             val commentImg = view1.findViewById<ImageView>(R.id.comment_second_commentImg)
             commentImg.setOnClickListener {
