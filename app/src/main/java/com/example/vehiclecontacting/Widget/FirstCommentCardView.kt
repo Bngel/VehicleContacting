@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
+import android.widget.*
 import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository.ownerComment
 import kotlinx.android.synthetic.main.view_comment_first.view.*
 
 class FirstCommentCardView: LinearLayout {
@@ -100,6 +99,26 @@ class FirstCommentCardView: LinearLayout {
                 inputManager.showSoftInput(secondEdit, 0)
             }
             thirdCommentCards.addView(view1)
+        }
+
+        val sendBtn = contentView.findViewById<TextView>(R.id.comment_third_send)
+        sendBtn.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val commentEdit = contentView.findViewById<EditText>(R.id.comment_third_edit)
+                val commentText = commentEdit.text.toString()
+                if (commentText != "") {
+                    val status = DiscussRepository.postComment(commentText, firstNumber, InfoRepository.user!!.id,
+                        ownerComment.number, DiscussRepository.replyNumber)
+                    if (status == StatusRepository.SUCCESS) {
+                        commentEdit.setText("")
+                        ToastView(context).show("评论成功")
+                    }
+                    else
+                        ToastView(context).show("评论失败")
+                }
+            }
+            else
+                ToastView(context).show("请先登录")
         }
 
         val rootView = LayoutInflater.from(context).inflate(R.layout.activity_discuss, null)

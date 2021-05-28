@@ -7,11 +7,9 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
+import android.widget.*
 import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.CommentOwner
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
@@ -106,6 +104,25 @@ class SecondCommentCardView: LinearLayout{
             thirdCommentCards.addView(view1)
         }
 
+        val sendBtn = contentView.findViewById<TextView>(R.id.comment_third_send)
+        sendBtn.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val commentEdit = contentView.findViewById<EditText>(R.id.comment_third_edit)
+                val commentText = commentEdit.text.toString()
+                if (commentText != "") {
+                    val status = DiscussRepository.postComment(commentText, DiscussRepository.thirdOwnerComment.number, InfoRepository.user!!.id,
+                        DiscussRepository.ownerComment.number, DiscussRepository.replyNumber)
+                    if (status == StatusRepository.SUCCESS) {
+                        commentEdit.setText("")
+                        ToastView(context).show("评论成功")
+                    }
+                    else
+                        ToastView(context).show("评论失败")
+                }
+            }
+            else
+                ToastView(context).show("请先登录")
+        }
         val rootView = LayoutInflater.from(context).inflate(R.layout.activity_discuss, null)
         popWindow.animationStyle = R.style.contextCommentAnim
         popWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0)

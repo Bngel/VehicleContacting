@@ -28,6 +28,8 @@ import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_discuss.*
 import kotlinx.android.synthetic.main.popup_comment.*
 import kotlinx.android.synthetic.main.view_comment_first.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DiscussActivity : BaseActivity() {
 
@@ -349,6 +351,26 @@ class DiscussActivity : BaseActivity() {
             }
             val commentCount = contentView.findViewById<TextView>(R.id.comment_commentCount)
             commentCount.text = "评论 ${ownerComment.commentCounts}"
+
+            val sendBtn = contentView.findViewById<TextView>(R.id.comment_send)
+            sendBtn.setOnClickListener {
+                if (InfoRepository.loginStatus.status) {
+                    val commentEdit = contentView.findViewById<EditText>(R.id.comment_edit)
+                    val commentText = commentEdit.text.toString()
+                    if (commentText != "") {
+                        val status = DiscussRepository.postComment(commentText, "0", InfoRepository.user!!.id,
+                        ownerComment.number, "0")
+                        if (status == StatusRepository.SUCCESS) {
+                            commentEdit.setText("")
+                            ToastView(this).show("评论成功")
+                        }
+                        else
+                            ToastView(this).show("评论失败")
+                    }
+                }
+                else
+                    ToastView(this).show("请先登录")
+            }
 
             val rootView = LayoutInflater.from(this).inflate(R.layout.activity_discuss, null)
             popWindow.animationStyle = R.style.contextCommentAnim

@@ -266,6 +266,16 @@ interface WebService {
     )
             : Call<GetThirdDiscuss>
 
+    @POST("comment")
+    fun postComment(
+        @Query("comments") comments: String,
+        @Query("fatherNumber") fatherNumber: String,
+        @Query("id") id: String,
+        @Query("number") number: String,
+        @Query("replyNumber") replyNumber: String
+    )
+            : Call<PostComment>
+
 
     companion object Factory {
         fun create() : WebService {

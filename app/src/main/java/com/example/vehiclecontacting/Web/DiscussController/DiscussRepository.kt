@@ -27,7 +27,7 @@ object DiscussRepository {
     var thirdPage = 0
     var thirdCount = 0
 
-    var replyNumber = ""
+    var replyNumber = "0"
 
     lateinit var ownerComment: OwnerComment
     lateinit var thirdOwnerComment: CommentOwner
@@ -452,6 +452,28 @@ object DiscussRepository {
                     thirdOwnerComment = body.data.ownerComment
                 }
                 LogRepository.getThirdDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子或评论不存在（可能是主贴，父级评论，被回复评论）
+     * success：成功
+     */
+    fun postComment(comments: String, fatherNumber: String, id: String, number: String, replyNumber: String): Int {
+        val data = discussService.postComment(comments, fatherNumber, id, number, replyNumber)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postCommentLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

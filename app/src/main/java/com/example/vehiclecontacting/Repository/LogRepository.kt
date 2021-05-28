@@ -665,4 +665,28 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun postCommentLog(body: PostComment) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t发表帖子评论接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t发表帖子评论接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 发表帖子评论成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 帖子或评论不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }
