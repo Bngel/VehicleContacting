@@ -1,6 +1,7 @@
 package com.example.vehiclecontacting.Web.DiscussController
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.WebService
@@ -25,6 +26,9 @@ object DiscussRepository {
     val thirdCommentList = ArrayList<ThirdComment>()
     var thirdPage = 0
     var thirdCount = 0
+
+    var replyNumber = ""
+    var replySecondNumber = ""
 
     lateinit var ownerComment: OwnerComment
     lateinit var thirdOwnerComment: CommentOwner

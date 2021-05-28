@@ -48,6 +48,12 @@ class FirstCommentCardView: LinearLayout {
             comment_second_count.visibility = View.GONE
         }
         comment_second_count.background = resources.getDrawable(R.drawable.bk_comment_second_count)
+        comment_first_commentImg.setOnClickListener {
+            val thirdStatus = DiscussRepository.getThirdDiscuss(1000, firstNumber, 1)
+            if (thirdStatus == StatusRepository.SUCCESS) {
+                openSecondComments()
+            }
+        }
     }
 
     init {
@@ -78,6 +84,7 @@ class FirstCommentCardView: LinearLayout {
                 thirdComment.description, thirdComment.createTime.substring(0, 10), thirdComment.likeCounts.toString())
             thirdCommentCards.addView(view1)
         }
+
         val rootView = LayoutInflater.from(context).inflate(R.layout.activity_discuss, null)
         popWindow.animationStyle = R.style.contextCommentAnim
         popWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0)

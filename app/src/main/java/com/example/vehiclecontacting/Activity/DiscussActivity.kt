@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.Activity
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -7,16 +8,15 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.Data.ReplyInfo
+import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
-import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Web.DiscussController.FirstComment
@@ -26,6 +26,8 @@ import com.example.vehiclecontacting.Widget.FirstCommentCardView
 import com.example.vehiclecontacting.Widget.SecondCommentCardView
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_discuss.*
+import kotlinx.android.synthetic.main.popup_comment.*
+import kotlinx.android.synthetic.main.view_comment_first.*
 
 class DiscussActivity : BaseActivity() {
 
@@ -68,23 +70,25 @@ class DiscussActivity : BaseActivity() {
                     .setTitle("提示:")
                     .setMessage("是否确定删除帖子")
                     .setPositiveButton("确定",
-                    DialogInterface.OnClickListener { dialogInterface, i ->
-                        val delete = DiscussRepository.deleteDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
-                        if (delete == StatusRepository.SUCCESS) {
-                            ToastView(this).show("删除成功")
-                            val intent = Intent()
-                            intent.putExtra("update", true)
-                            setResult(RESULT_OK, intent)
-                            ToastView(this).show("删除成功")
-                            finish()
-                        }
-                        else {
-                            ToastView(this).show("删除失败")
-                            finish()
-                        }
-                    })
+                        DialogInterface.OnClickListener { dialogInterface, i ->
+                            val delete = DiscussRepository.deleteDiscuss(
+                                InfoRepository.user!!.id,
+                                DiscussRepository.ownerComment.number
+                            )
+                            if (delete == StatusRepository.SUCCESS) {
+                                ToastView(this).show("删除成功")
+                                val intent = Intent()
+                                intent.putExtra("update", true)
+                                setResult(RESULT_OK, intent)
+                                ToastView(this).show("删除成功")
+                                finish()
+                            } else {
+                                ToastView(this).show("删除失败")
+                                finish()
+                            }
+                        })
                     .setNegativeButton("取消",
-                    DialogInterface.OnClickListener { dialogInterface, i ->  })
+                        DialogInterface.OnClickListener { dialogInterface, i -> })
                     .show()
             }
         }
@@ -93,7 +97,10 @@ class DiscussActivity : BaseActivity() {
     private fun likeAndFavorEvent() {
         var lf = -1
         if (InfoRepository.loginStatus.status) {
-            lf = DiscussRepository.postLikeAndFavor(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+            lf = DiscussRepository.postLikeAndFavor(
+                InfoRepository.user!!.id,
+                DiscussRepository.ownerComment.number
+            )
             if (lf == StatusRepository.SUCCESS) {
                 if (DiscussRepository.like == DiscussRepository.LIKE_STATUS) {
                     discuss_likeImg.visibility = View.VISIBLE
@@ -128,7 +135,10 @@ class DiscussActivity : BaseActivity() {
             if (InfoRepository.loginStatus.status) {
                 if (lf == StatusRepository.SUCCESS) {
                     if (DiscussRepository.like == DiscussRepository.LIKE_STATUS) {
-                        val likeStatus = DiscussRepository.postLikeDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        val likeStatus = DiscussRepository.postLikeDiscuss(
+                            InfoRepository.user!!.id,
+                            DiscussRepository.ownerComment.number
+                        )
                         if (likeStatus == StatusRepository.SUCCESS) {
                             discuss_likeImg.visibility = View.GONE
                             discuss_like.background = resources.getDrawable(R.drawable.bk_likedbtn)
@@ -141,7 +151,10 @@ class DiscussActivity : BaseActivity() {
                         }
                     }
                     else if (DiscussRepository.like == DiscussRepository.LIKED_STATUS) {
-                        val likeStatus = DiscussRepository.deleteLikeDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        val likeStatus = DiscussRepository.deleteLikeDiscuss(
+                            InfoRepository.user!!.id,
+                            DiscussRepository.ownerComment.number
+                        )
                         if (likeStatus == StatusRepository.SUCCESS) {
                             discuss_likeImg.visibility = View.VISIBLE
                             discuss_like.background = resources.getDrawable(R.drawable.bk_likebtn)
@@ -170,7 +183,10 @@ class DiscussActivity : BaseActivity() {
             if (InfoRepository.loginStatus.status) {
                 if (lf == StatusRepository.SUCCESS) {
                     if (DiscussRepository.favor == DiscussRepository.FAVOR_STATUS) {
-                        val favorStatus = DiscussRepository.postFavorDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        val favorStatus = DiscussRepository.postFavorDiscuss(
+                            InfoRepository.user!!.id,
+                            DiscussRepository.ownerComment.number
+                        )
                         if (favorStatus == StatusRepository.SUCCESS) {
                             ownerComment.favorCounts += 1
                             discuss_favorText.text = ownerComment.favorCounts.toString()
@@ -183,7 +199,10 @@ class DiscussActivity : BaseActivity() {
                         }
                     }
                     else if (DiscussRepository.favor == DiscussRepository.FAVORED_STATUS) {
-                        val favorStatus = DiscussRepository.deleteFavorDiscuss(InfoRepository.user!!.id, DiscussRepository.ownerComment.number)
+                        val favorStatus = DiscussRepository.deleteFavorDiscuss(
+                            InfoRepository.user!!.id,
+                            DiscussRepository.ownerComment.number
+                        )
                         if (favorStatus == StatusRepository.SUCCESS) {
                             ownerComment.favorCounts -= 1
                             discuss_favorText.text = ownerComment.favorCounts.toString()
@@ -209,7 +228,10 @@ class DiscussActivity : BaseActivity() {
 
     private fun followEvent() {
         if (InfoRepository.loginStatus.status && InfoRepository.user!!.id != DiscussRepository.ownerComment.fromId) {
-            val followStatus = UserRepository.postJudgeFavor(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
+            val followStatus = UserRepository.postJudgeFavor(
+                InfoRepository.user!!.id,
+                DiscussRepository.ownerComment.fromId
+            )
             if (followStatus == StatusRepository.SUCCESS) {
                     discuss_follow.setStatus(UserRepository.followStatus)
                     discuss_follow.discussFollow()
@@ -229,8 +251,10 @@ class DiscussActivity : BaseActivity() {
     private fun commentEvent() {
         discuss_comment.setOnClickListener {
             val contentView = LayoutInflater.from(this).inflate(R.layout.popup_comment, null)
-            val popWindow = PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true)
+            val popWindow = PopupWindow(
+                contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true
+            )
             popWindow.contentView = contentView
             val commentCards = contentView.findViewById<LinearLayout>(R.id.comment_cards)
             val commentRefresh = contentView.findViewById<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>(
@@ -241,27 +265,80 @@ class DiscussActivity : BaseActivity() {
             commentRefresh.setEnableOverScroll(false)
             commentRefresh.setEnableLoadmore(false)
 
-            val secondStatus = DiscussRepository.getSecondDiscuss(ownerComment.commentCounts, 1, ownerComment.number, 1)
+            val secondStatus = DiscussRepository.getSecondDiscuss(
+                ownerComment.commentCounts,
+                1,
+                ownerComment.number,
+                1
+            )
             if (secondStatus == StatusRepository.SUCCESS) {
                 for (secondComment in DiscussRepository.secondCommentList) {
-                    val view = FirstCommentCardView(this, secondComment.photo, secondComment.username,
-                        secondComment.description, secondComment.createTime.substring(0,10), secondComment.likeCounts, secondComment.commentCounts, secondComment.number)
+                    val view = FirstCommentCardView(
+                        this,
+                        secondComment.photo,
+                        secondComment.username,
+                        secondComment.description,
+                        secondComment.createTime.substring(0, 10),
+                        secondComment.likeCounts,
+                        secondComment.commentCounts,
+                        secondComment.number
+                    )
                     commentCards.addView(view)
 
                     // 插入二级评论
-                    val reply1 = ReplyInfo(secondComment.replyNumber1?:"", secondComment.replyId1?:"", secondComment.replyUsername1?:"", secondComment.replyPhoto1?:"",
-                        secondComment.replyVip1?:"", secondComment.replyDescription1?:"", secondComment.replyLikeCounts1?:"", secondComment.secondReplyUsername1?:"", secondComment.replyCreateTime1?:"")
-                    val reply2 = ReplyInfo(secondComment.replyNumber2?:"", secondComment.replyId2?:"", secondComment.replyUsername2?:"", secondComment.replyPhoto2?:"",
-                        secondComment.replyVip2?:"", secondComment.replyDescription2?:"", secondComment.replyLikeCounts2?:"", secondComment.secondReplyUsername2?:"", secondComment.replyCreateTime2?:"")
+                    val reply1 = ReplyInfo(
+                        secondComment.replyNumber1 ?: "",
+                        secondComment.replyId1 ?: "",
+                        secondComment.replyUsername1 ?: "",
+                        secondComment.replyPhoto1 ?: "",
+                        secondComment.replyVip1 ?: "",
+                        secondComment.replyDescription1 ?: "",
+                        secondComment.replyLikeCounts1 ?: "",
+                        secondComment.secondReplyUsername1 ?: "",
+                        secondComment.replyCreateTime1 ?: ""
+                    )
+                    val reply2 = ReplyInfo(
+                        secondComment.replyNumber2 ?: "",
+                        secondComment.replyId2 ?: "",
+                        secondComment.replyUsername2 ?: "",
+                        secondComment.replyPhoto2 ?: "",
+                        secondComment.replyVip2 ?: "",
+                        secondComment.replyDescription2 ?: "",
+                        secondComment.replyLikeCounts2 ?: "",
+                        secondComment.secondReplyUsername2 ?: "",
+                        secondComment.replyCreateTime2 ?: ""
+                    )
                     val secondView = view.findViewById<LinearLayout>(R.id.comment_second_cards)
                     if (reply1.replyId != "") {
-                        val view1 = SecondCommentCardView(view.context, reply1.replyPhoto, reply1.replyUsername,
-                            reply1.replyDescription, reply1.replyCreateTime.substring(0, 10), reply1.replyLikeCounts)
+                        val view1 = SecondCommentCardView(
+                            view.context,
+                            reply1.replyPhoto,
+                            reply1.replyUsername,
+                            reply1.replyDescription,
+                            reply1.replyCreateTime.substring(0, 10),
+                            reply1.replyLikeCounts
+                        )
+                        val reply1 = view1.findViewById<ImageView>(R.id.comment_second_commentImg)
+                        reply1.setOnClickListener {
+                            DiscussRepository.getThirdDiscuss(1000, secondComment.number, 1)
+                            view1.openSecondComments()
+                        }
                         secondView.addView(view1)
                     }
                     if (reply2.replyId != "") {
-                        val view2 = SecondCommentCardView(view.context, reply2.replyPhoto, reply2.replyUsername,
-                            reply2.replyDescription, reply2.replyCreateTime.substring(0,10), reply2.replyLikeCounts)
+                        val view2 = SecondCommentCardView(
+                            view.context,
+                            reply2.replyPhoto,
+                            reply2.replyUsername,
+                            reply2.replyDescription,
+                            reply2.replyCreateTime.substring(0, 10),
+                            reply2.replyLikeCounts
+                        )
+                        val reply2 = view2.findViewById<ImageView>(R.id.comment_second_commentImg)
+                        reply2.setOnClickListener {
+                            DiscussRepository.getThirdDiscuss(1000, secondComment.number, 1)
+                            view2.openSecondComments()
+                        }
                         secondView.addView(view2)
                     }
                 }
@@ -301,7 +378,7 @@ class DiscussActivity : BaseActivity() {
 
     private fun initImg(photo: String): ImageView {
         val img = ImageView(this)
-        img.setPadding(10,10,10,10)
+        img.setPadding(10, 10, 10, 10)
         Glide.with(this)
             .load(photo)
             .into(img)
