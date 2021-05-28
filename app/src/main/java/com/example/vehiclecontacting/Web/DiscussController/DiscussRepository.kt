@@ -28,7 +28,6 @@ object DiscussRepository {
     var thirdCount = 0
 
     var replyNumber = ""
-    var replySecondNumber = ""
 
     lateinit var ownerComment: OwnerComment
     lateinit var thirdOwnerComment: CommentOwner

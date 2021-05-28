@@ -7,6 +7,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -78,10 +80,25 @@ class FirstCommentCardView: LinearLayout {
         val commentFrom =
             contentView.findViewById<SecondCommentCardView>(R.id.comment_third_from)
         commentFrom.setData(DiscussRepository.thirdOwnerComment)
+        commentFrom.setOnClickListener {
+            DiscussRepository.replyNumber = firstNumber
+            val secondEdit = contentView.findViewById<EditText>(R.id.comment_third_edit)
+            secondEdit.requestFocus()
+            val inputManager = secondEdit.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(secondEdit, 0)
+        }
         val thirdCommentCards = contentView.findViewById<LinearLayout>(R.id.comment_third_cards)
         for (thirdComment in DiscussRepository.thirdCommentList) {
             val view1 = SecondCommentCardView(context, thirdComment.photo, thirdComment.username,
                 thirdComment.description, thirdComment.createTime.substring(0, 10), thirdComment.likeCounts.toString())
+            val commentImg = view1.findViewById<ImageView>(R.id.comment_second_commentImg)
+            commentImg.setOnClickListener {
+                DiscussRepository.replyNumber = thirdComment.number
+                val secondEdit = contentView.findViewById<EditText>(R.id.comment_third_edit)
+                secondEdit.requestFocus()
+                val inputManager = secondEdit.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.showSoftInput(secondEdit, 0)
+            }
             thirdCommentCards.addView(view1)
         }
 
