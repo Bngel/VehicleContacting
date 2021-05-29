@@ -183,6 +183,18 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_margin="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/bp_left"/>
+
+    <ImageView
+        android:id="@+id/detail_forbid"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:src="@drawable/rp_forbid"/>
 
 </RelativeLayout>

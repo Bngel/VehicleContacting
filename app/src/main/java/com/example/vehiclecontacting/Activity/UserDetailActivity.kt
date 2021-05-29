@@ -1,5 +1,7 @@
 package com.example.vehiclecontacting.Activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +10,12 @@ import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Web.AdministratorController.AdministratorRepository
 import com.example.vehiclecontacting.Web.UserController.User
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_user_detail.*
+import kotlinx.android.synthetic.main.view_userinfo.*
 
 class UserDetailActivity : BaseActivity() {
 
@@ -31,6 +36,36 @@ class UserDetailActivity : BaseActivity() {
         else
             followEvent()
         closeEvent()
+        forbidEvent()
+    }
+
+    private fun forbidEvent() {
+        if (InfoRepository.loginStatus.status) {
+            if (InfoRepository.user!!.vip >= 100) {
+                detail_forbid.visibility = View.VISIBLE
+                detail_forbid.setOnClickListener {
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("提示:")
+                        .setMessage("是否确认封禁 ${user.username} 60分钟?")
+                        .setPositiveButton("确定",
+                            DialogInterface.OnClickListener { dialogInterface, i ->
+                                val forbidStatus = AdministratorRepository.postFrozeUser(userId, 60) // 封禁一小时
+                                if (forbidStatus == StatusRepository.SUCCESS)
+                                    ToastView(this).show("封禁 ${user.username} 成功(60分钟)")
+                                else {
+                                    ToastView(this).show("封禁 ${user.username} 失败")
+                                }
+                            })
+                        .setNegativeButton("取消",
+                            DialogInterface.OnClickListener { dialogInterface, i ->  })
+                        .create()
+                        .show()
+                }
+            }
+            else {
+                detail_forbid.visibility = View.GONE
+            }
+        }
     }
 
     private fun closeEvent(){
@@ -42,16 +77,18 @@ class UserDetailActivity : BaseActivity() {
     }
 
     private fun followEvent() {
-        detail_follow.visibility = View.VISIBLE
-        val status = UserRepository.postJudgeFavor(InfoRepository.user!!.id, userId)
-        if (status == StatusRepository.SUCCESS) {
-            detail_follow.setStatus(UserRepository.followStatus)
-            detail_follow.cardFollow(userId)
-            detail_follow.isClickable = true
-        }
-        else {
-            detail_follow.setStatus(UserRepository.FOLLOW_NOT)
-            detail_follow.isClickable = false
+        if (InfoRepository.loginStatus.status) {
+            detail_follow.visibility = View.VISIBLE
+            val status = UserRepository.postJudgeFavor(InfoRepository.user!!.id, userId)
+            if (status == StatusRepository.SUCCESS) {
+                detail_follow.setStatus(UserRepository.followStatus)
+                detail_follow.cardFollow(userId)
+                detail_follow.isClickable = true
+            }
+            else {
+                detail_follow.setStatus(UserRepository.FOLLOW_NOT)
+                detail_follow.isClickable = false
+            }
         }
     }
 
@@ -73,7 +110,17 @@ class UserDetailActivity : BaseActivity() {
             detail_followCount.text = user.followCounts.toString()
             detail_fansCount.text = user.fansCounts.toString()
             detail_username.text = user.username
-            detail_vip.text = if (user.vip > 0) "vip${user.vip}" else "未开通VIP服务"
+            when {
+                user.vip <= 0 -> {
+                    detail_vip.text ="未开通VIP服务"
+                }
+                user.vip < 100 -> {
+                    detail_vip.text ="vip${user.vip}"
+                }
+                else -> {
+                    detail_vip.text ="社区管理员"
+                }
+            }
         }
     }
 }

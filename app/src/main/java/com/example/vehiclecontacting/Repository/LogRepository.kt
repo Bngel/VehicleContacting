@@ -2,6 +2,7 @@ package com.example.vehiclecontacting.Repository
 
 import android.util.Log
 import com.example.vehiclecontacting.Web.AdministratorController.GetVehicleList
+import com.example.vehiclecontacting.Web.AdministratorController.PostFrozeUser
 import com.example.vehiclecontacting.Web.AdministratorController.PostJudgeVehicle
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
@@ -756,6 +757,30 @@ object LogRepository {
             }
             "repeatWrong" -> {
                 stringBuilder.append("-\tmsg: 车辆信息已被审核\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postFrozeUserLog(body: PostFrozeUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t封禁用户接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t封禁用户接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 封禁用户成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

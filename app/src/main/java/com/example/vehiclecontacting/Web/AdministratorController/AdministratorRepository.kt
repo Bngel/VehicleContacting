@@ -64,4 +64,26 @@ object AdministratorRepository {
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }
+
+    /***
+     * msg:
+     * existWrong：用户不存在
+     * success：成功
+     */
+    fun postFrozeUser(id: String, minutes: Int): Int {
+        val data = adminService.postFrozeUser(id, minutes)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postFrozeUserLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 }

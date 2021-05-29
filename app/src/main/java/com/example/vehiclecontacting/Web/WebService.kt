@@ -2,6 +2,7 @@ package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.GetVehicleList
+import com.example.vehiclecontacting.Web.AdministratorController.PostFrozeUser
 import com.example.vehiclecontacting.Web.AdministratorController.PostJudgeVehicle
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
@@ -300,6 +301,13 @@ interface WebService {
         @Query("reason") reason: String = ""
     )
             : Call<PostJudgeVehicle>
+
+    @POST("/admin/frozeUser")
+    fun postFrozeUser(
+        @Query("id") id: String,
+        @Query("minutes") minutes: Int
+    )
+            : Call<PostFrozeUser>
 
     companion object Factory {
         fun create() : WebService {

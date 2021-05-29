@@ -32,15 +32,14 @@ class SettingActivity : BaseActivity() {
     }
 
     private fun adminEvent() {
-        setting_admin.visibility = View.VISIBLE
+        if (InfoRepository.user!!.vip >= 100)
+            setting_admin.visibility = View.VISIBLE
+        else
+            setting_admin.visibility = View.GONE
         setting_admin.setOnClickListener {
             val adminIntent = Intent(this, AdminActivity::class.java)
             startActivityForResult(adminIntent, ActivityCollector.ACTIVITY_ADMIN)
         }
-        /*if (InfoRepository.user!!.vip >= 100)
-            setting_admin.visibility = View.VISIBLE
-        else
-            setting_admin.visibility = View.GONE*/
     }
 
     private fun closeEvent() {

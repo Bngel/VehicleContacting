@@ -136,7 +136,17 @@ class UserFragment: Fragment() {
     private fun loadInfo() {
         InfoRepository.user!!.apply {
             user_username.text = username?:""
-            user_vipstatus.text = if (vip > 0) "vip${vip}" else "未开通VIP服务"
+            when {
+                vip <= 0 -> {
+                    user_vipstatus.text ="未开通VIP服务"
+                }
+                vip < 100 -> {
+                    user_vipstatus.text ="vip${vip}"
+                }
+                else -> {
+                    user_vipstatus.text ="社区管理员"
+                }
+            }
             user_moments.text = momentCounts.toString()
             user_follow.text = followCounts.toString()
             user_fans.text = fansCounts.toString()
