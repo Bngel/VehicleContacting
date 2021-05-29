@@ -689,4 +689,28 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun postCommentLikeLog(body: PostCommentLike) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t查看帖子评论点赞状态接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t查看帖子评论点赞状态接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 查看帖子评论点赞状态成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 评论不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

@@ -27,6 +27,10 @@ object DiscussRepository {
     var thirdPage = 0
     var thirdCount = 0
 
+    const val LIKE = 1
+    const val NOT_LIKE = 0
+    var commentLike = 0
+
     var replyNumber = "0"
 
     lateinit var ownerComment: OwnerComment
@@ -474,6 +478,30 @@ object DiscussRepository {
                 val body = data.execute().body()!!
                 msg = body.msg
                 LogRepository.postCommentLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：评论不存在
+     * success：成功 （返回json isLike：是否被点赞1是0不是）
+     */
+    fun postCommentLike(id: String, number: String): Int {
+        val data = discussService.postCommentLike(id, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    commentLike = body.data.isLike
+                LogRepository.postCommentLikeLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

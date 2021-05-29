@@ -56,6 +56,19 @@ class FirstCommentCardView: LinearLayout {
                 openSecondComments()
             }
         }
+        if (InfoRepository.loginStatus.status) {
+            val likeStatus = DiscussRepository.postCommentLike(InfoRepository.user!!.id, firstNumber)
+            if (likeStatus == StatusRepository.SUCCESS) {
+                if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    comment_first_likeImg.setImageResource(R.drawable.yy_like)
+                else
+                    comment_first_likeImg.setImageResource(R.drawable.gp_like)
+            }
+            else {
+                ToastView(context).show("读取用户点赞信息失败")
+            }
+        }
+
         comment_first_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
                 val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, firstNumber)

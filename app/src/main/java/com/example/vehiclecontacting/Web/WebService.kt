@@ -276,6 +276,13 @@ interface WebService {
     )
             : Call<PostComment>
 
+    @POST("commentLike")
+    fun postCommentLike(
+        @Query("id") id: String,
+        @Query("number") number: String
+    )
+            : Call<PostCommentLike>
+
 
     companion object Factory {
         fun create() : WebService {

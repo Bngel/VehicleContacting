@@ -13,6 +13,7 @@ import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.CommentOwner
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
+import kotlinx.android.synthetic.main.view_comment_first.view.*
 import kotlinx.android.synthetic.main.view_comment_second.view.*
 
 class SecondCommentCardView: LinearLayout{
@@ -35,6 +36,19 @@ class SecondCommentCardView: LinearLayout{
         comment_second_date.text = date
         comment_second_likeCount.text = likeCount
         secondNumber = number
+        if (InfoRepository.loginStatus.status) {
+            val likeStatus =
+                DiscussRepository.postCommentLike(InfoRepository.user!!.id, secondNumber)
+            if (likeStatus == StatusRepository.SUCCESS) {
+                if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                else
+                    comment_second_likeImg.setImageResource(R.drawable.gp_like)
+            } else {
+                ToastView(context).show("读取用户点赞信息失败")
+            }
+        }
+
         comment_second_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
                 val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
@@ -78,6 +92,18 @@ class SecondCommentCardView: LinearLayout{
         comment_second_likeCount.text = data.likeCounts.toString()
         comment_second_date.text = data.createTime.substring(0, 10)
         secondNumber = data.number
+        if (InfoRepository.loginStatus.status) {
+            val likeStatus = DiscussRepository.postCommentLike(InfoRepository.user!!.id, secondNumber)
+            if (likeStatus == StatusRepository.SUCCESS) {
+                if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                else
+                    comment_second_likeImg.setImageResource(R.drawable.gp_like)
+            }
+            else {
+                ToastView(context).show("读取用户点赞信息失败")
+            }
+        }
         comment_second_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
                 val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
