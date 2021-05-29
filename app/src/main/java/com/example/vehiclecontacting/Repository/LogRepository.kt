@@ -1,9 +1,7 @@
 package com.example.vehiclecontacting.Repository
 
 import android.util.Log
-import com.example.vehiclecontacting.Web.AdministratorController.GetVehicleList
-import com.example.vehiclecontacting.Web.AdministratorController.PostFrozeUser
-import com.example.vehiclecontacting.Web.AdministratorController.PostJudgeVehicle
+import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
 import java.lang.StringBuilder
@@ -781,6 +779,57 @@ object LogRepository {
             }
             "existWrong" -> {
                 stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getFrozenListLog(body: GetFrozenList) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取被封禁用户接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取被封禁用户接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取被封禁用户成功\t-\n")
+                for (user in body.data.frozenUserList) {
+                    stringBuilder.append("-\tusername: ${user.username}\t-\n")
+                }
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postReopenUserLog(body: PostReopenUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t解封用户接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t解封用户接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 解封用户成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 用户已被解封\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

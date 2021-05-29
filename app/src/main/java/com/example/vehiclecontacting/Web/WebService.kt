@@ -1,9 +1,7 @@
 package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.Repository.SSLSocketClient
-import com.example.vehiclecontacting.Web.AdministratorController.GetVehicleList
-import com.example.vehiclecontacting.Web.AdministratorController.PostFrozeUser
-import com.example.vehiclecontacting.Web.AdministratorController.PostJudgeVehicle
+import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
 import com.google.gson.Gson
@@ -308,6 +306,19 @@ interface WebService {
         @Query("minutes") minutes: Int
     )
             : Call<PostFrozeUser>
+
+    @GET("/admin/frozenList")
+    fun getFrozenList(
+        @Query("cnt") cnt: Int,
+        @Query("page") page: Int
+    )
+            : Call<GetFrozenList>
+
+    @POST("/admin/reopenUser")
+    fun postReopenUser(
+        @Query("id") id: String
+    )
+            : Call<PostReopenUser>
 
     companion object Factory {
         fun create() : WebService {

@@ -18,6 +18,7 @@ class AdminActivity : BaseActivity() {
     private fun initWidget() {
         closeEvent()
         licenseEvent()
+        frozeEvent()
     }
 
     private fun closeEvent() {
@@ -30,6 +31,13 @@ class AdminActivity : BaseActivity() {
         admin_license.setOnClickListener {
             val licenseIntent = Intent(this, LicenseActivity::class.java)
             startActivityForResult(licenseIntent, ActivityCollector.ACTIVITY_LICENSE)
+        }
+    }
+
+    private fun frozeEvent() {
+        admin_frozen.setOnClickListener {
+            val frozenIntent = Intent(this, FrozeActivity::class.java)
+            startActivityForResult(frozenIntent, ActivityCollector.ACTIVITY_FROZEN)
         }
     }
 }
