@@ -33,6 +33,8 @@ object DiscussRepository {
 
     var replyNumber = "0"
 
+    val hotDiscussList = ArrayList<HotDiscuss>()
+
     lateinit var ownerComment: OwnerComment
     lateinit var thirdOwnerComment: CommentOwner
 
@@ -502,6 +504,32 @@ object DiscussRepository {
                 if (msg == "success")
                     commentLike = body.data.isLike
                 LogRepository.postCommentLikeLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * 按照8小时内权重综合排序 浏览量：1 点赞：5 收藏：10
+     * 取消收藏/点赞等等会降低权重如果找不到合适的，
+     * 比如刚开服等情况，就给当前浏览量最多的几个
+     * success：返回json hotDiscussList
+     */
+    fun getHotDiscuss(): Int {
+        val data = discussService.getHotDiscuss()
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    hotDiscussList.addAll(body.data.hotDiscussList)
+                LogRepository.getHotDiscussLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

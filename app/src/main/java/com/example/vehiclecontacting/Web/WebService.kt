@@ -320,6 +320,10 @@ interface WebService {
     )
             : Call<PostReopenUser>
 
+    @GET("hotDiscuss")
+    fun getHotDiscuss()
+            : Call<GetHotDiscuss>
+
     companion object Factory {
         fun create() : WebService {
             val gson = GsonBuilder()

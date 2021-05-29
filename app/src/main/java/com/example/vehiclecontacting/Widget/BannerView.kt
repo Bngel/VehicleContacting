@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.view_banner.view.*
 
@@ -25,6 +26,12 @@ class BannerView: RelativeLayout {
 
     fun setImageResource(image: Drawable){
         banner_img.setImageDrawable(image)
+    }
+
+    fun setImageResource(image: String) {
+        Glide.with(context)
+            .load(image)
+            .into(banner_img)
     }
 
     fun setText(text: String) {

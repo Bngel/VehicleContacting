@@ -11,6 +11,8 @@ import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.Data.HotInfo
 import com.example.vehiclecontacting.R
+import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
 import com.example.vehiclecontacting.Widget.HomeHotView
 import com.example.vehiclecontacting.Widget.ToastView
 import com.youth.banner.indicator.CircleIndicator
@@ -41,7 +43,7 @@ class HomeFragment: Fragment() {
     }
 
     private fun initWidget() {
-        bannerEvent(getBannerData())
+        bannerEvent()
         hotEvent()
         cityEvent()
     }
@@ -55,21 +57,17 @@ class HomeFragment: Fragment() {
     /***
      *  events of banner
      */
-    private fun bannerEvent(data: List<BannerInfo>) {
-        home_banner.addBannerLifecycleObserver(this)
-            .setAdapter(MyBannerAdapter(data))
-            .setIndicator(CircleIndicator(context))
-    }
-
-    /***
-     *  get images for banner
-     */
-    private fun getBannerData() : List<BannerInfo>{
-        return listOf(
-                BannerInfo(ContextCompat.getDrawable(parentContext!!, R.drawable.gw_home)!!,"TEXT1TEXT1TEXT1TEXT1TEXT1TEXT1TEXT1"),
-                BannerInfo(ContextCompat.getDrawable(parentContext!!, R.drawable.gw_user)!!,"TEXT2"),
-                BannerInfo(ContextCompat.getDrawable(parentContext!!, R.drawable.gw_community)!!,"TEXT3")
-        )
+    private fun bannerEvent() {
+        val status = DiscussRepository.getHotDiscuss()
+        if (status == StatusRepository.SUCCESS){
+            val bannerInfoList = ArrayList<BannerInfo>()
+            for (discuss in DiscussRepository.hotDiscussList) {
+                bannerInfoList.add(BannerInfo(discuss.photo, discuss.title, discuss.number))
+            }
+            home_banner.addBannerLifecycleObserver(this)
+                .setAdapter(MyBannerAdapter(bannerInfoList))
+                .setIndicator(CircleIndicator(context))
+        }
     }
 
     private fun hotEvent() {

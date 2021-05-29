@@ -837,4 +837,28 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun getHotDiscussLog(body: GetHotDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取热榜接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+            for (discuss in body.data.hotDiscussList) {
+                stringBuilder.append("-\ttitle: ${discuss.title}\t-\n")
+            }
+        }
+        else {
+            stringBuilder.append("-\t获取热榜接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取热榜成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

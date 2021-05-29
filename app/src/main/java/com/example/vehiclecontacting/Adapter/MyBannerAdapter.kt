@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vehiclecontacting.Data.BannerInfo
+import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Widget.BannerView
 import com.youth.banner.adapter.BannerAdapter
 
@@ -12,7 +13,10 @@ class MyBannerAdapter(images: List<BannerInfo>): BannerAdapter<BannerInfo, MyBan
     inner class BannerViewHolder(val view: BannerView): RecyclerView.ViewHolder(view)
 
     override fun onBindView(holder: BannerViewHolder, data: BannerInfo, position: Int, size: Int) {
-        holder.view.setImageResource(data.image)
+        if (data.image != null)
+            holder.view.setImageResource(data.image)
+        else
+            holder.view.setImageResource(R.drawable.gp_defaultimg)
         holder.view.setText(data.text)
     }
 
