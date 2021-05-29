@@ -1,6 +1,8 @@
 package com.example.vehiclecontacting.Repository
 
 import android.util.Log
+import com.example.vehiclecontacting.Web.AdministratorController.GetVehicleList
+import com.example.vehiclecontacting.Web.AdministratorController.PostJudgeVehicle
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
 import java.lang.StringBuilder
@@ -706,6 +708,54 @@ object LogRepository {
             }
             "existWrong" -> {
                 stringBuilder.append("-\tmsg: 评论不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getVehicleListLog(body: GetVehicleList) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取需要审核的车辆列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取需要审核的车辆列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取需要审核的车辆列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postJudgeVehicleLog(body: PostJudgeVehicle) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t审核车辆信息接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t审核车辆信息接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 审核车辆信息成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 车辆信息不存在\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 车辆信息已被审核\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorCommunityTitleBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="车辆审核"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/vehicleDialog_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/vehicleDialog_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="若拒绝通过,请输入理由"
+        android:textSize="20sp"/>
+
+</LinearLayout>

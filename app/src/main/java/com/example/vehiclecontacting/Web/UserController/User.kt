@@ -19,5 +19,9 @@ data class User(
     val reopenDate: String,
     val updateTime: String,
     val complainCounts: Int,
-    val vip: Int
+    val vip: Int,
+    val dirtyCounts: Int,
+    val noSpeakDate: String
+
+
 )

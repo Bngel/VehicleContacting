@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SettingActivity"></activity>
+        <activity android:name=".Activity.LicenseActivity"></activity>
+        <activity android:name=".Activity.AdminActivity" />
+        <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.ChangeInfoActivity" />
         <activity android:name=".Activity.FansActivity" />
         <activity android:name=".Activity.FollowActivity" />

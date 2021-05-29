@@ -27,7 +27,7 @@ object UserRepository {
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
             "", "", "", -1, -1, -1, -1,
-            -1,"", "", "", "", -1, -1)
+            -1,"", "", "", "", -1, -1, -1, "")
     }
 
     fun getUser(phone: String): User {
