@@ -2,12 +2,9 @@ package com.example.vehiclecontacting.Web.VehicleController
 
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
-import com.example.vehiclecontacting.Web.AdministratorController.AdministratorRepository
-import com.example.vehiclecontacting.Web.UserController.PostUserPhoto
 import com.example.vehiclecontacting.Web.WebService
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
-import retrofit2.http.Multipart
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -15,6 +12,7 @@ object VehicleRepository {
 
     private val vehicleService = WebService.create()
 
+    val vehicleList = ArrayList<MyVehicle>()
     var vehicleUrl = ""
 
     /***
@@ -57,8 +55,8 @@ object VehicleRepository {
      * amountWrong：用户上传车辆超过4个
      * success：成功
      */
-    fun postVehicle(description: String, id: String, license: String, licensePhoto: String, type: String): Int {
-        val data = vehicleService.postVehicle(description, id, license, licensePhoto, type)
+    fun postVehicle(description: String, id: String, license: String, licensePhoto: String, type: String, models: String): Int {
+        val data = vehicleService.postVehicle(description, id, license, licensePhoto, type, models)
         var msg = ""
         try {
             thread {
@@ -71,6 +69,30 @@ object VehicleRepository {
             "repeatWrong" -> StatusRepository.REPEAT_WRONG
             "existWrong" -> StatusRepository.EXIST_WRONG
             "amountWrong" -> StatusRepository.AMOUNT_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 返回json vehicleList：车辆列表
+     */
+    fun getVehicleList(id: String): Int {
+        val data = vehicleService.getVehicleList(id)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    vehicleList.clear()
+                    vehicleList.addAll(body.data.vehicleList)
+                }
+                LogRepository.getVehicleListLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }

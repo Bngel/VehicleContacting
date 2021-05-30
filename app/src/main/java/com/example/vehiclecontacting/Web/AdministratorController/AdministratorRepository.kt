@@ -2,8 +2,6 @@ package com.example.vehiclecontacting.Web.AdministratorController
 
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
-import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
-import com.example.vehiclecontacting.Web.UserController.PostJudgeFavor
 import com.example.vehiclecontacting.Web.WebService
 import java.lang.Exception
 import kotlin.concurrent.thread
@@ -22,7 +20,7 @@ object AdministratorRepository {
      * msg:
      * success：成功 （返回 vehicleList：需要审核车辆大致信息）
      */
-    fun getVehicleList(cnt: Int, keyword: String, page: Int): Int {
+    fun getJudgeVehicleList(cnt: Int, keyword: String, page: Int): Int {
         val data = adminService.getVehicleList(cnt, keyword, page)
         var msg = ""
         try {
@@ -33,7 +31,7 @@ object AdministratorRepository {
                     vehicleCards.clear()
                     vehicleCards.addAll(body.data.vehicleList)
                 }
-                LogRepository.getVehicleListLog(body)
+                LogRepository.getJudgeVehicleListLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

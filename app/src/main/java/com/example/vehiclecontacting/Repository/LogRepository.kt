@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
+import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
 import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
 import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
 import java.lang.StringBuilder
@@ -717,7 +718,7 @@ object LogRepository {
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
-    fun getVehicleListLog(body: GetVehicleList) {
+    fun getJudgeVehicleListLog(body: GetJudgeVehicleList) {
         val stringBuilder = StringBuilder()
         if (body.code == 200) {
             stringBuilder.append("-\t获取需要审核的车辆列表接口访问成功\t-\n" +
@@ -917,6 +918,29 @@ object LogRepository {
             }
             "amountWrong" -> {
                 stringBuilder.append("-\tmsg: 用户上传车辆超过4个\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getVehicleListLog(body: GetVehicleList) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取车辆信息列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取车辆信息列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取车辆信息列表成功\t-\n")
+                for (vehicle in body.data.vehicleList)
+                    stringBuilder.append("-\tlicense: ${vehicle.license}\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

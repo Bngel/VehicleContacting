@@ -28,7 +28,7 @@ import okhttp3.RequestBody
 import java.io.File
 
 class AddVehicleActivity : BaseActivity() {
-    val vehicleInfo = VehicleInfo("","","","")
+    val vehicleInfo = VehicleInfo("","","","", "")
     private var imageFile: File? = null // 声明File对象
     private var imageUri: Uri? = null // 裁剪后的图片uri
 
@@ -43,14 +43,17 @@ class AddVehicleActivity : BaseActivity() {
         numberEvent()
         descriptionEvent()
         typeEvent()
+        modelEvent()
         photoEvent()
         okEvent()
     }
 
     private fun okEvent() {
         vehicleAdd_ok.setOnClickListener {
-            if (vehicleInfo.description != null || vehicleInfo.license != null || vehicleInfo.licensePhoto != null || vehicleInfo.type != null) {
-                if (vehicleInfo.description == "" || vehicleInfo.license == "" || vehicleInfo.licensePhoto == "" || vehicleInfo.type == "")
+            if (vehicleInfo.description != null && vehicleInfo.license != null &&
+                vehicleInfo.licensePhoto != null && vehicleInfo.type != null && vehicleInfo.model != null) {
+                if (vehicleInfo.description == "" || vehicleInfo.license == "" ||
+                    vehicleInfo.licensePhoto == "" || vehicleInfo.type == "" || vehicleInfo.model == "")
                     ToastView(this).show("请填写所有信息")
                 else {
                     val status = VehicleRepository.postVehicle(
@@ -58,7 +61,8 @@ class AddVehicleActivity : BaseActivity() {
                         InfoRepository.user!!.id,
                         vehicleInfo.license,
                         vehicleInfo.licensePhoto,
-                        vehicleInfo.type
+                        vehicleInfo.type,
+                        vehicleInfo.model
                     )
                     if (status == StatusRepository.SUCCESS) {
                         ToastView(this).show("提交车辆审核申请成功")
@@ -74,6 +78,23 @@ class AddVehicleActivity : BaseActivity() {
     private fun closeEvent() {
         vehicleAdd_close.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun modelEvent() {
+        vehicleAdd_model.setOnClickListener {
+            val view = AddVehicleDialogView(this, "车辆型号(如奔驰A8)")
+            val modelDialog = AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton("确定",
+                    DialogInterface.OnClickListener { dialogInterface, i ->
+                        vehicleAdd_modelText.text = view.getText()
+                        vehicleInfo.model = view.getText()
+                    })
+                .setNegativeButton("取消",
+                    DialogInterface.OnClickListener { dialogInterface, i ->  })
+                .create()
+            modelDialog.show()
         }
     }
 

@@ -4,5 +4,6 @@ data class VehicleInfo(
     var license: String,
     var type: String,
     var description: String,
-    var licensePhoto: String
+    var licensePhoto: String,
+    var model: String
 )

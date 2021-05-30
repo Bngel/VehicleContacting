@@ -4,6 +4,7 @@ import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
+import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
 import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
 import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
 import com.google.gson.Gson
@@ -292,12 +293,13 @@ interface WebService {
         @Query("keyword") keyword: String,
         @Query("page") page: Int
     )
-            : Call<GetVehicleList>
+            : Call<GetJudgeVehicleList>
 
     @POST("/admin/judgeVehicle")
     fun postJudgeVehicle(
         @Query("isPass") isPass: Int,
         @Query("license") license: String,
+        @Query("vehicleBrand") vehicleBrand: String,
         @Query("reason") reason: String = ""
     )
             : Call<PostJudgeVehicle>
@@ -340,9 +342,16 @@ interface WebService {
         @Query("id") id: String,
         @Query("license") license: String,
         @Query("licensePhoto") licensePhoto: String,
-        @Query("type") type: String
+        @Query("type") type: String,
+        @Query("vehicleBrand") vehicleBrand: String
     )
             : Call<PostVehicle>
+
+    @GET("vehicleList")
+    fun getVehicleList(
+        @Query("id") id: String
+    )
+            : Call<GetVehicleList>
 
     companion object Factory {
         fun create() : WebService {

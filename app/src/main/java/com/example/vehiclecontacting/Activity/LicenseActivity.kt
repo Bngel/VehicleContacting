@@ -1,9 +1,7 @@
 package com.example.vehiclecontacting.Activity
 
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.example.vehiclecontacting.R
@@ -23,7 +21,7 @@ class LicenseActivity : BaseActivity() {
     }
 
     private fun initData() {
-        val status = AdministratorRepository.getVehicleList(1000, "", 1)
+        val status = AdministratorRepository.getJudgeVehicleList(1000, "", 1)
         if (status == StatusRepository.SUCCESS) {
             for (license in AdministratorRepository.vehicleCards) {
                 val view = VehicleCardView(this, license.userPhoto, license.username, license.license, license.vip)

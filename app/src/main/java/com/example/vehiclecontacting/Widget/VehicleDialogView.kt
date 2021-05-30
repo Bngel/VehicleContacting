@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.dialog_vehicle.view.*
 class VehicleDialogView: LinearLayout {
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
-    constructor(context: Context, img: String): super(context) {
+    constructor(context: Context, img: String?): super(context) {
         Glide.with(context)
-            .load(img)
+            .load(img?:R.drawable.gp_defaultimg)
             .into(vehicleDialog_img)
     }
 

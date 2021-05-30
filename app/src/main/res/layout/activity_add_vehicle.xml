@@ -127,6 +127,47 @@
             android:layout_height="1dp"
             android:background="#33707070"/>
 
+        <RelativeLayout
+            android:id="@+id/vehicleAdd_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="车辆型号"
+                android:layout_alignParentLeft="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/vehicleAdd_modelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/vehicleAdd_modelImg"
+                android:layout_centerVertical="true"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/vehicleAdd_modelImg"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/gp_right"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33707070"/>
+
 
         <RelativeLayout
             android:id="@+id/vehicleAdd_licensePhoto"
