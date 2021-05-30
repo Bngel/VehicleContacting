@@ -19,6 +19,8 @@ object ActivityCollector {
     const val ACTIVITY_ADMIN = 0x12
     const val ACTIVITY_LICENSE = 0x13
     const val ACTIVITY_FROZEN = 0x14
+    const val ACTIVITY_ADD_VEHICLE = 0x15
+    const val ACTIVITY_MY_VEHICLE = 0x16
 
     private val activities = ArrayList<Activity>()
 

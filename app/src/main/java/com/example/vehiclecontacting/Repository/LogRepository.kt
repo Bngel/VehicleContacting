@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
+import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
+import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
 import java.lang.StringBuilder
 
 object LogRepository {
@@ -854,6 +856,67 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取热榜成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postVehiclePhotoLog(body: PostVehiclePhoto) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t上传车辆照片接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t上传车辆照片访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 上传车辆照片成功\t-\n")
+                stringBuilder.append("-\turl: ${body.data}}\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "fileWrong" -> {
+                stringBuilder.append("-\tmsg: 文件为空\t-\n")
+            }
+            "typeWrong" -> {
+                stringBuilder.append("-\tmsg: 上传格式错误\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postVehicleLog(body: PostVehicle) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t提交车辆审核接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t提交车辆审核接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 提交车辆审核成功\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 车牌号已被申请\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户不存在\t-\n")
+            }
+            "amountWrong" -> {
+                stringBuilder.append("-\tmsg: 用户上传车辆超过4个\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")

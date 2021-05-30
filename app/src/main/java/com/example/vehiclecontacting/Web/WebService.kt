@@ -4,6 +4,8 @@ import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
+import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
+import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -323,6 +325,24 @@ interface WebService {
     @GET("hotDiscuss")
     fun getHotDiscuss()
             : Call<GetHotDiscuss>
+
+    @POST("vehiclePhoto")
+    @Multipart
+    fun postVehiclePhoto(
+        @Part("id") id: String,
+        @Part photo: MultipartBody.Part
+    )
+            : Call<PostVehiclePhoto>
+
+    @POST("vehicle")
+    fun postVehicle(
+        @Query("description") description: String,
+        @Query("id") id: String,
+        @Query("license") license: String,
+        @Query("licensePhoto") licensePhoto: String,
+        @Query("type") type: String
+    )
+            : Call<PostVehicle>
 
     companion object Factory {
         fun create() : WebService {

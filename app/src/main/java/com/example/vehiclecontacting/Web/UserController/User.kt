@@ -21,7 +21,7 @@ data class User(
     val complainCounts: Int,
     val vip: Int,
     val dirtyCounts: Int,
-    val noSpeakDate: String
-
+    val noSpeakDate: String,
+    val blackCounts: Int
 
 )

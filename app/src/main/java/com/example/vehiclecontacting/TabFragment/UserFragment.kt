@@ -17,6 +17,7 @@ import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import kotlinx.android.synthetic.main.view_userfunction.*
 import kotlinx.android.synthetic.main.view_userinfo.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -79,6 +80,19 @@ class UserFragment: Fragment() {
         followEvent()
         fansEvent()
         settingEvent()
+        myVehicleEvent()
+    }
+
+    private fun myVehicleEvent() {
+        user_myVehicle.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val vehicleIntent = Intent(parentContext!!, MyVehicleActivity::class.java)
+                startActivityForResult(vehicleIntent, ActivityCollector.ACTIVITY_MY_VEHICLE)
+            } else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
     }
 
     private fun settingEvent() {

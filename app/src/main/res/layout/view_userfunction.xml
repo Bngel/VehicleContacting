@@ -31,6 +31,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/user_myVehicle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -54,6 +55,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_myCreate"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -77,6 +79,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_myFavor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -100,6 +103,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/user_myHistory"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
