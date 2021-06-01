@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.AddVehicleActivity"></activity>
+        <activity android:name=".Activity.MyHistoryActivity"></activity>
+        <activity android:name=".Activity.MyFavorActivity" />
+        <activity android:name=".Activity.MyCreateActivity" />
+        <activity android:name=".Activity.AddVehicleActivity" />
         <activity android:name=".Activity.MyVehicleActivity" />
         <activity android:name=".Activity.FrozeActivity" />
         <activity android:name=".Activity.LicenseActivity" />

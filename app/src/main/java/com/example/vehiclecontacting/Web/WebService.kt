@@ -353,6 +353,14 @@ interface WebService {
     )
             : Call<GetVehicleList>
 
+    @GET("userDiscuss")
+    fun getUserDiscuss(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int
+    )
+            : Call<GetUserDiscuss>
+
     companion object Factory {
         fun create() : WebService {
             val gson = GsonBuilder()

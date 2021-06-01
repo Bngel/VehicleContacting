@@ -21,6 +21,9 @@ object ActivityCollector {
     const val ACTIVITY_FROZEN = 0x14
     const val ACTIVITY_ADD_VEHICLE = 0x15
     const val ACTIVITY_MY_VEHICLE = 0x16
+    const val ACTIVITY_MY_CREATE = 0x17
+    const val ACTIVITY_MY_FAVOR = 0x18
+    const val ACTIVITY_MY_HISTORY = 0x19
 
     private val activities = ArrayList<Activity>()
 

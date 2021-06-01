@@ -948,4 +948,31 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun webSocketStatusLog(body: String) {
+        val stringBuilder = StringBuilder()
+            stringBuilder.append("-\t获取WebSocket连接状态: $body\t-\n")
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getUserDiscussLog(body: GetUserDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户文章列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户文章列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户文章列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

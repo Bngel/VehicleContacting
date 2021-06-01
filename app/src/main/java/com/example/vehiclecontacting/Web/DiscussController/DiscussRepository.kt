@@ -27,6 +27,8 @@ object DiscussRepository {
     var thirdPage = 0
     var thirdCount = 0
 
+    val myDiscussList = ArrayList<Discuss>()
+
     const val LIKE = 1
     const val NOT_LIKE = 0
     var commentLike = 0
@@ -535,6 +537,30 @@ object DiscussRepository {
         return when (msg) {
             "success" -> StatusRepository.SUCCESS
             "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json discussList：帖子列表 pages：页面总数 counts：数据总量）
+     */
+    fun getUserDiscuss(cnt: Int, id: String, page: Int): Int {
+        val data = discussService.getUserDiscuss(cnt, id, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    myDiscussList.clear()
+                    myDiscussList.addAll(body.data.discussList)
+                }
+                LogRepository.getUserDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }

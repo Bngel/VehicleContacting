@@ -22,6 +22,6 @@ data class User(
     val vip: Int,
     val dirtyCounts: Int,
     val noSpeakDate: String,
-    val blackCounts: Int
-
+    val blackCounts: Int,
+    val friendCounts: Int
 )

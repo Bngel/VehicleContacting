@@ -10,6 +10,7 @@ import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.VehicleController.VehicleRepository
 import com.example.vehiclecontacting.Widget.MyVehicleCardView
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_my_vehicle.*
 
 class MyVehicleActivity : AppCompatActivity() {
@@ -33,8 +34,13 @@ class MyVehicleActivity : AppCompatActivity() {
 
     private fun addEvent() {
         myVehicle_add.setOnClickListener {
-            val addIntent = Intent(this, AddVehicleActivity::class.java)
-            startActivityForResult(addIntent, ActivityCollector.ACTIVITY_ADD_VEHICLE)
+            if (myVehicle_cards.childCount < 4) {
+                val addIntent = Intent(this, AddVehicleActivity::class.java)
+                startActivityForResult(addIntent, ActivityCollector.ACTIVITY_ADD_VEHICLE)
+            }
+            else {
+                ToastView(this).show("最多仅支持绑定四个车牌")
+            }
         }
     }
 
