@@ -33,7 +33,10 @@ class MyCreateActivity : BaseActivity() {
                         val view = CommunityCardView(context, discuss.title, discuss.userPhoto,
                             discuss.username, discuss.description, discuss.photo, discuss.likeCounts, discuss.commentCounts)
                         view.setOnClickListener {
-                            DiscussRepository.getFirstDiscuss(30, discuss.number)
+                            if (InfoRepository.loginStatus.status)
+                                DiscussRepository.getFirstDiscuss(InfoRepository.user!!.id, 30, discuss.number)
+                            else
+                                DiscussRepository.getFirstDiscuss(30, discuss.number)
                             val discussIntent = Intent(context, DiscussActivity::class.java)
                             discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
                             discussIntent.putExtra("firstComments", DiscussRepository.firstCommentList)
@@ -64,7 +67,7 @@ class MyCreateActivity : BaseActivity() {
                     val delete = data?.getBooleanExtra("update", false)
                     if (delete == true) {
                         DiscussRepository.discussList.clear()
-                        recommend_cards.removeAllViews()
+                        myCreate_cards.removeAllViews()
                         if (InfoRepository.loginStatus.status) {
                             DiscussRepository.getDiscuss(10, 1, 1, 0)
                             val discussStatus = DiscussRepository.getUserDiscuss(InfoRepository.user!!.discussCounts, InfoRepository.user!!.id, 1)
@@ -73,7 +76,10 @@ class MyCreateActivity : BaseActivity() {
                                     val view = CommunityCardView(this, discuss.title, discuss.userPhoto,
                                         discuss.username, discuss.description, discuss.photo, discuss.likeCounts, discuss.commentCounts)
                                     view.setOnClickListener {
-                                        DiscussRepository.getFirstDiscuss(30, discuss.number)
+                                        if (InfoRepository.loginStatus.status)
+                                            DiscussRepository.getFirstDiscuss(InfoRepository.user!!.id, 30, discuss.number)
+                                        else
+                                            DiscussRepository.getFirstDiscuss(30, discuss.number)
                                         val discussIntent = Intent(this, DiscussActivity::class.java)
                                         discussIntent.putExtra("ownerComment", DiscussRepository.ownerComment)
                                         discussIntent.putExtra("firstComments", DiscussRepository.firstCommentList)

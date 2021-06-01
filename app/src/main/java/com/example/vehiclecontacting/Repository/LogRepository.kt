@@ -975,4 +975,70 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun getFavorDiscussLog(body: GetFavorDiscuss) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户收藏列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户收藏列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户收藏列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getHistoryLog(body: GetHistory) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户浏览记录接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户浏览记录接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户浏览记录成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteAllHistoryLog(body: DeleteAllHistory) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t清空用户浏览记录接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t清空用户浏览记录接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 清空用户浏览记录成功\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 历史记录已被清空, 重复请求\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

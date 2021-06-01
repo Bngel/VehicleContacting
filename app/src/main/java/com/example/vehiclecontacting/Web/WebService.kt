@@ -253,6 +253,14 @@ interface WebService {
     )
             : Call<GetFirstDiscuss>
 
+    @GET("firstDiscuss")
+    fun getFirstDiscuss(
+        @Query("id") id: String,
+        @Query("cnt") cnt: Int,
+        @Query("number") number: String
+    )
+            : Call<GetFirstDiscuss>
+
     @GET("secondDiscuss")
     fun getSecondDiscuss(
         @Query("cnt") cnt: Int,
@@ -360,6 +368,32 @@ interface WebService {
         @Query("page") page: Int
     )
             : Call<GetUserDiscuss>
+
+    @GET("favorDiscuss")
+    fun getFavorDiscuss(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int
+    )
+            : Call<GetFavorDiscuss>
+
+    @GET("history")
+    fun getHistory(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int
+    )
+            : Call<GetHistory>
+
+    @DELETE("allHistory")
+    fun deleteAllHistory(
+        @Query("id") id: String
+    )
+            : Call<DeleteAllHistory>
+
+
+
+
 
     companion object Factory {
         fun create() : WebService {

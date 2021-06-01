@@ -28,6 +28,8 @@ object DiscussRepository {
     var thirdCount = 0
 
     val myDiscussList = ArrayList<Discuss>()
+    val favorDiscussList = ArrayList<Discuss>()
+    val historyList = ArrayList<Discuss>()
 
     const val LIKE = 1
     const val NOT_LIKE = 0
@@ -415,6 +417,33 @@ object DiscussRepository {
     /***
      * msg:
      * existWrong：帖子不存在
+     * success：成功 （返回json ownerComment：帖子主人写的内容 firstCommentList：下面的评论列表（2-3个就好））
+     */
+    fun getFirstDiscuss(id: String, cnt: Int, number: String): Int {
+        val data = discussService.getFirstDiscuss(id, cnt, number)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success"){
+                    ownerComment = body.data.ownerComment
+                    firstCommentList.clear()
+                    firstCommentList.addAll(body.data.firstCommentList)
+                }
+                LogRepository.getFirstDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：帖子不存在
      * success：成功 （返回json secondCommentList：二级评论列表 pages：页面数 counts：数据总数）
      */
     fun getSecondDiscuss(cnt: Int, isOrderByHot: Int, number: String, page: Int): Int {
@@ -561,6 +590,76 @@ object DiscussRepository {
         } catch (e: Exception) {}
         return when (msg) {
             "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json favorList：帖子列表 pages：页面总数 counts：数据总量）
+     */
+    fun getFavorDiscuss(cnt: Int, id: String, page: Int): Int {
+        val data = discussService.getFavorDiscuss(cnt, id, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    favorDiscussList.clear()
+                    favorDiscussList.addAll(body.data.discussList)
+                }
+                LogRepository.getFavorDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json historyList（历史记录列表） pages：（页面总数） counts：（数据总量））
+     */
+    fun getHistory(cnt: Int, id: String, page: Int): Int {
+        val data = discussService.getHistory(cnt, id, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    historyList.clear()
+                    historyList.addAll(body.data.historyList)
+                }
+                LogRepository.getHistoryLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：历史记录已被清空（可能是重复请求）
+     * success：成功
+     */
+    fun deleteAllHistory(id: String): Int {
+        val data = discussService.deleteAllHistory(id)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteAllHistoryLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }
