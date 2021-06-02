@@ -43,6 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="搜索相关帖子、联系人"
                 android:background="@null"/>
 
             <ImageView
@@ -99,6 +100,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/home_friends"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -107,14 +109,14 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/wp_qrscan"
+                android:src="@drawable/wp_connect"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="扫一扫"
+                android:text="联系人"
                 android:textColor="@color/colorHomeTitleFunction"
                 android:textStyle="bold"
                 android:textSize="15sp"

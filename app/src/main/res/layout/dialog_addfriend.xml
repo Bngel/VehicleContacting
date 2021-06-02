@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorCommunityTitleBackground">
+
+        <TextView
+            android:id="@+id/dialogFriend_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="添加好友"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/dialogFriend_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/dialogFriend_edit"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:hint="请输入验证信息"
+        android:inputType="textMultiLine"
+        android:maxLength="20"
+        android:gravity="top"
+        android:padding="10dp"
+        android:textSize="20sp"/>
+
+</LinearLayout>

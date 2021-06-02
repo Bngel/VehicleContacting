@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.R
@@ -13,6 +15,7 @@ import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.AdministratorController.AdministratorRepository
 import com.example.vehiclecontacting.Web.UserController.User
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Widget.AddFriendDialogView
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_user_detail.*
 import kotlinx.android.synthetic.main.view_userinfo.*
@@ -37,6 +40,38 @@ class UserDetailActivity : BaseActivity() {
             followEvent()
         closeEvent()
         forbidEvent()
+        addFriendEvent()
+    }
+
+    private fun addFriendEvent() {
+        if (InfoRepository.loginStatus.status) {
+            val status = UserRepository.postJudgeFriend(InfoRepository.user!!.id, userId)
+            if (status == StatusRepository.SUCCESS) {
+                if (UserRepository.isFriend == 0) {
+                    detail_add.visibility = View.VISIBLE
+                    detail_add.setOnClickListener {
+                        val view = AddFriendDialogView(this, user.username)
+                        val dialog = AlertDialog.Builder(this)
+                            .setView(view)
+                            .setPositiveButton("发送",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    val reasonEdit = view.findViewById<EditText>(R.id.dialogFriend_edit)
+                                    val addStatus = UserRepository.postFriend(InfoRepository.user!!.id, reasonEdit.text.toString(), userId?:"")
+                                    if (addStatus == StatusRepository.SUCCESS)
+                                        ToastView(this).show("发送请求成功")
+                                    else
+                                        ToastView(this).show("发送请求失败")
+                                })
+                            .setNegativeButton("取消",null)
+                            .create()
+                        dialog.show()
+                    }
+                }
+                else {
+                    detail_add.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun forbidEvent() {

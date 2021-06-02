@@ -24,6 +24,8 @@ object UserRepository {
     var fansPage = 0
     var fansCount = 0
 
+    var isFriend = 0
+
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
             "", "", "", -1, -1, -1, -1,
@@ -428,6 +430,52 @@ object UserRepository {
                     fansCount = body.data.counts
                 }
                 LogRepository.getFansLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * blackWrong：被对方拉黑了
+     * repeatWrong：已经加好友了
+     * success：成功（对方如果已申请加你为好友则会直接加成功）
+     */
+    fun postFriend(fromId: String, reason: String, toId: String): Int {
+        val data = userService.postFriend(fromId, reason, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postFriendLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "blackWrong" -> StatusRepository.BLACK_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json status：1是 0不是）
+     */
+    fun postJudgeFriend(fromId: String, toId: String): Int {
+        val data = userService.postJudgeFriend(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    isFriend = body.data.status
+                LogRepository.postJudgeFriendLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

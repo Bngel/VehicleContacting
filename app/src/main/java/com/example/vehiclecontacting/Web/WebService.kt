@@ -397,6 +397,21 @@ interface WebService {
     )
             : Call<GetFirstPageDiscuss>
 
+    @POST("judgeFriend")
+    fun postJudgeFriend(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<PostJudgeFriend>
+
+    @POST("friend")
+    fun postFriend(
+        @Query("fromId") fromId: String,
+        @Query("reason") reason: String,
+        @Query("toId") toId: String
+    )
+            : Call<PostFriend>
+
 
 
 

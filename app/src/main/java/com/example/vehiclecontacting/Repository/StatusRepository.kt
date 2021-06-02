@@ -43,6 +43,7 @@ object StatusRepository {
     const val TYPE_WRONG = 8
     const val USER_WRONG = 9
     const val AMOUNT_WRONG = 10
+    const val BLACK_WRONG = 11
     const val UNKNOWN_WRONG = 0xFF
 
 }

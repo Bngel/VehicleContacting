@@ -14,8 +14,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.vehiclecontacting.Activity.DiscussActivity
-import com.example.vehiclecontacting.Activity.QRScanActivity
+import com.example.vehiclecontacting.Activity.*
 import com.example.vehiclecontacting.Adapter.MyBannerAdapter
 import com.example.vehiclecontacting.Data.BannerInfo
 import com.example.vehiclecontacting.R
@@ -28,14 +27,13 @@ import com.example.vehiclecontacting.Widget.ToastView
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_hometitle.*
+import kotlinx.android.synthetic.main.view_userinfo.*
 
 
 class HomeFragment: Fragment() {
 
     // 申请相机权限的requestCode
     private val PERMISSION_CAMERA_REQUEST_CODE = 0x00000012
-
-
 
     var parentContext: Context? = null
 
@@ -63,6 +61,19 @@ class HomeFragment: Fragment() {
         hotEvent()
         cityEvent()
         scanEvent()
+        friendsEvent()
+    }
+
+    private fun friendsEvent() {
+        home_friends.setOnClickListener {
+                if (InfoRepository.loginStatus.status) {
+                    val friendsIntent = Intent(parentContext!!, FriendsActivity::class.java)
+                    startActivityForResult(friendsIntent, ActivityCollector.ACTIVITY_FRIENDS)
+                } else {
+                    val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                    startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
     }
 
     private fun scanEvent() {

@@ -41,10 +41,10 @@ class RecommendFragment: Fragment() {
 
     private fun initWidget() {
         refreshEvent()
-        initRecommend()
+        initData()
     }
 
-    private fun initRecommend() {
+    private fun initData() {
         DiscussRepository.discussList.clear()
         recommend_cards.removeAllViews()
         page = 1

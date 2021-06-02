@@ -195,7 +195,7 @@ object LogRepository {
                 stringBuilder.append("-\tmsg: 获取成功\t-\n")
                 stringBuilder.append("-\tpages: ${body.data.pages}\t-\n")
                 for (discuss in body.data.discussList)
-                    stringBuilder.append("-\ttitle: ${discuss.title}\t-\n")
+                    stringBuilder.append("-\ttitle: ${discuss.title}  number: ${discuss.number}\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
@@ -1055,6 +1055,56 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 获取推荐帖子成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postFriendLog(body: PostFriend) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t申请加好友接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t申请加好友接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 申请加好友成功\t-\n")
+            }
+            "blackWrong" -> {
+                stringBuilder.append("-\tmsg: 用户已被拉黑\t-\n")
+            }
+
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 已是好友, 无需重复添加\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postJudgeFriendLog(body: PostJudgeFriend) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t判断是否为好友接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t判断是否为好友接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 判断是否为好友成功\t-\n")
+                stringBuilder.append("-\tstatus: ${body.data.status}\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
