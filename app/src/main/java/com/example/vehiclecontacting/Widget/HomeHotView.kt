@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 import com.example.vehiclecontacting.Data.HotInfo
 import com.example.vehiclecontacting.R
 import kotlinx.android.synthetic.main.view_homehot.view.*
@@ -28,7 +29,13 @@ class HomeHotView:LinearLayout {
         hot_type.text = type
         hot_img.setImageResource(Img)
     }
-
+    constructor(context: Context, title: String, type: String, Img: String): super(context) {
+        hot_title.text = title
+        hot_type.text = type
+        Glide.with(context)
+            .load(Img)
+            .into(hot_img)
+    }
     init {
         LayoutInflater.from(context).inflate(R.layout.view_homehot, this)
     }

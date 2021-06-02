@@ -30,6 +30,7 @@ object DiscussRepository {
     val myDiscussList = ArrayList<Discuss>()
     val favorDiscussList = ArrayList<Discuss>()
     val historyList = ArrayList<Discuss>()
+    val hotList = ArrayList<Discuss>()
 
     const val LIKE = 1
     const val NOT_LIKE = 0
@@ -660,6 +661,30 @@ object DiscussRepository {
         return when (msg) {
             "success" -> StatusRepository.SUCCESS
             "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json：discussList：帖子列表）（cnt大于帖子总数会返回null）
+     */
+    fun getFirstPageDiscuss(cnt: Int): Int {
+        val data = discussService.getFirstPageDiscuss(cnt)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    hotList.clear()
+                    hotList.addAll(body.data.discussList)
+                }
+                LogRepository.getFirstPageDiscussLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }

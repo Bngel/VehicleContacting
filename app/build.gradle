@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7' // RecycleView 上拉刷新 下拉加载
     implementation 'com.android.support:percent:28.0.0' // 百分比布局
     implementation "org.java-websocket:Java-WebSocket:1.4.0" // WebSocket
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0' // 二维码扫描库
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

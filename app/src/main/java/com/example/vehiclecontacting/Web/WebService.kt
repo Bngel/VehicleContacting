@@ -391,6 +391,12 @@ interface WebService {
     )
             : Call<DeleteAllHistory>
 
+    @GET("firstPageDiscuss")
+    fun getFirstPageDiscuss(
+        @Query("cnt") cnt: Int
+    )
+            : Call<GetFirstPageDiscuss>
+
 
 
 
