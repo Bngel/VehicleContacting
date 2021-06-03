@@ -412,7 +412,37 @@ interface WebService {
     )
             : Call<PostFriend>
 
+    @GET("friendList")
+    fun getFriendList(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int,
+        @Query("type") type: Int
+    )
+            : Call<GetFriendList>
 
+    @DELETE("friend")
+    fun deleteFriend(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<DeleteFriend>
+
+    @POST("verifyFriend")
+    fun postVerifyFriend(
+        @Query("fromId") fromId: String,
+        @Query("isPass") isPass: Int,
+        @Query("toId") toId: String
+    )
+            : Call<PostVerifyFriend>
+
+    @GET("postFriendList")
+    fun getPostFriendList(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int
+    )
+            : Call<GetPostFriendList>
 
 
 

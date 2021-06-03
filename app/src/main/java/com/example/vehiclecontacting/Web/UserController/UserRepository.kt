@@ -1,5 +1,6 @@
 package com.example.vehiclecontacting.Web.UserController
 
+import android.util.Log
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
@@ -25,6 +26,8 @@ object UserRepository {
     var fansCount = 0
 
     var isFriend = 0
+    val friendList = ArrayList<Friend>()
+    val friendApplyList = ArrayList<PerApplyFriend>()
 
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
@@ -445,7 +448,7 @@ object UserRepository {
      * success：成功（对方如果已申请加你为好友则会直接加成功）
      */
     fun postFriend(fromId: String, reason: String, toId: String): Int {
-        val data = userService.postFriend(fromId, reason, toId)
+        val data = userService.postFriend(fromId, reason?:"" , toId)
         var msg = ""
         try {
             thread {
@@ -476,6 +479,100 @@ object UserRepository {
                 if (msg == "success")
                     isFriend = body.data.status
                 LogRepository.postJudgeFriendLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json friendList：好友列表 pages：页面数 counts：数据总量）
+     */
+    fun getFriendList(cnt: Int, id: String, page: Int, type: Int): Int {
+        val data = userService.getFriendList(cnt, id, page, type)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    friendList.clear()
+                    friendList.addAll(body.data.friendList)
+                }
+                LogRepository.getFriendListLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：好友不存在
+     * success：成功
+     */
+    fun deleteFriend(fromId: String, toId: String): Int {
+        val data = userService.deleteFriend(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteFriendLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：好友审核已被同意
+     * existWrong：好友申请不存在
+     * success：成功 申请成功好友数会加1
+     */
+    fun postVerifyFriend(fromId: String, isPass: Int, toId: String): Int {
+        val data = userService.postVerifyFriend(fromId, isPass, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postVerifyFriendLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 返回json postFriendList：申请加好友的列表 pages：页面总数 counts：数据总量
+     */
+    fun getPostFriendList(cnt: Int, id: String, page: Int): Int {
+        val data = userService.getPostFriendList(cnt, id, page)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    friendApplyList.clear()
+                    friendApplyList.addAll(body.data.postFriendList)
+                }
+                LogRepository.getPostFriendListLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

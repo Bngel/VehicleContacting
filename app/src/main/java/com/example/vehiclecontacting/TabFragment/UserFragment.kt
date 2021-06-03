@@ -94,12 +94,10 @@ class UserFragment: Fragment() {
             if (InfoRepository.loginStatus.status) {
                 val historyIntent = Intent(parentContext!!, MyHistoryActivity::class.java)
                 startActivityForResult(historyIntent, ActivityCollector.ACTIVITY_MY_HISTORY)
-            /*
-                WebRepository.createWebClient(InfoRepository.user!!.id)
+                /*WebRepository.createWebClient(InfoRepository.user!!.id)
                 while (WebRepository.webClient.readyState != ReadyState.OPEN)
                     Log.d(StatusRepository.VehicleLog, "连接中")
-                WebRepository.webClient.send("测试一下")
-            */
+                WebRepository.webClient.send("测试一下")*/
             } else {
                 val loginIntent = Intent(parentContext, LoginActivity::class.java)
                 startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)

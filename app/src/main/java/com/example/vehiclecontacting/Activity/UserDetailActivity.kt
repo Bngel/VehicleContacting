@@ -56,7 +56,7 @@ class UserDetailActivity : BaseActivity() {
                             .setPositiveButton("发送",
                                 DialogInterface.OnClickListener { dialogInterface, i ->
                                     val reasonEdit = view.findViewById<EditText>(R.id.dialogFriend_edit)
-                                    val addStatus = UserRepository.postFriend(InfoRepository.user!!.id, reasonEdit.text.toString(), userId?:"")
+                                    val addStatus = UserRepository.postFriend(InfoRepository.user!!.id, reasonEdit.text.toString()?:"", userId?:"")
                                     if (addStatus == StatusRepository.SUCCESS)
                                         ToastView(this).show("发送请求成功")
                                     else

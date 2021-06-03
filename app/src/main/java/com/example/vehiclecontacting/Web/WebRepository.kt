@@ -3,7 +3,7 @@ package com.example.vehiclecontacting.Web
 import java.net.URI
 
 object WebRepository {
-    private const val baseUri = "wss://47.115.128.193/websocket/"
+    private const val baseUri = "ws://47.115.128.193:8090/websocket/"
 
     lateinit var webClient: JWebSocketClient
 
