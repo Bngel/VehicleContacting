@@ -19,6 +19,7 @@ import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Web.WebRepository
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.view_userfunction.*
 import kotlinx.android.synthetic.main.view_userinfo.*
 import okhttp3.MediaType
@@ -26,6 +27,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.java_websocket.enums.ReadyState
 import java.io.File
+import java.util.regex.Pattern
 
 class UserFragment: Fragment() {
 
@@ -94,6 +96,7 @@ class UserFragment: Fragment() {
             if (InfoRepository.loginStatus.status) {
                 val historyIntent = Intent(parentContext!!, MyHistoryActivity::class.java)
                 startActivityForResult(historyIntent, ActivityCollector.ACTIVITY_MY_HISTORY)
+
                 /*WebRepository.createWebClient(InfoRepository.user!!.id)
                 while (WebRepository.webClient.readyState != ReadyState.OPEN)
                     Log.d(StatusRepository.VehicleLog, "连接中")
