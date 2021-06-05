@@ -62,16 +62,29 @@ class HomeFragment: Fragment() {
         cityEvent()
         scanEvent()
         friendsEvent()
+        codeEvent()
     }
 
     private fun friendsEvent() {
         home_friends.setOnClickListener {
-                if (InfoRepository.loginStatus.status) {
-                    val friendsIntent = Intent(parentContext!!, FriendsActivity::class.java)
-                    startActivityForResult(friendsIntent, ActivityCollector.ACTIVITY_FRIENDS)
-                } else {
-                    val loginIntent = Intent(parentContext, LoginActivity::class.java)
-                    startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            if (InfoRepository.loginStatus.status) {
+                val friendsIntent = Intent(parentContext!!, FriendsActivity::class.java)
+                startActivityForResult(friendsIntent, ActivityCollector.ACTIVITY_FRIENDS)
+            } else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
+    }
+
+    private fun codeEvent() {
+        home_qrcode.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val qrCodeIntent = Intent(parentContext!!, QRCodeActivity::class.java)
+                startActivityForResult(qrCodeIntent, ActivityCollector.ACTIVITY_QRCODE)
+            } else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
             }
         }
     }
@@ -136,9 +149,7 @@ class HomeFragment: Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                ActivityCollector.ACTIVITY_DISCUSS -> {
 
-                }
             }
         }
     }

@@ -444,6 +444,12 @@ interface WebService {
     )
             : Call<GetPostFriendList>
 
+    @GET("userQRcode")
+    fun getUserQRCode(
+        @Query("id") id: String
+    )
+            : Call<String>
+
 
 
     companion object Factory {

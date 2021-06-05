@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.FriendsActivity"></activity>
+        <activity android:name=".Activity.QRCodeActivity"></activity>
+        <activity android:name=".Activity.FriendsActivity" />
         <activity android:name=".Activity.QRScanActivity" />
         <activity android:name=".Activity.MyHistoryActivity" />
         <activity android:name=".Activity.MyFavorActivity" />

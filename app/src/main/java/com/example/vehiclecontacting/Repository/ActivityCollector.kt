@@ -25,6 +25,7 @@ object ActivityCollector {
     const val ACTIVITY_MY_FAVOR = 0x18
     const val ACTIVITY_MY_HISTORY = 0x19
     const val ACTIVITY_FRIENDS = 0x20
+    const val ACTIVITY_QRCODE = 0x21
 
     private val activities = ArrayList<Activity>()
 

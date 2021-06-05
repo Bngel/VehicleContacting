@@ -1,5 +1,8 @@
 package com.example.vehiclecontacting.Web.UserController
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.LogRepository
@@ -579,5 +582,22 @@ object UserRepository {
             "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }
+    }
+
+    /***
+     * msg:
+     * 会返回一个二维码
+     */
+    fun getUserQRCode(id: String): Bitmap? {
+        val data = userService.getUserQRCode(id)
+        var bitmap: Bitmap? = null
+        try {
+            thread {
+                val body = data.execute().body()!!
+                val bitmapArray = Base64.decode(body, Base64.URL_SAFE)
+                bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.count())
+            }.join(4000)
+        } catch (e: Exception) {}
+        return bitmap
     }
 }
