@@ -63,6 +63,21 @@ class HomeFragment: Fragment() {
         scanEvent()
         friendsEvent()
         codeEvent()
+        searchEvent()
+    }
+
+    private fun searchEvent() {
+        home_search.setOnClickListener {
+            val keyword = home_keyword.text.toString()
+            if (keyword != "") {
+                val searchIntent = Intent(parentContext!!, SearchResultActivity::class.java)
+                searchIntent.putExtra("keyword", keyword)
+                startActivityForResult(searchIntent, ActivityCollector.ACTIVITY_SEARCH)
+            }
+            else
+                ToastView(parentContext!!).show("搜索内容不得为空")
+        }
+
     }
 
     private fun friendsEvent() {

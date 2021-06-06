@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorCommunityTitleBackground">
+
+        <ImageView
+            android:id="@+id/result_close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/bp_left"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询结果"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/result_friend_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#707070"
+                    android:text="查找到的联系人:"
+                    android:textSize="18sp"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:id="@+id/result_friend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#707070"
+                    android:text="查找到的帖子:"
+                    android:textSize="18sp"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:id="@+id/result_discuss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+</LinearLayout>
