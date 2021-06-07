@@ -64,6 +64,19 @@ class HomeFragment: Fragment() {
         friendsEvent()
         codeEvent()
         searchEvent()
+        relationEvent()
+    }
+
+    private fun relationEvent() {
+        home_relation.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val relationIntent = Intent(parentContext!!, RelationActivity::class.java)
+                startActivityForResult(relationIntent, ActivityCollector.ACTIVITY_RELATION)
+            } else {
+                val loginIntent = Intent(parentContext, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
     }
 
     private fun searchEvent() {

@@ -24,5 +24,6 @@ data class User(
     val noSpeakDate: String,
     val blackCounts: Int,
     val friendCounts: Int,
-    val boxMessageCounts: Int
+    val boxMessageCounts: Int,
+    val connectCount: Int
 )

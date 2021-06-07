@@ -441,7 +441,8 @@ interface WebService {
     fun getPostFriendList(
         @Query("cnt") cnt: Int,
         @Query("id") id: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("type") type: Int
     )
             : Call<GetPostFriendList>
 
@@ -467,6 +468,30 @@ interface WebService {
         @Query("keyword") keyword: String
     )
             : Call<GetSearchVehicle>
+
+    @POST("linkUser")
+    fun postLinkUser(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<PostLinkUser>
+
+    @GET("postLinkUser")
+    fun getPostLinkUser(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int,
+        @Query("type") type: Int
+    )
+            : Call<GetPostLinkUser>
+
+    @POST("judgeLinkUser")
+    fun postJudgeLinkUser(
+        @Query("fromId") fromId: String,
+        @Query("isPass") isPass: Int,
+        @Query("toId") toId: String
+    )
+            : Call<PostJudgeLinkUser>
 
 
 

@@ -6,6 +6,7 @@
 
     <!--- annotation for name of userInfo -->
     <string name="userInfo_moments">动态</string>
+    <string name="userInfo_discuss">文章</string>
     <string name="userInfo_follow">关注</string>
     <string name="userInfo_fans">粉丝</string>
 

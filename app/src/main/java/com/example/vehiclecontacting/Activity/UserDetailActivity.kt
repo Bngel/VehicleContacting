@@ -41,6 +41,29 @@ class UserDetailActivity : BaseActivity() {
         closeEvent()
         forbidEvent()
         addFriendEvent()
+        linkEvent()
+    }
+
+    private fun linkEvent() {
+        if (InfoRepository.loginStatus.status) {
+            detail_link.setOnClickListener {
+                val linkDialog = AlertDialog.Builder(this)
+                    .setTitle("提示:")
+                    .setMessage("是否添加用户 ${user.username} 为亲友关系")
+                    .setPositiveButton("确定",
+                        DialogInterface.OnClickListener { dialogInterface, i ->
+                            val linkStatus = UserRepository.postLinkUser(InfoRepository.user!!.id, userId)
+                            if (linkStatus == StatusRepository.SUCCESS) {
+                                ToastView(this).show("申请添加为亲友成功")
+                            }
+                            else
+                                ToastView(this).show("申请添加为亲友失败")
+                        })
+                    .setNegativeButton("取消", null)
+                    .create()
+                linkDialog.show()
+            }
+        }
     }
 
     private fun addFriendEvent() {

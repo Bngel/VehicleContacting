@@ -13,7 +13,7 @@ class AddFriendDialogView: LinearLayout {
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
     constructor(context: Context, username: String): super(context) {
-        dialogFriend_msg.text = "是否申请添加用户 $username 为好友"
+        dialogFriend_msg.text = "是否同意用户 $username 的申请"
     }
     init {
         LayoutInflater.from(context).inflate(R.layout.dialog_addfriend, this)

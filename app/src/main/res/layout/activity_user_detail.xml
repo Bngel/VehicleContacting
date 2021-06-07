@@ -207,4 +207,13 @@
         android:visibility="gone"
         android:src="@drawable/rp_forbid"/>
 
+    <ImageView
+        android:id="@+id/detail_link"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/bp_link"/>
+
 </RelativeLayout>

@@ -36,11 +36,15 @@ object UserRepository {
     var searchPage = 0
     var searchCount = 0
 
+    val postLinkList = ArrayList<LinkUser>()
+    var postLinkPage = 0
+    var postLinkCount = 0
+
 
     private fun getNullUser(msg: String): User {
         return User("",msg,"", "", "",
             "", "", "", -1, -1, -1, -1,
-            -1,"", "", "", "", -1, -1, -1, "",-1, -1, -1)
+            -1,"", "", "", "", -1, -1, -1, "",-1, -1, -1, -1)
     }
 
     fun getUser(phone: String): User {
@@ -569,8 +573,8 @@ object UserRepository {
      * msg:
      * success：成功 返回json postFriendList：申请加好友的列表 pages：页面总数 counts：数据总量
      */
-    fun getPostFriendList(cnt: Int, id: String, page: Int): Int {
-        val data = userService.getPostFriendList(cnt, id, page)
+    fun getPostFriendList(cnt: Int, id: String, page: Int, type: Int = 1): Int {
+        val data = userService.getPostFriendList(cnt, id, page, type)
         var msg = ""
         try {
             thread {
@@ -628,6 +632,84 @@ object UserRepository {
         } catch (e: Exception) {}
         return when (msg) {
             "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * userWrong：用户连接已达到3个
+     * blackWrong：用户在黑名单内
+     * repeatWrong：已在连接列表内
+     * success：成功
+     */
+    fun postLinkUser(fromId: String, toId: String): Int {
+        val data = userService.postLinkUser(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postLinkUserLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "userWrong" -> StatusRepository.USER_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "blackWrong" -> StatusRepository.BLACK_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json postUserList：用户列表 pages：页面数 counts：数据总量）
+     */
+    fun getPostLinkUser(cnt: Int, id: String, page: Int, type: Int = 1): Int {
+        val data = userService.getPostLinkUser(cnt, id, page, type)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    postLinkList.clear()
+                    postLinkList.addAll(body.data.postUserList)
+                    postLinkPage = body.data.pages
+                    postLinkCount = body.data.counts
+                }
+                LogRepository.getPostLinkUserLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * repeatWrong：对方已经联结
+     * existWrong：请求不存在或已被审核
+     * userWrong：用户或对方已拥有3个联结用户
+     * success：成功
+     */
+    fun postJudgeLinkUser(fromId: String, isPass: Int, toId: String): Int {
+        val data = userService.postJudgeLinkUser(fromId, isPass, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.postJudgeLinkUserLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "userWrong" -> StatusRepository.USER_WRONG
+            "repeatWrong" -> StatusRepository.REPEAT_WRONG
+            "existWrong" -> StatusRepository.BLACK_WRONG
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }

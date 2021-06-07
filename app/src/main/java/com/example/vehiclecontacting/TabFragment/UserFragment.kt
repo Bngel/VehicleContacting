@@ -210,7 +210,7 @@ class UserFragment: Fragment() {
                     user_vipstatus.text ="社区管理员"
                 }
             }
-            user_moments.text = momentCounts.toString()
+            user_moments.text = discussCounts.toString()
             user_follow.text = followCounts.toString()
             user_fans.text = fansCounts.toString()
             if (photo != null)

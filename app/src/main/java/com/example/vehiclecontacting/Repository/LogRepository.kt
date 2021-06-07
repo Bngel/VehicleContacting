@@ -1248,4 +1248,85 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun postLinkUserLog(body: PostLinkUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t申请联结用户接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t申请联结用户接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 申请联结用户成功\t-\n")
+            }
+            "userWrong" -> {
+                stringBuilder.append("-\tmsg: 用户连接已达到3个\t-\n")
+            }
+            "blackWrong" -> {
+                stringBuilder.append("-\tmsg: 用户在黑名单内\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 已在连接列表内\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getPostLinkUserLog(body: GetPostLinkUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取申请联结用户列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取申请联结用户列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取申请联结用户列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun postJudgeLinkUserLog(body: PostJudgeLinkUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t审核联结用户申请接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t审核联结用户申请接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 审核联结用户申请成功\t-\n")
+            }
+            "userWrong" -> {
+                stringBuilder.append("-\tmsg: 用户或对方已拥有3个联结用户\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 请求不存在或已被审核\t-\n")
+            }
+            "repeatWrong" -> {
+                stringBuilder.append("-\tmsg: 对方已经联结\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }
