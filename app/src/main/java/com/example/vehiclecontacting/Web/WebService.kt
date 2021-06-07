@@ -4,6 +4,7 @@ import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
 import com.example.vehiclecontacting.Web.UserController.*
+import com.example.vehiclecontacting.Web.VehicleController.GetSearchVehicle
 import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
 import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
 import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
@@ -449,6 +450,24 @@ interface WebService {
         @Query("id") id: String
     )
             : Call<String>
+
+    @GET("searchUser")
+    fun getSearchUser(
+        @Query("cnt") cnt: Int,
+        @Query("page") page: Int,
+        @Query("username") username: String
+    )
+            : Call<GetSearchUser>
+
+    @GET("searchVehicle")
+    fun getSearchVehicle(
+        @Query("cnt") cnt: Int,
+        @Query("page") page: Int,
+        @Query("type") type: Int,
+        @Query("keyword") keyword: String
+    )
+            : Call<GetSearchVehicle>
+
 
 
 

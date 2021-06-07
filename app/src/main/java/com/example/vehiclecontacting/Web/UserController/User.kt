@@ -23,5 +23,6 @@ data class User(
     val dirtyCounts: Int,
     val noSpeakDate: String,
     val blackCounts: Int,
-    val friendCounts: Int
+    val friendCounts: Int,
+    val boxMessageCounts: Int
 )

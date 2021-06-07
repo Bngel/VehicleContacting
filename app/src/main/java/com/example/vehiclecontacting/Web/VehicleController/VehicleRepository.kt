@@ -15,6 +15,10 @@ object VehicleRepository {
     val vehicleList = ArrayList<MyVehicle>()
     var vehicleUrl = ""
 
+    val searchVehicleList = ArrayList<SearchPerVehicle>()
+    var searchVehicleCount = 0
+    var searchVehiclePage = 0
+
     /***
      * msg:
      * existWrong：用户不存在
@@ -90,6 +94,32 @@ object VehicleRepository {
                     vehicleList.addAll(body.data.vehicleList)
                 }
                 LogRepository.getVehicleListLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 （返回json vehicleList（车辆相关信息列表） pages：页面总数 counts：数据总量）
+     */
+    fun getSearchVehicle(cnt: Int, page: Int, type: Int = 0 , keyword: String = ""): Int {
+        val data = vehicleService.getSearchVehicle(cnt, page, type, keyword)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    searchVehicleList.clear()
+                    searchVehicleList.addAll(body.data.vehicleList)
+                    searchVehicleCount = body.data.counts
+                    searchVehiclePage = body.data.pages
+                }
+                LogRepository.getSearchVehicleLog(body)
             }.join(4000)
         } catch (e: Exception) {}
         return when (msg) {

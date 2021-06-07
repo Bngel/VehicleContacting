@@ -58,6 +58,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"/>
 
+                <Button
+                    android:id="@+id/result_moreUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="- 加载更多 -"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#707070"
+                    android:text="查找到的相关车牌:"
+                    android:textSize="18sp"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:id="@+id/result_vehicle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

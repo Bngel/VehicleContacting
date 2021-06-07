@@ -45,33 +45,38 @@ class FollowView: LinearLayout {
 
     fun discussFollow() {
         follow_btn.setOnClickListener {
-            if (UserRepository.followStatus == UserRepository.FOLLOW_NOT) {
-                val follow = UserRepository.postFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
-                if (follow == StatusRepository.SUCCESS) {
-                    follow_btn.text = resources.getString(R.string.fans_followed)
-                    follow_btn.background = resources.getDrawable(R.drawable.bk_followedbtn)
-                    follow_btn.setTextColor(resources.getColor(R.color.colorFollowed))
-                    UserRepository.followStatus = UserRepository.FOLLOW_ED
-                    followStatus = UserRepository.FOLLOW_ED
-                    ToastView(context).show("关注成功")
+            if (InfoRepository.loginStatus.status) {
+                if (UserRepository.followStatus == UserRepository.FOLLOW_NOT) {
+                    val follow = UserRepository.postFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
+                    if (follow == StatusRepository.SUCCESS) {
+                        follow_btn.text = resources.getString(R.string.fans_followed)
+                        follow_btn.background = resources.getDrawable(R.drawable.bk_followedbtn)
+                        follow_btn.setTextColor(resources.getColor(R.color.colorFollowed))
+                        UserRepository.followStatus = UserRepository.FOLLOW_ED
+                        followStatus = UserRepository.FOLLOW_ED
+                        ToastView(context).show("关注成功")
+                    }
+                    else {
+                        ToastView(context).show("关注失败, 请稍后重试")
+                    }
                 }
                 else {
-                    ToastView(context).show("关注失败, 请稍后重试")
+                    val follow = UserRepository.deleteFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
+                    if (follow == StatusRepository.SUCCESS) {
+                        follow_btn.text = resources.getString(R.string.fans_follow)
+                        follow_btn.background = resources.getDrawable(R.drawable.bk_followbtn)
+                        follow_btn.setTextColor(resources.getColor(R.color.colorFollow))
+                        UserRepository.followStatus = UserRepository.FOLLOW_NOT
+                        followStatus = UserRepository.FOLLOW_ED
+                        ToastView(context).show("取消关注成功")
+                    }
+                    else {
+                        ToastView(context).show("取消关注失败, 请稍后重试")
+                    }
                 }
             }
             else {
-                val follow = UserRepository.deleteFans(InfoRepository.user!!.id, DiscussRepository.ownerComment.fromId)
-                if (follow == StatusRepository.SUCCESS) {
-                    follow_btn.text = resources.getString(R.string.fans_follow)
-                    follow_btn.background = resources.getDrawable(R.drawable.bk_followbtn)
-                    follow_btn.setTextColor(resources.getColor(R.color.colorFollow))
-                    UserRepository.followStatus = UserRepository.FOLLOW_NOT
-                    followStatus = UserRepository.FOLLOW_ED
-                    ToastView(context).show("取消关注成功")
-                }
-                else {
-                    ToastView(context).show("取消关注失败, 请稍后重试")
-                }
+                ToastView(context).show("请先登录")
             }
         }
     }

@@ -65,9 +65,9 @@ class FansActivity : BaseActivity() {
             val followBtn = view.findViewById<FollowView>(R.id.userCard_follow)
             val followStatus = UserRepository.postJudgeFavor(InfoRepository.user!!.id, fans.id)
             if (followStatus == StatusRepository.SUCCESS)
-                followBtn.setStatus(UserRepository.FOLLOW_NOT)
-            else
                 followBtn.setStatus(UserRepository.followStatus)
+            else
+                followBtn.setStatus(UserRepository.FOLLOW_NOT)
             followBtn.cardFollow(fans.id)
             val fansAvt = view.findViewById<AvtView>(R.id.userCard_avt)
             fansAvt.setOnClickListener {
