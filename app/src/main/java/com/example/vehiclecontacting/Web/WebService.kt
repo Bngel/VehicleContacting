@@ -3,6 +3,8 @@ package com.example.vehiclecontacting.Web
 import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
+import com.example.vehiclecontacting.Web.TalkController.GetTalk
+import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
 import com.example.vehiclecontacting.Web.VehicleController.GetSearchVehicle
 import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
@@ -472,6 +474,7 @@ interface WebService {
     @POST("linkUser")
     fun postLinkUser(
         @Query("fromId") fromId: String,
+        @Query("relationship") relationship: String,
         @Query("toId") toId: String
     )
             : Call<PostLinkUser>
@@ -492,6 +495,43 @@ interface WebService {
         @Query("toId") toId: String
     )
             : Call<PostJudgeLinkUser>
+
+    @GET("linkUser")
+    fun getLinkUser(
+        @Query("id") id: String
+    )
+            : Call<GetLinkUser>
+
+    @GET("talk")
+    fun getTalk(
+        @Query("cnt") cnt: Int,
+        @Query("fromId") fromId: String,
+        @Query("page") page: Int,
+        @Query("toId") toId: String
+    )
+            : Call<GetTalk>
+
+    @DELETE("removeLink")
+    fun deleteRemoveLink(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<DeleteRemoveLink>
+
+    @GET("judgeLink")
+    fun getJudgeLink(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<GetJudgeLink>
+
+    @GET("talkList")
+    fun getTalkList(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("page") page: Int
+    )
+            : Call<GetTalkList>
 
 
 

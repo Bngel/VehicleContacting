@@ -13,7 +13,6 @@ import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_COMMUNITY
 import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_HOME
 import com.example.vehiclecontacting.Repository.StatusRepository.PAGE_USER
-import com.example.vehiclecontacting.Web.WebRepository
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

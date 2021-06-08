@@ -40,4 +40,5 @@ class AdminActivity : BaseActivity() {
             startActivityForResult(frozenIntent, ActivityCollector.ACTIVITY_FROZEN)
         }
     }
+
 }

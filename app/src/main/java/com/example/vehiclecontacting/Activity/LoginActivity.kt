@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
+import com.example.vehiclecontacting.Repository.WebRepository
 import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_login.*
+import org.java_websocket.enums.ReadyState
 
 class LoginActivity : BaseActivity() {
 
@@ -76,6 +79,9 @@ class LoginActivity : BaseActivity() {
                     intent.putExtra(StatusRepository.loginStatus, true)
                     setResult(RESULT_OK, intent)
                     InfoRepository.initLogin(this, tel)
+                    WebRepository.createWebClient(InfoRepository.user!!.id)
+                    while (WebRepository.webClient.readyState != ReadyState.OPEN)
+                        Log.d(StatusRepository.VehicleLog, "连接中")
                     finish()
                 }
             }
@@ -176,12 +182,13 @@ class LoginActivity : BaseActivity() {
                         val intent = Intent()
                         intent.putExtra(StatusRepository.loginStatus, true)
                         setResult(RESULT_OK, intent)
+                        WebRepository.createWebClient(InfoRepository.user!!.id)
+                        while (WebRepository.webClient.readyState != ReadyState.OPEN)
+                            Log.d(StatusRepository.VehicleLog, "连接中")
                         finish()
                     }
                 }
             }
         }
     }
-
-
 }

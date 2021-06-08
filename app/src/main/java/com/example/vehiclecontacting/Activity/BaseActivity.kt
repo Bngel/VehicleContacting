@@ -16,4 +16,9 @@ open class BaseActivity: AppCompatActivity() {
         super.onDestroy()
         ActivityCollector.removeActivity(this)
     }
+
+    override fun onResume() {
+        super.onResume()
+        ActivityCollector.curActivity = this
+    }
 }

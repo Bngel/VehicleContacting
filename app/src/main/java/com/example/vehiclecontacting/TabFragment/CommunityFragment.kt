@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.vehiclecontacting.*
+import com.example.vehiclecontacting.Activity.ChatBoxActivity
 import com.example.vehiclecontacting.Activity.CreateActivity
 import com.example.vehiclecontacting.Activity.DiscussActivity
 import com.example.vehiclecontacting.Activity.LoginActivity
@@ -50,6 +51,20 @@ class CommunityFragment: Fragment() {
         tabEvent()
         vpEvent()
         addEvent()
+        chatBoxEvent()
+    }
+
+    private fun chatBoxEvent() {
+        community_chatBox.setOnClickListener {
+            if (InfoRepository.loginStatus.status) {
+                val chatIntent = Intent(parentContext!!, ChatBoxActivity::class.java)
+                startActivityForResult(chatIntent, ActivityCollector.ACTIVITY_CHAT_BOX)
+            }
+            else {
+                val loginIntent = Intent(parentContext!!, LoginActivity::class.java)
+                startActivityForResult(loginIntent, ActivityCollector.ACTIVITY_LOGIN)
+            }
+        }
     }
 
     private fun tabEvent() {

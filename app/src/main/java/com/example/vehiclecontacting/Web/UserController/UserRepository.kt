@@ -37,8 +37,10 @@ object UserRepository {
     var searchCount = 0
 
     val postLinkList = ArrayList<LinkUser>()
+    val linkList = ArrayList<LinkRelation>()
     var postLinkPage = 0
     var postLinkCount = 0
+    var isLink = 0
 
 
     private fun getNullUser(msg: String): User {
@@ -643,8 +645,8 @@ object UserRepository {
      * repeatWrong：已在连接列表内
      * success：成功
      */
-    fun postLinkUser(fromId: String, toId: String): Int {
-        val data = userService.postLinkUser(fromId, toId)
+    fun postLinkUser(fromId: String, relationship: String, toId: String): Int {
+        val data = userService.postLinkUser(fromId, relationship, toId)
         var msg = ""
         try {
             thread {
@@ -710,6 +712,74 @@ object UserRepository {
             "userWrong" -> StatusRepository.USER_WRONG
             "repeatWrong" -> StatusRepository.REPEAT_WRONG
             "existWrong" -> StatusRepository.BLACK_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 返回linkUserList：联结的用户列表 最多就3个，所以就不分页了~
+     */
+    fun getLinkUser(id: String): Int {
+        val data = userService.getLinkUser(id)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success") {
+                    linkList.clear()
+                    linkList.addAll(body.data.linkUserList)
+                }
+                LogRepository.getLinkUserLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * existWrong：联结关系不存在
+     * success：成功
+     */
+    fun deleteRemoveLink(fromId: String, toId: String): Int {
+        val data = userService.deleteRemoveLink(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteRemoveLinkLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
+
+    /***
+     * msg:
+     * success：成功 返回json status：1有 0 没有
+     */
+    fun getJudgeLink(fromId: String, toId: String): Int {
+        val data = userService.getJudgeLink(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                if (msg == "success")
+                    isLink = body.data.status
+                LogRepository.getJudgeLinkLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "success" -> StatusRepository.SUCCESS
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }

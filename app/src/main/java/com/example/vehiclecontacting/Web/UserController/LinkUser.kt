@@ -8,5 +8,6 @@ data class LinkUser(
     val photo: String,
     val sex: String,
     val username: String,
-    val vip: Int
+    val vip: Int,
+    val relationship: String
 )

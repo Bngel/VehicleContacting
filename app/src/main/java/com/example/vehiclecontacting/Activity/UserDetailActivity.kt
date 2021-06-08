@@ -42,27 +42,53 @@ class UserDetailActivity : BaseActivity() {
         forbidEvent()
         addFriendEvent()
         linkEvent()
+        chatEvent()
+    }
+
+    private fun chatEvent() {
+        if (InfoRepository.loginStatus.status) {
+            detail_chat.visibility = View.VISIBLE
+            detail_chat.setOnClickListener {
+                val chatIntent = Intent(this, ChatActivity::class.java)
+                chatIntent.putExtra("userId", userId)
+                chatIntent.putExtra("userPhoto", user.photo)
+                startActivityForResult(chatIntent, ActivityCollector.ACTIVITY_CHAT)
+            }
+        }
+        else {
+            detail_chat.visibility = View.GONE
+        }
     }
 
     private fun linkEvent() {
         if (InfoRepository.loginStatus.status) {
-            detail_link.setOnClickListener {
-                val linkDialog = AlertDialog.Builder(this)
-                    .setTitle("提示:")
-                    .setMessage("是否添加用户 ${user.username} 为亲友关系")
-                    .setPositiveButton("确定",
-                        DialogInterface.OnClickListener { dialogInterface, i ->
-                            val linkStatus = UserRepository.postLinkUser(InfoRepository.user!!.id, userId)
-                            if (linkStatus == StatusRepository.SUCCESS) {
-                                ToastView(this).show("申请添加为亲友成功")
-                            }
-                            else
-                                ToastView(this).show("申请添加为亲友失败")
-                        })
-                    .setNegativeButton("取消", null)
-                    .create()
-                linkDialog.show()
+            val linkStatus = UserRepository.getJudgeLink(InfoRepository.user!!.id, userId)
+            if (linkStatus == StatusRepository.SUCCESS) {
+                detail_link.visibility = View.VISIBLE
+                detail_link.setOnClickListener {
+                    val linkDialog = AlertDialog.Builder(this)
+                        .setTitle("提示:")
+                        .setMessage("是否添加用户 ${user.username} 为亲友关系")
+                        .setPositiveButton("确定",
+                            DialogInterface.OnClickListener { dialogInterface, i ->
+                                val linkStatus = UserRepository.postLinkUser(InfoRepository.user!!.id, "", userId)
+                                if (linkStatus == StatusRepository.SUCCESS) {
+                                    ToastView(this).show("申请添加为亲友成功")
+                                }
+                                else
+                                    ToastView(this).show("申请添加为亲友失败")
+                            })
+                        .setNegativeButton("取消", null)
+                        .create()
+                    linkDialog.show()
+                }
             }
+            else {
+                detail_link.visibility = View.GONE
+            }
+        }
+        else {
+            detail_link.visibility = View.GONE
         }
     }
 

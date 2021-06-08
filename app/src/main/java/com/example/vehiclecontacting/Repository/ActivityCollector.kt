@@ -1,9 +1,16 @@
 package com.example.vehiclecontacting.Repository
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
+import androidx.core.content.ContextCompat
+import com.example.vehiclecontacting.Activity.BaseActivity
+import com.example.vehiclecontacting.Activity.MainActivity
+
 
 object ActivityCollector {
 
+    const val ACTIVITY_MAIN = 0x00
     const val ACTIVITY_CODE = 0x01
     const val ACTIVITY_LOGIN = 0x02
     const val CODE_GALLERY = 0x03
@@ -28,6 +35,10 @@ object ActivityCollector {
     const val ACTIVITY_QRCODE = 0x21
     const val ACTIVITY_SEARCH = 0x22
     const val ACTIVITY_RELATION = 0x23
+    const val ACTIVITY_CHAT = 0x24
+    const val ACTIVITY_CHAT_BOX = 0x25
+
+    var curActivity: BaseActivity? = null
 
     private val activities = ArrayList<Activity>()
 
@@ -56,5 +67,4 @@ object ActivityCollector {
         }
         activities.clear()
     }
-
 }

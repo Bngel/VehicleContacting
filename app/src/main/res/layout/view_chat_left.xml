@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="10dp">
+
+    <com.example.vehiclecontacting.Widget.AvtView
+        android:id="@+id/chat_left_avt"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/test_img"
+        android:layout_gravity="center_vertical"/>
+
+    <com.cxd.chatview.moudle.ChatView
+        xmlns:chat="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:gravity="center_vertical"
+
+        chat:arrow_direction="left"
+        chat:is_arrow_center="true"
+        chat:arrow_up_distance="10dp"
+        chat:arrow_width="5dp"
+        chat:arrow_height="12dp"
+        chat:stroke_width="1px"
+        chat:stroke_color="#FFFFFF"
+        chat:fill_color="#FFFFFF"
+        chat:press_stroke_color="#50111111"
+        chat:press_fill_color="#50111111"
+        chat:conner_radius="6dp"
+        android:layout_gravity="left">
+
+        <TextView
+            android:textSize="16dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/chat_left_msg"
+            android:text="这是箭头向左的聊天气泡"
+            android:textColor="#4a4a4a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </com.cxd.chatview.moudle.ChatView>
+</LinearLayout>

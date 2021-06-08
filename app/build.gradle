@@ -46,6 +46,7 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.4.0" // WebSocket
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3' // 二维码扫描库
     implementation 'com.google.zxing:core:3.4.0' // ZXING 二维码库
+    implementation 'com.github.bigdongdong:ChatView:2.0' // 聊天气泡依赖库
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

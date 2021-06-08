@@ -28,7 +28,7 @@
                 android:textSize="22sp"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="待处理的好友请求"/>
+                android:text="待处理的请求"/>
         </RelativeLayout>
 
     </LinearLayout>

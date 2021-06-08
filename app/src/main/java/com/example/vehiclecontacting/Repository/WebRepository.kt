@@ -1,5 +1,6 @@
-package com.example.vehiclecontacting.Web
+package com.example.vehiclecontacting.Repository
 
+import com.example.vehiclecontacting.Web.JWebSocketClient
 import java.net.URI
 
 object WebRepository {

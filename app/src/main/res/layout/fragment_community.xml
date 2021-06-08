@@ -29,4 +29,13 @@
         android:src="@drawable/yb_add"
         android:layout_margin="30dp" />
 
+    <ImageView
+        android:id="@+id/community_chatBox"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/bp_chat"/>
+
 </RelativeLayout>

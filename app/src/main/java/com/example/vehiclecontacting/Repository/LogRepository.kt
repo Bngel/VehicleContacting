@@ -3,6 +3,8 @@ package com.example.vehiclecontacting.Repository
 import android.util.Log
 import com.example.vehiclecontacting.Web.AdministratorController.*
 import com.example.vehiclecontacting.Web.DiscussController.*
+import com.example.vehiclecontacting.Web.TalkController.GetTalk
+import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
 import com.example.vehiclecontacting.Web.VehicleController.GetSearchVehicle
 import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
@@ -950,9 +952,23 @@ object LogRepository {
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
-    fun webSocketStatusLog(body: String) {
+    fun webSocketStatusLog(body: String, msg: String = "") {
         val stringBuilder = StringBuilder()
             stringBuilder.append("-\t获取WebSocket连接状态: $body\t-\n")
+        when (body) {
+            "onOpen" -> {
+                stringBuilder.append("-\t与服务器建立WebSocket连接\t-\n")
+            }
+            "onMessage" -> {
+                stringBuilder.append("-\t接收服务器WebSocket消息: $msg\t-\n")
+            }
+            "onClose" -> {
+                stringBuilder.append("-\t与服务器WebSocket连接关闭\t-\n")
+            }
+            "onError" -> {
+                stringBuilder.append("-\t与服务器WebSocket连接发生异常\t-\n")
+            }
+        }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
@@ -1329,4 +1345,112 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+    fun getLinkUserLog(body: GetLinkUser) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户联结列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户联结列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户联结列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getTalkLog(body: GetTalk) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户一对一聊天记录接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户一对一聊天记录接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户一对一聊天记录成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteRemoveLinkLog(body: DeleteRemoveLink) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t解除联结关系接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t解除联结关系接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 解除联结关系成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 联结关系不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getJudgeLinkLog(body: GetJudgeLink) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t判断是否为联结关系接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t判断是否为联结关系接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 判断是否为联结关系成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+    fun getTalkListLog(body: GetTalkList) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取用户聊天列表接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取用户聊天列表接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取用户聊天列表成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
 }

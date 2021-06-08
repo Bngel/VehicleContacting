@@ -1,6 +1,8 @@
 package com.example.vehiclecontacting.Activity
 
 import android.app.ActionBar
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -47,9 +49,24 @@ class RelationActivity : BaseActivity() {
     }
 
     private fun initData() {
-        /*val layout = initLicense()
-        relation_infos.addView(layout)*/
+        relation_infos.removeAllViews()
         if (InfoRepository.loginStatus.status) {
+            val relationStatus = UserRepository.getLinkUser(InfoRepository.user!!.id)
+            if (relationStatus == StatusRepository.SUCCESS) {
+                for (relation in UserRepository.linkList) {
+                    val licenses = ArrayList<String>()
+                    if (relation.license1 != null)
+                        licenses.add(relation.license1)
+                    if (relation.license2 != null)
+                        licenses.add(relation.license2)
+                    if (relation.license3 != null)
+                        licenses.add(relation.license3)
+                    if (relation.license4 != null)
+                        licenses.add(relation.license4)
+                    val layout = initLicense(relation.id, relation.photo, relation.username, relation.introduction, licenses)
+                    relation_infos.addView(layout)
+                }
+            }
             val applyListStatus = UserRepository.getPostLinkUser(1000, InfoRepository.user!!.id, 1)
             if (applyListStatus == StatusRepository.SUCCESS) {
                 val dealingList =
@@ -144,7 +161,7 @@ class RelationActivity : BaseActivity() {
         val params = ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         layout.layoutParams = params
         layout.orientation = LinearLayout.VERTICAL
-        layout.addView(UserCardView(this, id, photo, username, introduction))
+        layout.addView(UserCardView(this, id, photo, username, introduction?:""))
         val childLayout = LinearLayout(this)
         childLayout.layoutParams = params
         childLayout.orientation = LinearLayout.VERTICAL
@@ -159,6 +176,23 @@ class RelationActivity : BaseActivity() {
         layout.background = resources.getDrawable(R.drawable.bk_relationcard)
         layout.setPadding(20, 30, 20, 30)
         layout.addView(childLayout)
+        layout.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(this)
+                .setTitle("提示:")
+                .setMessage("是否确定与用户 $username 解除联结关系?")
+                .setPositiveButton("确定",
+                    DialogInterface.OnClickListener { dialogInterface, i ->
+                        val deleteStatus = UserRepository.deleteRemoveLink(InfoRepository.user!!.id, id)
+                        if (deleteStatus == StatusRepository.SUCCESS) {
+                            initData()
+                            ToastView(this).show("解除成功")
+                        }
+                    })
+                .setNegativeButton("取消" ,null)
+                .create()
+                .show()
+            true
+        }
         return layout
     }
 }
