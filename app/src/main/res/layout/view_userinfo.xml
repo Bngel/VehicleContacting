@@ -144,15 +144,34 @@
         android:visibility="gone"
         android:src="@drawable/wp_setting"/>
 
-    <ImageView
+    <RelativeLayout
         android:id="@+id/user_push"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/user_setting"
         android:layout_margin="15dp"
-        android:visibility="gone"
-        android:src="@drawable/wp_push"/>
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/wp_push"/>
+
+        <TextView
+            android:id="@+id/user_attention"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:background="@drawable/bk_attention"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
 </RelativeLayout>
 
 

@@ -222,6 +222,12 @@ class UserFragment: Fragment() {
             user_fans.text = fansCounts.toString()
             if (photo != null)
                 user_avt.setAvt(photo)
+            if (boxMessageCounts > 0) {
+                user_attention.visibility = View.VISIBLE
+            }
+            else {
+                user_attention.visibility = View.INVISIBLE
+            }
         }
         // user_username.isClickable = false
         user_avt.isClickable = true

@@ -29,7 +29,7 @@ class ChatBoxActivity : BaseActivity() {
             val boxStatus = TalkRepository.getTalkList(1000, InfoRepository.user!!.id, 1)
             if (boxStatus == StatusRepository.SUCCESS) {
                 for (chat in TalkRepository.talkBoxList) {
-                    val view = ChatBoxView(this, chat.photo, chat.username, chat.lastMessage)
+                    val view = ChatBoxView(this, chat.photo, chat.username, chat.lastMessage, chat.noReadCounts)
                     view.setOnClickListener {
                         val chatIntent = Intent(this, ChatActivity::class.java)
                         chatIntent.putExtra("userId", chat.id)
@@ -75,11 +75,10 @@ class ChatBoxActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                ActivityCollector.ACTIVITY_CHAT -> {
+        when (requestCode) {
+            ActivityCollector.ACTIVITY_CHAT -> {
+                if (InfoRepository.loginStatus.status)
                     initData()
-                }
             }
         }
     }
