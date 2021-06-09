@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ChatBoxActivity"></activity>
+        <activity android:name=".Activity.PushActivity"></activity>
+        <activity android:name=".Activity.ChatBoxActivity" />
         <activity android:name=".Activity.ChatActivity" />
         <activity android:name=".Activity.RelationActivity" />
         <activity android:name=".Activity.SearchResultActivity" />

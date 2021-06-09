@@ -2,7 +2,10 @@ package com.example.vehiclecontacting.Web
 
 import com.example.vehiclecontacting.Repository.SSLSocketClient
 import com.example.vehiclecontacting.Web.AdministratorController.*
+import com.example.vehiclecontacting.Web.BoxController.DeleteBoxMessage
+import com.example.vehiclecontacting.Web.BoxController.GetAllBox
 import com.example.vehiclecontacting.Web.DiscussController.*
+import com.example.vehiclecontacting.Web.TalkController.DeleteTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
@@ -532,6 +535,29 @@ interface WebService {
         @Query("page") page: Int
     )
             : Call<GetTalkList>
+
+    @DELETE("talk")
+    fun deleteTalk(
+        @Query("fromId") fromId: String,
+        @Query("toId") toId: String
+    )
+            : Call<DeleteTalk>
+
+    @GET("allBox")
+    fun getAllBox(
+        @Query("cnt") cnt: Int,
+        @Query("id") id: String,
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int
+    )
+            : Call<GetAllBox>
+
+    @DELETE("boxMessage")
+    fun deleteBoxMessage(
+        @Query("id") id: String,
+        @Query("numbers") numbers: List<String>
+    )
+            : Call<DeleteBoxMessage>
 
 
 

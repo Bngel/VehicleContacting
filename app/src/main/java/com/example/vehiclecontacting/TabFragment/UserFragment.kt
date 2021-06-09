@@ -65,8 +65,10 @@ class UserFragment: Fragment() {
             // user_username.isClickable = false
             user_avt.isClickable = false
             user_setting.visibility = View.GONE
+            user_push.visibility = View.GONE
         }
         settingEvent()
+        pushEvent()
     }
 
     private fun initData() {
@@ -84,6 +86,20 @@ class UserFragment: Fragment() {
         myCreateEvent()
         myFavorEvent()
         myHistoryEvent()
+        pushEvent()
+    }
+
+    private fun pushEvent() {
+        if (InfoRepository.loginStatus.status) {
+            user_push.visibility = View.VISIBLE
+            user_push.setOnClickListener {
+                val pushIntent = Intent(parentContext!!, PushActivity::class.java)
+                startActivityForResult(pushIntent, ActivityCollector.ACTIVITY_PUSH)
+            }
+        }
+        else {
+            user_push.visibility = View.GONE
+        }
     }
 
     private fun myHistoryEvent() {
@@ -137,13 +153,13 @@ class UserFragment: Fragment() {
     private fun settingEvent() {
         if (InfoRepository.loginStatus.status) {
             user_setting.visibility = View.VISIBLE
+            user_setting.setOnClickListener {
+                val stIntent = Intent(parentContext!!, SettingActivity::class.java)
+                startActivityForResult(stIntent, ActivityCollector.ACTIVITY_SETTING)
+            }
         }
         else {
             user_setting.visibility = View.GONE
-        }
-        user_setting.setOnClickListener {
-            val stIntent = Intent(parentContext!!, SettingActivity::class.java)
-            startActivityForResult(stIntent, ActivityCollector.ACTIVITY_SETTING)
         }
     }
 
@@ -205,7 +221,6 @@ class UserFragment: Fragment() {
             user_fans.text = fansCounts.toString()
             if (photo != null)
                 user_avt.setAvt(photo)
-            user_setting.visibility = View.VISIBLE
         }
         // user_username.isClickable = false
         user_avt.isClickable = true
@@ -267,6 +282,8 @@ class UserFragment: Fragment() {
                     val status = data?.getBooleanExtra(StatusRepository.loginStatus, false)
                     if (status == true) {
                         loadInfo()
+                        settingEvent()
+                        pushEvent()
                     }
                 }
                 ActivityCollector.CROP_PHOTO -> {

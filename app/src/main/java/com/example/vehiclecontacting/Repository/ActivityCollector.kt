@@ -37,6 +37,7 @@ object ActivityCollector {
     const val ACTIVITY_RELATION = 0x23
     const val ACTIVITY_CHAT = 0x24
     const val ACTIVITY_CHAT_BOX = 0x25
+    const val ACTIVITY_PUSH = 0x26
 
     var curActivity: BaseActivity? = null
 

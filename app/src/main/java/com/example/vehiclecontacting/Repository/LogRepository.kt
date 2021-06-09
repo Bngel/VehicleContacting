@@ -2,7 +2,10 @@ package com.example.vehiclecontacting.Repository
 
 import android.util.Log
 import com.example.vehiclecontacting.Web.AdministratorController.*
+import com.example.vehiclecontacting.Web.BoxController.DeleteBoxMessage
+import com.example.vehiclecontacting.Web.BoxController.GetAllBox
 import com.example.vehiclecontacting.Web.DiscussController.*
+import com.example.vehiclecontacting.Web.TalkController.DeleteTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
@@ -1432,6 +1435,8 @@ object LogRepository {
         }
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
+
+
     fun getTalkListLog(body: GetTalkList) {
         val stringBuilder = StringBuilder()
         if (body.code == 200) {
@@ -1453,4 +1458,69 @@ object LogRepository {
         Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
     }
 
+    fun deleteTalkLog(body: DeleteTalk) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t删除某用户聊天列表显示接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t删除某用户聊天列表显示接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 删除某用户聊天列表显示成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun getAllBoxLog(body: GetAllBox) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t获取消息盒子接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t获取消息盒子接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 获取消息盒子显示成功\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteBoxMessageLog(body: DeleteBoxMessage) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t批量删除消息盒子的消息接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t批量删除消息盒子的消息接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 批量删除消息盒子的消息成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 消息不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
 }

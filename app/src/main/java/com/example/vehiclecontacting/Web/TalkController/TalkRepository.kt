@@ -65,4 +65,25 @@ object TalkRepository {
         }
     }
 
+    /**
+     * msg:
+     * existWrong：该消息不存在（可能时重复请求）
+     * success：成功
+     */
+    fun deleteTalk(fromId: String, toId: String): Int {
+        val data = talkService.deleteTalk(fromId, toId)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteTalkLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when(msg) {
+            "success" -> StatusRepository.SUCCESS
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 }

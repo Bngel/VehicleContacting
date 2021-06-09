@@ -1,8 +1,10 @@
 package com.example.vehiclecontacting.Activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.InfoRepository
@@ -10,6 +12,7 @@ import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.TalkController.TalkRepository
 import com.example.vehiclecontacting.Web.UserController.UserRepository
 import com.example.vehiclecontacting.Widget.ChatBoxView
+import com.example.vehiclecontacting.Widget.ToastView
 import kotlinx.android.synthetic.main.activity_chat_box.*
 
 class ChatBoxActivity : BaseActivity() {
@@ -32,6 +35,26 @@ class ChatBoxActivity : BaseActivity() {
                         chatIntent.putExtra("userId", chat.id)
                         chatIntent.putExtra("userPhoto", chat.photo)
                         startActivityForResult(chatIntent, ActivityCollector.ACTIVITY_CHAT)
+                    }
+                    view.setOnLongClickListener {
+                        val deleteDialog = AlertDialog.Builder(this)
+                            .setTitle("提示:")
+                            .setMessage("是否删除该消息记录?")
+                            .setPositiveButton("确定",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    val deleteStatus = TalkRepository.deleteTalk(InfoRepository.user!!.id, chat.id)
+                                    if (deleteStatus == StatusRepository.SUCCESS) {
+                                        ToastView(this).show("删除成功")
+                                        initData()
+                                    }
+                                    else {
+                                        ToastView(this).show("删除失败")
+                                    }
+                                })
+                            .setNegativeButton("取消", null)
+                            .create()
+                            .show()
+                        true
                     }
                     chatBox_infos.addView(view)
                 }

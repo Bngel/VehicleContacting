@@ -143,6 +143,16 @@
         android:layout_margin="15dp"
         android:visibility="gone"
         android:src="@drawable/wp_setting"/>
+
+    <ImageView
+        android:id="@+id/user_push"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/user_setting"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        android:src="@drawable/wp_push"/>
 </RelativeLayout>
 
 
