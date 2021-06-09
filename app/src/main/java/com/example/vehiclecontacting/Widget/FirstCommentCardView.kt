@@ -71,21 +71,33 @@ class FirstCommentCardView: LinearLayout {
 
         comment_first_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
-                val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, firstNumber)
-                if (likeStatus != StatusRepository.SUCCESS){
-                    val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, firstNumber)
-                    if (unlikeStatus == StatusRepository.SUCCESS) {
-                        comment_first_likeImg.setImageResource(R.drawable.gp_like)
-                        comment_first_likeCount.text =
-                            (comment_first_likeCount.text.toString().toInt() - 1).toString()
-                        ToastView(context).show("取消点赞成功")
+                val isLikeStatus = DiscussRepository.postCommentLike(InfoRepository.user!!.id, firstNumber)
+                if (isLikeStatus == StatusRepository.SUCCESS) {
+                    if (DiscussRepository.commentLike == DiscussRepository.NOT_LIKE) {
+                        val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, firstNumber)
+                        if (likeStatus == StatusRepository.SUCCESS) {
+                            comment_first_likeImg.setImageResource(R.drawable.yy_like)
+                            comment_first_likeCount.text =
+                                (comment_first_likeCount.text.toString().toInt() + 1).toString()
+                            ToastView(context).show("点赞成功")
+                        }
+                    }
+                    else if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    {
+                        val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, firstNumber)
+                        if (unlikeStatus == StatusRepository.SUCCESS) {
+                            comment_first_likeImg.setImageResource(R.drawable.gp_like)
+                            comment_first_likeCount.text =
+                                (comment_first_likeCount.text.toString().toInt() - 1).toString()
+                            ToastView(context).show("取消点赞成功")
+                        }
+                    }
+                    else {
+                        ToastView(context).show("点赞状态异常")
                     }
                 }
                 else {
-                    comment_first_likeImg.setImageResource(R.drawable.yy_like)
-                    comment_first_likeCount.text =
-                        (comment_first_likeCount.text.toString().toInt() + 1).toString()
-                    ToastView(context).show("点赞成功")
+                    ToastView(context).show("获取点赞状态失败")
                 }
             }
             else {

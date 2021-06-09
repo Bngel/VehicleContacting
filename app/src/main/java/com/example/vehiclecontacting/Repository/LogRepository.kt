@@ -713,6 +713,11 @@ object LogRepository {
         when (body.msg) {
             "success" -> {
                 stringBuilder.append("-\tmsg: 查看帖子评论点赞状态成功\t-\n")
+                stringBuilder.append("-\tstatus: ${when(body.data.isLike){
+                    DiscussRepository.LIKE -> "LIKE"
+                    DiscussRepository.NOT_LIKE -> "NOT_LIKE"
+                    else -> ""
+                }}\t-\n")
             }
             "existWrong" -> {
                 stringBuilder.append("-\tmsg: 评论不存在\t-\n")

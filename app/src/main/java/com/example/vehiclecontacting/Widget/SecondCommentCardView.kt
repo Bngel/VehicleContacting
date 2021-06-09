@@ -13,7 +13,7 @@ import com.example.vehiclecontacting.Repository.InfoRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
 import com.example.vehiclecontacting.Web.DiscussController.CommentOwner
 import com.example.vehiclecontacting.Web.DiscussController.DiscussRepository
-import kotlinx.android.synthetic.main.view_comment_first.view.*
+import kotlinx.android.synthetic.main.view_comment_second.view.*
 import kotlinx.android.synthetic.main.view_comment_second.view.*
 
 class SecondCommentCardView: LinearLayout{
@@ -51,20 +51,33 @@ class SecondCommentCardView: LinearLayout{
 
         comment_second_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
-                val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
-                if (likeStatus != StatusRepository.SUCCESS){
-                    val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
-                    if (unlikeStatus == StatusRepository.SUCCESS) {
-                        comment_second_likeImg.setImageResource(R.drawable.gp_like)
-                        comment_second_likeCount.text =
-                            (comment_second_likeCount.text.toString().toInt() - 1).toString()
-                        ToastView(context).show("取消点赞成功")
+                val isLikeStatus = DiscussRepository.postCommentLike(InfoRepository.user!!.id, secondNumber)
+                if (isLikeStatus == StatusRepository.SUCCESS) {
+                    if (DiscussRepository.commentLike == DiscussRepository.NOT_LIKE) {
+                        val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
+                        if (likeStatus == StatusRepository.SUCCESS) {
+                            comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                            comment_second_likeCount.text =
+                                (comment_second_likeCount.text.toString().toInt() + 1).toString()
+                            ToastView(context).show("点赞成功")
+                        }
+                    }
+                    else if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    {
+                        val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
+                        if (unlikeStatus == StatusRepository.SUCCESS) {
+                            comment_second_likeImg.setImageResource(R.drawable.gp_like)
+                            comment_second_likeCount.text =
+                                (comment_second_likeCount.text.toString().toInt() - 1).toString()
+                            ToastView(context).show("取消点赞成功")
+                        }
+                    }
+                    else {
+                        ToastView(context).show("点赞状态异常")
                     }
                 }
                 else {
-                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
-                    comment_second_likeCount.text = (comment_second_likeCount.text.toString().toInt() + 1).toString()
-                    ToastView(context).show("点赞成功")
+                    ToastView(context).show("获取点赞状态失败")
                 }
             }
             else {
@@ -106,20 +119,33 @@ class SecondCommentCardView: LinearLayout{
         }
         comment_second_likeImg.setOnClickListener {
             if (InfoRepository.loginStatus.status) {
-                val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
-                if (likeStatus != StatusRepository.SUCCESS){
-                    val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
-                    if (unlikeStatus == StatusRepository.SUCCESS) {
-                        comment_second_likeImg.setImageResource(R.drawable.gp_like)
-                        comment_second_likeCount.text =
-                            (comment_second_likeCount.text.toString().toInt() - 1).toString()
-                        ToastView(context).show("取消点赞成功")
+                val isLikeStatus = DiscussRepository.postCommentLike(InfoRepository.user!!.id, secondNumber)
+                if (isLikeStatus == StatusRepository.SUCCESS) {
+                    if (DiscussRepository.commentLike == DiscussRepository.NOT_LIKE) {
+                        val likeStatus = DiscussRepository.postLike(InfoRepository.user!!.id, secondNumber)
+                        if (likeStatus == StatusRepository.SUCCESS) {
+                            comment_second_likeImg.setImageResource(R.drawable.yy_like)
+                            comment_second_likeCount.text =
+                                (comment_second_likeCount.text.toString().toInt() + 1).toString()
+                            ToastView(context).show("点赞成功")
+                        }
+                    }
+                    else if (DiscussRepository.commentLike == DiscussRepository.LIKE)
+                    {
+                        val unlikeStatus = DiscussRepository.deleteLike(InfoRepository.user!!.id, secondNumber)
+                        if (unlikeStatus == StatusRepository.SUCCESS) {
+                            comment_second_likeImg.setImageResource(R.drawable.gp_like)
+                            comment_second_likeCount.text =
+                                (comment_second_likeCount.text.toString().toInt() - 1).toString()
+                            ToastView(context).show("取消点赞成功")
+                        }
+                    }
+                    else {
+                        ToastView(context).show("点赞状态异常")
                     }
                 }
                 else {
-                    comment_second_likeImg.setImageResource(R.drawable.yy_like)
-                    comment_second_likeCount.text = (comment_second_likeCount.text.toString().toInt() + 1).toString()
-                    ToastView(context).show("点赞成功")
+                    ToastView(context).show("获取点赞状态失败")
                 }
             }
             else {
