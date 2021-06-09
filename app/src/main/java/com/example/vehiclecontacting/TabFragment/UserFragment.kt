@@ -1,7 +1,11 @@
 package com.example.vehiclecontacting.TabFragment
 
+import android.R.attr.level
 import android.app.Activity.RESULT_OK
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -10,6 +14,9 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.vehiclecontacting.*
 import com.example.vehiclecontacting.Activity.*
@@ -23,6 +30,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+
 
 class UserFragment: Fragment() {
 

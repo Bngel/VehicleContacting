@@ -71,4 +71,15 @@ class ChatBoxActivity : BaseActivity() {
             finish()
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                ActivityCollector.ACTIVITY_CHAT -> {
+                    initData()
+                }
+            }
+        }
+    }
 }
