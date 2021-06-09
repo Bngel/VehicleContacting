@@ -23,6 +23,7 @@ class ChatActivity : BaseActivity() {
 
     lateinit var userId: String
     lateinit var userPhoto: String
+    lateinit var username: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class ChatActivity : BaseActivity() {
     private fun initData() {
         userId = intent.getStringExtra("userId")?:""
         userPhoto = intent.getStringExtra("userPhoto")?:""
+        username = intent.getStringExtra("username")?:"聊天界面"
         chat_detail.removeAllViews()
         val talkStatus = TalkRepository.getTalk(1000, InfoRepository.user!!.id, 1, userId)
         if (talkStatus == StatusRepository.SUCCESS) {
@@ -46,6 +48,7 @@ class ChatActivity : BaseActivity() {
                 }
             }
         }
+        chat_title.text = username
         TalkRepository.updateMessage.value = false
         chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
     }

@@ -2,9 +2,12 @@ package com.example.vehiclecontacting.Web.DiscussController
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.WebRepository
 import com.example.vehiclecontacting.Web.WebService
+import com.example.vehiclecontacting.Widget.ToastView
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import retrofit2.http.Query
@@ -60,6 +63,10 @@ object DiscussRepository {
      * success：成功（返回json带url）
      */
     fun postDiscussPhoto(photo: MultipartBody.Part): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val gson = GsonBuilder()
             .registerTypeAdapter(PostDiscussPhoto::class.java, PostDiscussPhoto.DataStateDeserializer())
             .setLenient()
@@ -91,6 +98,10 @@ object DiscussRepository {
      */
     fun postDiscuss(description: String, id: String, title: String,
                     photo1: String = "", photo2: String = "", photo3: String = ""): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postDiscuss(description, id, photo1, photo2, photo3, title)
         var msg = ""
         try {
@@ -114,6 +125,10 @@ object DiscussRepository {
      */
     fun postDiscuss(description: String, id: String, title: String,
                     photos: List<String>): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         var photo1 = ""
         var photo2 = ""
         var photo3 = ""
@@ -145,6 +160,10 @@ object DiscussRepository {
      * success：成功（返回json discussList（主页帖子信息列表） pages（页面总数） counts（帖子总数））
      */
     fun getDiscuss(cnt: Int, isOrderByTime: Int, page: Int, isFollow: Int, keyword: String = "", id: String = ""): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getDiscuss(id, cnt,isOrderByTime, keyword, page, isFollow)
         var msg = ""
         try {
@@ -169,6 +188,10 @@ object DiscussRepository {
      * success：成功
      */
     fun deleteDiscuss(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.deleteDiscuss(id, number)
         var msg = ""
         try {
@@ -192,6 +215,10 @@ object DiscussRepository {
      * success：成功（返回json ownerComment（楼主的评论和帖子的相关信息） pages（页面总数） counts（帖子总数） commentList（评论列表））
      */
     fun getComment(cnt: Int, isOrderByTime: Int, page: Int, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getComment(cnt,isOrderByTime, number, page)
         var msg = ""
         try {
@@ -217,6 +244,10 @@ object DiscussRepository {
      * success：成功 （返回json isLike（是否点赞） isFavor（是否收藏））
      */
     fun postLikeAndFavor(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postLikeAndFavor(id, number)
         var msg = ""
         try {
@@ -243,6 +274,10 @@ object DiscussRepository {
      * success：成功
      */
     fun postLike(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postLike(id, number)
         var msg = ""
         try {
@@ -269,6 +304,10 @@ object DiscussRepository {
      * success：成功
      */
     fun deleteLike(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.deleteLike(id, number)
         var msg = ""
         try {
@@ -294,6 +333,10 @@ object DiscussRepository {
      * success：成功
      */
     fun postLikeDiscuss(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postLikeDiscuss(id, number)
         var msg = ""
         try {
@@ -318,6 +361,10 @@ object DiscussRepository {
      * success：成功
      */
     fun deleteLikeDiscuss(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.deleteLikeDiscuss(id, number)
         var msg = ""
         try {
@@ -343,6 +390,10 @@ object DiscussRepository {
      * success：成功
      */
     fun postFavorDiscuss(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postFavorDiscuss(id, number)
         var msg = ""
         try {
@@ -369,6 +420,10 @@ object DiscussRepository {
      * success：成功
      */
     fun deleteFavorDiscuss(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.deleteFavorDiscuss(id, number)
         var msg = ""
         try {
@@ -394,6 +449,10 @@ object DiscussRepository {
      * success：成功 （返回json ownerComment：帖子主人写的内容 firstCommentList：下面的评论列表（2-3个就好））
      */
     fun getFirstDiscuss(cnt: Int, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getFirstDiscuss(cnt, number)
         var msg = ""
         try {
@@ -421,6 +480,10 @@ object DiscussRepository {
      * success：成功 （返回json ownerComment：帖子主人写的内容 firstCommentList：下面的评论列表（2-3个就好））
      */
     fun getFirstDiscuss(id: String, cnt: Int, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getFirstDiscuss(id, cnt, number)
         var msg = ""
         try {
@@ -448,6 +511,10 @@ object DiscussRepository {
      * success：成功 （返回json secondCommentList：二级评论列表 pages：页面数 counts：数据总数）
      */
     fun getSecondDiscuss(cnt: Int, isOrderByHot: Int, number: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getSecondDiscuss(cnt, isOrderByHot, number, page)
         var msg = ""
         try {
@@ -476,6 +543,10 @@ object DiscussRepository {
      * success：成功 （返回json thirdCommentList：三级评论列表 OwnerComment：父级评论（显示在最上面） pages：页面数 counts：页面数据量）
      */
     fun getThirdDiscuss(cnt: Int, number: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getThirdDiscuss(cnt, number, page)
         var msg = ""
         try {
@@ -505,6 +576,10 @@ object DiscussRepository {
      * success：成功
      */
     fun postComment(comments: String, fatherNumber: String, id: String, number: String, replyNumber: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postComment(comments, fatherNumber, id, number, replyNumber)
         var msg = ""
         try {
@@ -527,6 +602,10 @@ object DiscussRepository {
      * success：成功 （返回json isLike：是否被点赞1是0不是）
      */
     fun postCommentLike(id: String, number: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.postCommentLike(id, number)
         var msg = ""
         try {
@@ -553,6 +632,10 @@ object DiscussRepository {
      * success：返回json hotDiscussList
      */
     fun getHotDiscuss(): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getHotDiscuss()
         var msg = ""
         try {
@@ -576,6 +659,10 @@ object DiscussRepository {
      * success：成功 （返回json discussList：帖子列表 pages：页面总数 counts：数据总量）
      */
     fun getUserDiscuss(cnt: Int, id: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getUserDiscuss(cnt, id, page)
         var msg = ""
         try {
@@ -600,6 +687,10 @@ object DiscussRepository {
      * success：成功 （返回json favorList：帖子列表 pages：页面总数 counts：数据总量）
      */
     fun getFavorDiscuss(cnt: Int, id: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getFavorDiscuss(cnt, id, page)
         var msg = ""
         try {
@@ -624,6 +715,10 @@ object DiscussRepository {
      * success：成功 （返回json historyList（历史记录列表） pages：（页面总数） counts：（数据总量））
      */
     fun getHistory(cnt: Int, id: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getHistory(cnt, id, page)
         var msg = ""
         try {
@@ -649,6 +744,10 @@ object DiscussRepository {
      * success：成功
      */
     fun deleteAllHistory(id: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.deleteAllHistory(id)
         var msg = ""
         try {
@@ -670,6 +769,10 @@ object DiscussRepository {
      * success：成功 （返回json：discussList：帖子列表）（cnt大于帖子总数会返回null）
      */
     fun getFirstPageDiscuss(cnt: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = discussService.getFirstPageDiscuss(cnt)
         var msg = ""
         try {

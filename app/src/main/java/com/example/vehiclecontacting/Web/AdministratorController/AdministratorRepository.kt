@@ -1,8 +1,11 @@
 package com.example.vehiclecontacting.Web.AdministratorController
 
+import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.WebRepository
 import com.example.vehiclecontacting.Web.WebService
+import com.example.vehiclecontacting.Widget.ToastView
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -21,6 +24,10 @@ object AdministratorRepository {
      * success：成功 （返回 vehicleList：需要审核车辆大致信息）
      */
     fun getJudgeVehicleList(cnt: Int, keyword: String, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = adminService.getVehicleList(cnt, keyword, page)
         var msg = ""
         try {
@@ -47,6 +54,10 @@ object AdministratorRepository {
      * success：成功
      */
     fun postJudgeVehicle(isPass: Int, license: String, reason: String = ""): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = adminService.postJudgeVehicle(isPass, license, reason)
         var msg = ""
         try {
@@ -70,6 +81,10 @@ object AdministratorRepository {
      * success：成功
      */
     fun postFrozeUser(id: String, minutes: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = adminService.postFrozeUser(id, minutes)
         var msg = ""
         try {
@@ -91,6 +106,10 @@ object AdministratorRepository {
      * success：成功 （返回json frozenUserList：封禁用户信息列表 pages：页面总数 counts：数据总量）
      */
     fun getFrozenList(cnt: Int, page: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = adminService.getFrozenList(cnt, page)
         var msg = ""
         try {
@@ -117,6 +136,10 @@ object AdministratorRepository {
      * success：成功
      */
     fun postReopenUser(id: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = adminService.postReopenUser(id)
         var msg = ""
         try {

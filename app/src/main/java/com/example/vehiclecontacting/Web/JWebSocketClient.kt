@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.vehiclecontacting.Activity.ChatActivity
+import com.example.vehiclecontacting.Activity.ChatBoxActivity
 import com.example.vehiclecontacting.Activity.PushActivity
 import com.example.vehiclecontacting.R
 import com.example.vehiclecontacting.Repository.*
@@ -49,12 +50,18 @@ class JWebSocketClient(serverUri: URI): WebSocketClient(serverUri, Draft_6455())
                         TalkRepository.updateMessage.postValue(true)
                     }
                 }
+                else {
+                    val data = JSONObject(json.get("data").toString())
+                    val username = data.get("username").toString()
+                    val info = data.get("info").toString()
+                    createNotification(ActivityCollector.curActivity!!, "${username}发来了一条消息", info, 2)
+                }
             }
             "systemInfoSuccess" -> {
                 val data = JSONObject(json.get("data").toString())
                 val title = data.get("title").toString()
                 val content = data.get("content").toString()
-                createNotification(ActivityCollector.curActivity!!, title, content)
+                createNotification(ActivityCollector.curActivity!!, title, content, 1)
             }
             else -> {}
         }
@@ -74,14 +81,17 @@ class JWebSocketClient(serverUri: URI): WebSocketClient(serverUri, Draft_6455())
         }
     }
 
-    private fun createNotification(context: Context, title: String, content: String) {
+    private fun createNotification(context: Context, title: String, content: String, type: Int) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel("notification01", "vehiclePush", NotificationManager.IMPORTANCE_DEFAULT)
-        val resultIntent = Intent(context, PushActivity::class.java)
         // Create the TaskStackBuilder
         val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
             // Add the intent, which inflates the back stack
-            addNextIntentWithParentStack(resultIntent)
+            addNextIntentWithParentStack(when (type){
+                1 -> Intent(context, PushActivity::class.java)
+                2 -> Intent(context, ChatBoxActivity::class.java)
+                else -> Intent(context, PushActivity::class.java)
+            })
             // Get the PendingIntent containing the entire back stack
             getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }

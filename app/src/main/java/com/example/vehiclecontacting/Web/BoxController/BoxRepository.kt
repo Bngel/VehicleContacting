@@ -1,8 +1,11 @@
 package com.example.vehiclecontacting.Web.BoxController
 
+import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.WebRepository
 import com.example.vehiclecontacting.Web.WebService
+import com.example.vehiclecontacting.Widget.ToastView
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -17,6 +20,10 @@ object BoxRepository {
      * success：成功 （返回json messageList：消息列表 pages：页面总数 counts：数据总量）
      */
     fun getAllBox(cnt: Int, id: String, page: Int, keyword: String = ""): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = boxService.getAllBox(cnt, id, keyword, page)
         var msg = ""
         try {
@@ -42,6 +49,10 @@ object BoxRepository {
      * success：成功
      */
     fun deleteBoxMessage(id: String, numbers: List<String>): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = boxService.deleteBoxMessage(id, numbers)
         var msg = ""
         try {

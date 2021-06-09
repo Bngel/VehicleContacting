@@ -4,10 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
-import com.example.vehiclecontacting.Repository.InfoRepository
-import com.example.vehiclecontacting.Repository.LogRepository
-import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.*
 import com.example.vehiclecontacting.Web.WebService
+import com.example.vehiclecontacting.Widget.ToastView
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import java.lang.Exception
@@ -50,6 +49,10 @@ object UserRepository {
     }
 
     fun getUser(phone: String): User {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return getNullUser("")
+        }
         val data = userService.getUser(phone)
         var user: User? = null
         var msg = ""
@@ -65,6 +68,10 @@ object UserRepository {
     }
 
     fun getUserById(id: String): User {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return getNullUser("")
+        }
         val data = userService.getUserById(id)
         var user: User? = null
         var msg = ""
@@ -85,6 +92,10 @@ object UserRepository {
      * success：成功
      */
     fun patchUserDescription(id: String, description: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.patchUserDescription(id, description)
         var msg = ""
         try {
@@ -109,6 +120,10 @@ object UserRepository {
      * success：成功
      */
     fun patchUserSex(id: String, sex: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.patchUserSex(id, sex)
         var msg = ""
         try {
@@ -133,6 +148,10 @@ object UserRepository {
      * success：成功
      */
     fun patchUserUsername(id: String, username: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.patchUserUsername(id, username)
         var msg = ""
         try {
@@ -159,6 +178,10 @@ object UserRepository {
      * success：成功
      */
     fun postChangePassword(code: String, newPassword: String, oldPassword: String, phone: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postChangePassword(code, newPassword, oldPassword, phone)
         var msg = ""
         try {
@@ -190,6 +213,10 @@ object UserRepository {
     const val TYPE_LOGIN = 4
 
     fun postCode(phone: String, type: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postCode(phone, type)
         var msg = ""
         try {
@@ -214,6 +241,10 @@ object UserRepository {
      * success：成功
      */
     fun postFindPassword(code: String, newPassword: String, phone: String): Int{
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postFindPassword(code, newPassword, phone)
         var msg = ""
         try {
@@ -240,6 +271,10 @@ object UserRepository {
      * success：成功（返回json带token：token令牌）
      */
     fun postLoginByCode(code: String, phone: String): Int{
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val gson = GsonBuilder()
             .registerTypeAdapter(PostLoginByCode::class.java, PostLoginByCode.DataStateDeserializer())
             .setLenient()
@@ -278,6 +313,10 @@ object UserRepository {
      * success：成功（返回json带token：token令牌）
      */
     fun postLogin(phone: String, password: String): Int{
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val gson = GsonBuilder()
             .registerTypeAdapter(PostLogin::class.java, PostLogin.DataStateDeserializer())
             .setLenient()
@@ -310,6 +349,10 @@ object UserRepository {
      * success：成功，成功后返回json：url（头像url）
      */
     fun postUserPhoto(id: String, photo: MultipartBody.Part): Int{
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val gson = GsonBuilder()
             .registerTypeAdapter(PostUserPhoto::class.java, PostUserPhoto.DataStateDeserializer())
             .setLenient()
@@ -340,6 +383,10 @@ object UserRepository {
      * success：成功
      */
     fun postFans(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postFans(fromId, toId)
         var msg = ""
         try {
@@ -364,6 +411,10 @@ object UserRepository {
      * success：成功
      */
     fun deleteFans(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.deleteFans(fromId, toId)
         var msg = ""
         try {
@@ -387,6 +438,10 @@ object UserRepository {
      * data.status :  返回status 1：未关注 2：已关注 3：已相互关注
      */
     fun postJudgeFavor(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postJudgeFavor(fromId, toId)
         var msg = ""
         try {
@@ -408,6 +463,10 @@ object UserRepository {
      * success：成功 （返回json followList（关注信息列表） pages（页面总数） counts（数据总量））
      */
     fun getFollow(id: String, cnt: Int, page: Int, keyword: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getFollow(cnt, id, keyword, page)
         var msg = ""
         try {
@@ -434,6 +493,10 @@ object UserRepository {
      * success：成功 （返回json fansList（粉丝信息列表） pages（页面总数） counts（数据总量））
      */
     fun getFans(id: String, cnt: Int, page: Int, keyword: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getFans(cnt, id, keyword, page)
         var msg = ""
         try {
@@ -462,6 +525,10 @@ object UserRepository {
      * success：成功（对方如果已申请加你为好友则会直接加成功）
      */
     fun postFriend(fromId: String, reason: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postFriend(fromId, reason?:"" , toId)
         var msg = ""
         try {
@@ -484,6 +551,10 @@ object UserRepository {
      * success：成功 （返回json status：1是 0不是）
      */
     fun postJudgeFriend(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postJudgeFriend(fromId, toId)
         var msg = ""
         try {
@@ -506,6 +577,10 @@ object UserRepository {
      * success：成功 （返回json friendList：好友列表 pages：页面数 counts：数据总量）
      */
     fun getFriendList(cnt: Int, id: String, page: Int, type: Int): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getFriendList(cnt, id, page, type)
         var msg = ""
         try {
@@ -531,6 +606,10 @@ object UserRepository {
      * success：成功
      */
     fun deleteFriend(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.deleteFriend(fromId, toId)
         var msg = ""
         try {
@@ -554,6 +633,10 @@ object UserRepository {
      * success：成功 申请成功好友数会加1
      */
     fun postVerifyFriend(fromId: String, isPass: Int, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postVerifyFriend(fromId, isPass, toId)
         var msg = ""
         try {
@@ -576,6 +659,10 @@ object UserRepository {
      * success：成功 返回json postFriendList：申请加好友的列表 pages：页面总数 counts：数据总量
      */
     fun getPostFriendList(cnt: Int, id: String, page: Int, type: Int = 1): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getPostFriendList(cnt, id, page, type)
         var msg = ""
         try {
@@ -600,6 +687,10 @@ object UserRepository {
      * 会返回一个二维码
      */
     fun getUserQRCode(id: String): Bitmap? {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return null
+        }
         val data = userService.getUserQRCode(id)
         var bitmap: Bitmap? = null
         try {
@@ -617,6 +708,10 @@ object UserRepository {
      * success：成功 （返回userList：用户列表 pages：页面数 counts：数据总量 ）
      */
     fun getSearchUser(cnt: Int, page: Int, username: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getSearchUser(cnt, page, username)
         var msg = ""
         try {
@@ -646,6 +741,10 @@ object UserRepository {
      * success：成功
      */
     fun postLinkUser(fromId: String, relationship: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postLinkUser(fromId, relationship, toId)
         var msg = ""
         try {
@@ -669,6 +768,10 @@ object UserRepository {
      * success：成功 （返回json postUserList：用户列表 pages：页面数 counts：数据总量）
      */
     fun getPostLinkUser(cnt: Int, id: String, page: Int, type: Int = 1): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getPostLinkUser(cnt, id, page, type)
         var msg = ""
         try {
@@ -698,6 +801,10 @@ object UserRepository {
      * success：成功
      */
     fun postJudgeLinkUser(fromId: String, isPass: Int, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.postJudgeLinkUser(fromId, isPass, toId)
         var msg = ""
         try {
@@ -721,6 +828,10 @@ object UserRepository {
      * success：成功 返回linkUserList：联结的用户列表 最多就3个，所以就不分页了~
      */
     fun getLinkUser(id: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getLinkUser(id)
         var msg = ""
         try {
@@ -746,6 +857,10 @@ object UserRepository {
      * success：成功
      */
     fun deleteRemoveLink(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.deleteRemoveLink(fromId, toId)
         var msg = ""
         try {
@@ -767,6 +882,10 @@ object UserRepository {
      * success：成功 返回json status：1有 0 没有
      */
     fun getJudgeLink(fromId: String, toId: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = userService.getJudgeLink(fromId, toId)
         var msg = ""
         try {

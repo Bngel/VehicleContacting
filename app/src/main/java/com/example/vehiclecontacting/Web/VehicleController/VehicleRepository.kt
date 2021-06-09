@@ -1,8 +1,11 @@
 package com.example.vehiclecontacting.Web.VehicleController
 
+import com.example.vehiclecontacting.Repository.ActivityCollector
 import com.example.vehiclecontacting.Repository.LogRepository
 import com.example.vehiclecontacting.Repository.StatusRepository
+import com.example.vehiclecontacting.Repository.WebRepository
 import com.example.vehiclecontacting.Web.WebService
+import com.example.vehiclecontacting.Widget.ToastView
 import com.google.gson.GsonBuilder
 import okhttp3.MultipartBody
 import java.lang.Exception
@@ -27,6 +30,10 @@ object VehicleRepository {
      * success：成功，成功后返回json：url（图片url）
      */
     fun postVehiclePhoto(id: String, photo: MultipartBody.Part): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val gson = GsonBuilder()
             .registerTypeAdapter(PostVehiclePhoto::class.java, PostVehiclePhoto.DataStateDeserializer())
             .setLenient()
@@ -60,6 +67,10 @@ object VehicleRepository {
      * success：成功
      */
     fun postVehicle(description: String, id: String, license: String, licensePhoto: String, type: String, models: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = vehicleService.postVehicle(description, id, license, licensePhoto, type, models)
         var msg = ""
         try {
@@ -83,6 +94,10 @@ object VehicleRepository {
      * success：成功 返回json vehicleList：车辆列表
      */
     fun getVehicleList(id: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = vehicleService.getVehicleList(id)
         var msg = ""
         try {
@@ -107,6 +122,10 @@ object VehicleRepository {
      * success：成功 （返回json vehicleList（车辆相关信息列表） pages：页面总数 counts：数据总量）
      */
     fun getSearchVehicle(cnt: Int, page: Int, type: Int = 0 , keyword: String = ""): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
         val data = vehicleService.getSearchVehicle(cnt, page, type, keyword)
         var msg = ""
         try {

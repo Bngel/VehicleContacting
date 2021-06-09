@@ -1,7 +1,10 @@
 package com.example.vehiclecontacting.Repository
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.example.vehiclecontacting.Web.JWebSocketClient
 import java.net.URI
+
 
 object WebRepository {
     private const val baseUri = "ws://47.115.128.193:8090/websocket/"
@@ -12,4 +15,30 @@ object WebRepository {
         webClient = JWebSocketClient(URI.create("$baseUri$id"))
         webClient.connectBlocking()
     }
+
+    fun isNetworkConnected(context: Context?): Boolean {
+        if (context != null) {
+            val mConnectivityManager = context
+                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val mNetworkInfo = mConnectivityManager.activeNetworkInfo
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable
+            }
+        }
+        return false
+    }
+
+    fun isNetworkConnected(): Boolean {
+        val context = ActivityCollector.curActivity
+        if (context != null) {
+            val mConnectivityManager = context
+                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val mNetworkInfo = mConnectivityManager.activeNetworkInfo
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable
+            }
+        }
+        return false
+    }
+
 }

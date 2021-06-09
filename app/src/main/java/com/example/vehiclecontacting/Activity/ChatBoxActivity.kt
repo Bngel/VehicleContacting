@@ -34,6 +34,7 @@ class ChatBoxActivity : BaseActivity() {
                         val chatIntent = Intent(this, ChatActivity::class.java)
                         chatIntent.putExtra("userId", chat.id)
                         chatIntent.putExtra("userPhoto", chat.photo)
+                        chatIntent.putExtra("username", chat.username)
                         startActivityForResult(chatIntent, ActivityCollector.ACTIVITY_CHAT)
                     }
                     view.setOnLongClickListener {
