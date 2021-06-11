@@ -98,7 +98,7 @@ class JWebSocketClient(serverUri: URI): WebSocketClient(serverUri, Draft_6455())
 
         manager.createNotificationChannel(channel)
         val builder = NotificationCompat.Builder(context, "notification01")
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.icon)
             .setContentTitle(title)
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -146,4 +146,30 @@ object VehicleRepository {
             else -> StatusRepository.UNKNOWN_WRONG
         }
     }
+
+    /***
+     * msg:
+     * existWrong：用户并未绑定该车牌（可能是重复请求）
+     * success：成功
+     */
+    fun deleteVehicle(id: String, license: String): Int {
+        if (!WebRepository.isNetworkConnected()) {
+            ToastView(ActivityCollector.curActivity!!).show("网络错误")
+            return StatusRepository.CONNECT_WRONG
+        }
+        val data = vehicleService.deleteVehicle(id, license)
+        var msg = ""
+        try {
+            thread {
+                val body = data.execute().body()!!
+                msg = body.msg
+                LogRepository.deleteVehicleLog(body)
+            }.join(4000)
+        } catch (e: Exception) {}
+        return when (msg) {
+            "existWrong" -> StatusRepository.EXIST_WRONG
+            "success" -> StatusRepository.SUCCESS
+            else -> StatusRepository.UNKNOWN_WRONG
+        }
+    }
 }

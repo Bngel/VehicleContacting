@@ -9,10 +9,7 @@ import com.example.vehiclecontacting.Web.TalkController.DeleteTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
-import com.example.vehiclecontacting.Web.VehicleController.GetSearchVehicle
-import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
-import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
-import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
+import com.example.vehiclecontacting.Web.VehicleController.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -558,6 +555,13 @@ interface WebService {
         @Query("numbers") numbers: List<String>
     )
             : Call<DeleteBoxMessage>
+
+    @DELETE("vehicle")
+    fun deleteVehicle(
+        @Query("id") id: String,
+        @Query("license") license: String
+    )
+            : Call<DeleteVehicle>
 
 
 

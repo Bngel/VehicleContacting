@@ -49,14 +49,26 @@ class ChatActivity : BaseActivity() {
             }
         }
         chat_title.text = username
-        TalkRepository.updateMessage.value = false
         chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
+        TalkRepository.updateMessage.value = false
     }
 
     private fun initWidget() {
         sendEvent()
         liveEvent()
         closeEvent()
+        scrollEvent()
+        downEvent()
+    }
+
+    private fun downEvent() {
+        chat_down.setOnClickListener {
+            chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
+        }
+    }
+
+    private fun scrollEvent() {
+        chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
     }
 
     private fun closeEvent() {
@@ -64,6 +76,12 @@ class ChatActivity : BaseActivity() {
             finish()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
+    }
+
 
     private fun liveEvent() {
         TalkRepository.updateMessage.observe(this, Observer {
@@ -83,7 +101,8 @@ class ChatActivity : BaseActivity() {
                 TalkRepository.updateMessage.value = false
                 chat_scroll.fullScroll(ScrollView.FOCUS_DOWN)
             }
-        })
+        }
+        )
     }
 
     private fun sendEvent() {

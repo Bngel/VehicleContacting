@@ -9,10 +9,7 @@ import com.example.vehiclecontacting.Web.TalkController.DeleteTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalk
 import com.example.vehiclecontacting.Web.TalkController.GetTalkList
 import com.example.vehiclecontacting.Web.UserController.*
-import com.example.vehiclecontacting.Web.VehicleController.GetSearchVehicle
-import com.example.vehiclecontacting.Web.VehicleController.GetVehicleList
-import com.example.vehiclecontacting.Web.VehicleController.PostVehicle
-import com.example.vehiclecontacting.Web.VehicleController.PostVehiclePhoto
+import com.example.vehiclecontacting.Web.VehicleController.*
 import java.lang.StringBuilder
 
 object LogRepository {
@@ -1521,6 +1518,30 @@ object LogRepository {
             }
             "existWrong" -> {
                 stringBuilder.append("-\tmsg: 消息不存在\t-\n")
+            }
+            else -> {
+                stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
+            }
+        }
+        Log.d(StatusRepository.VehicleLog, stringBuilder.toString())
+    }
+
+    fun deleteVehicleLog(body: DeleteVehicle) {
+        val stringBuilder = StringBuilder()
+        if (body.code == 200) {
+            stringBuilder.append("-\t解除车牌绑定接口访问成功\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        else {
+            stringBuilder.append("-\t解除车牌绑定接口访问失败\t-\n" +
+                    "-\tcode: ${body.code}\t-\n")
+        }
+        when (body.msg) {
+            "success" -> {
+                stringBuilder.append("-\tmsg: 解除车牌绑定成功\t-\n")
+            }
+            "existWrong" -> {
+                stringBuilder.append("-\tmsg: 用户并未绑定该车牌\t-\n")
             }
             else -> {
                 stringBuilder.append("-\tmsg: 访问接口发生未知错误\t-\n")
