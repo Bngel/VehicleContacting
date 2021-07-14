@@ -25,5 +25,6 @@ data class User(
     val blackCounts: Int,
     val friendCounts: Int,
     val boxMessageCounts: Int,
-    val connectCount: Int
+    val connectCount: Int,
+    val isNoDisturb: Int
 )
